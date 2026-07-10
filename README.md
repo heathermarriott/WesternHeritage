@@ -11,3 +11,4 @@ ToDo:
 2) run video on local machine to reduce lag
 3) full language support for html text as shown in languages.html
 4) check with Project Sponsors before proceeding much further with this model
+5) Implement "Ask Questions" webpage with buttons that direct the video that will play based on the list of videos that are available.  Ex. "What are the Rough Riders?", etc.

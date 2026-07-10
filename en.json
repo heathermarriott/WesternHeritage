@@ -1,0 +1,79 @@
+{
+  "pageTitle": "Prescott Western Heritage Center",
+  "menu": {
+    "openMenuTitle": "Open Menu",
+    "title": "Menu",
+    "selectAvatar": "Select Avatar",
+    "askQuestion": "Ask a Question",
+    "prescottTrivia": "Prescott Trivia",
+    "cowboyRoundupGame": "Cowboy Roundup Game",
+    "settings": "Settings"
+  },
+  "home": {
+    "welcomeMessage": "Click the cowboy hat to open the navigation menu."
+  },
+  "avatar": {
+    "heading": "Select Your Avatar",
+    "theodoreRoosevelt": "Theodore Roosevelt",
+    "annieOakley": "Annie Oakley",
+    "wyattEarp": "Wyatt Earp",
+    "selectedHeading": "Avatar Selected!",
+    "selectedMessage": "Your adventure is ready to begin."
+  },
+  "trivia": {
+    "heading": "🤠 Prescott Trivia Challenge",
+    "intro": "Answer all five questions and see how well you know Prescott!",
+    "q1": "Prescott was the first territorial capital of Arizona.",
+    "q1True": "True",
+    "q1False": "False",
+    "q2": "What famous street is known for its historic saloons?",
+    "q2A": "Whiskey Row",
+    "q2B": "Main Street",
+    "q2C": "Frontier Road",
+    "q2D": "Gold Street",
+    "q3": "Which large lake is located just a few miles from downtown Prescott?",
+    "q3A": "Lake Pleasant",
+    "q3B": "Watson Lake",
+    "q3C": "Roosevelt Lake",
+    "q3D": "Saguaro Lake",
+    "q4": "Prescott is surrounded by which national forest?",
+    "q4A": "Coconino National Forest",
+    "q4B": "Prescott National Forest",
+    "q4C": "Kaibab National Forest",
+    "q4D": "Apache-Sitgreaves National Forest",
+    "q5": "Prescott's annual rodeo is known as:",
+    "q5A": "Arizona Stampede",
+    "q5B": "World's Oldest Rodeo",
+    "q5C": "Cowboy Days",
+    "q5D": "Frontier Roundup",
+    "submit": "Submit Quiz",
+    "scoreResult": "🏆 You scored {score} out of 5!"
+  },
+  "game": {
+    "heading": "🐎 Cowboy Roundup - click on the horse",
+    "time": "Time:",
+    "seconds": "sec",
+    "horsesCollected": "Horses Collected:",
+    "timeUp": "Time's Up!",
+    "roundedUp": "You rounded up {score} horses!",
+    "playAgain": "Play Again"
+  },
+  "settings": {
+    "heading": "⚙️ Settings",
+    "displaySizeHeading": "Display Size",
+    "displaySizeIntro": "Select how the application should be displayed.",
+    "website": "Website",
+    "protoLuma": "Proto Luma",
+    "languageHeading": "Language",
+    "languageIntro": "Select your preferred language.",
+    "english": "English",
+    "spanish": "Spanish",
+    "save": "Save Settings",
+    "saved": "✔ Settings saved!",
+    "displayLabel": "Display:",
+    "languageLabel": "Language:"
+  },
+  "common": {
+    "underConstruction": "This section is under construction."
+  }
+}

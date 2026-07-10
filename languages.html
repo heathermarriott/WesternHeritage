@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Language Translation Demo</title>
+
+<style>
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    margin:40px;
+    background:#f5f5f5;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 2px 10px rgba(0,0,0,.15);
+}
+
+.language{
+    margin-bottom:25px;
+}
+
+.language label{
+    margin-right:20px;
+    font-size:18px;
+}
+
+h1{
+    color:#8B4513;
+}
+
+.section{
+    margin-top:30px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:6px;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <div class="language">
+        <strong>Select Language:</strong><br><br>
+
+        <label>
+            <input type="radio"
+                   name="language"
+                   value="en"
+                   checked>
+            English
+        </label>
+
+        <label>
+            <input type="radio"
+                   name="language"
+                   value="es">
+            Spanish
+        </label>
+    </div>
+
+    <h1 id="pageTitle"></h1>
+
+    <div class="section">
+        <h2 id="settingsHeading"></h2>
+
+        <p id="welcomeMessage"></p>
+
+        <p>
+            <strong id="languageLabel"></strong>
+            <span id="currentLanguage"></span>
+        </p>
+
+        <button id="saveButton"></button>
+    </div>
+
+</div>
+
+<script>
+
+let translations = {};
+
+async function loadLanguage(language){
+
+    try{
+
+        const response = await fetch(`${language}.json`);
+
+        translations = await response.json();
+
+        applyTranslations();
+
+        localStorage.setItem("language", language);
+
+    }
+    catch(error){
+        console.error(error);
+    }
+
+}
+
+function applyTranslations(){
+
+    document.documentElement.lang =
+        localStorage.getItem("language") || "en";
+
+    document.getElementById("pageTitle").textContent =
+        translations.pageTitle;
+
+    document.getElementById("settingsHeading").textContent =
+        translations.settings.heading;
+
+    document.getElementById("welcomeMessage").textContent =
+        translations.home.welcomeMessage;
+
+    document.getElementById("languageLabel").textContent =
+        translations.settings.languageLabel;
+
+    document.getElementById("saveButton").textContent =
+        translations.settings.save;
+
+    const currentLang =
+        document.querySelector("input[name='language']:checked").value;
+
+    document.getElementById("currentLanguage").textContent =
+        currentLang === "en"
+            ? translations.settings.english
+            : translations.settings.spanish;
+}
+
+// Radio button events
+document.querySelectorAll("input[name='language']").forEach(radio=>{
+
+    radio.addEventListener("change",function(){
+
+        loadLanguage(this.value);
+
+    });
+
+});
+
+// Load saved language
+const savedLanguage = localStorage.getItem("language") || "en";
+
+document.querySelector(
+    `input[value="${savedLanguage}"]`
+).checked = true;
+
+loadLanguage(savedLanguage);
+
+</script>
+
+</body>
+</html>

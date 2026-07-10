@@ -21,7 +21,7 @@ body{
 /* Cowboy Hat Button */
 #hatButton{
     position:fixed;
-    top:75%;
+    top:18%;
     left:15px;
     width:70px;
     height:70px;
@@ -33,6 +33,13 @@ body{
     padding:0;
 }
 
+body.menu-open #hatButton{
+    left:228px;
+    transform:rotate(18deg);
+    pointer-events:none;
+    cursor:default;
+}
+
 #hatButton img{
     width:100%;
     height:100%;
@@ -42,13 +49,18 @@ body{
 #hatButton:hover{
     transform:scale(1.1);
 }
+
+body.menu-open #hatButton:hover{
+    transform:rotate(18deg) scale(1.1);
+}
 /* Menu */
 #menu{
     position:fixed;
     top:0;
     left:-280px;
+    top: 20%;
     width:280px;
-    height:100%;
+    height:40%;
     background:#6b4423;
     color:white;
     transition:.35s;
@@ -267,10 +279,12 @@ const content = document.getElementById("content");
 
 hatButton.addEventListener("click", () => {
     menu.classList.add("open");
+    document.body.classList.add("menu-open");
 });
 
 closeBtn.addEventListener("click", () => {
     menu.classList.remove("open");
+    document.body.classList.remove("menu-open");
 });
 
 document.querySelectorAll("#menu a").forEach(item => {
@@ -280,6 +294,9 @@ document.querySelectorAll("#menu a").forEach(item => {
         e.preventDefault();
 
         const page = this.dataset.page;
+
+        menu.classList.remove("open");
+        document.body.classList.remove("menu-open");
 
 if(page === "Select Avatar"){
 

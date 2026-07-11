@@ -2,42 +2,148 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Prescott Western Heritage Center</title>
 
 <style>
+/* ==========================================================================
+   QUICK CUSTOMIZATION
+   Set these two values to the Proto Luma's real screen resolution (in CSS
+   pixels). Everything else on the page - the card size/position, buttons,
+   fonts, the menu, the game board - is derived from these two numbers, so
+   changing them re-tunes the whole layout automatically.
+
+   The page builds a fixed-size "stage" at exactly this resolution and then
+   scales it (via JS, see bottom of file) to fit whatever browser window
+   you're previewing in - so you always see the true composition, just
+   shrunk/grown to fit your monitor, instead of a cropped slice of it.
+   ========================================================================== */
+:root{
+    --device-width: 2189px;
+    --device-height: 3840px;
+
+    /* The original design was tuned assuming a viewport around this wide.
+       --scale is the multiplier applied to every fixed-px value below so
+       the whole layout grows/shrinks proportionally with --device-width. */
+    --baseline-width: 550px;
+    --scale: calc(var(--device-width) / var(--baseline-width));
+}
+
 /* General reset to ensure consistent styling across browsers */
 *{
     margin:0px;
     padding:0;
     box-sizing:border-box;
     font-family:Arial, Helvetica, sans-serif;
+    -webkit-tap-highlight-color:transparent;
 }
 
-/* Basic body styles */
+/* Basic body styles - locked to the viewport, kiosk-style (no page scroll/bounce).
+   Background here only shows up as "letterbox" bars around the stage when the
+   browser window's aspect ratio doesn't match the device's - on the real
+   device (where the window IS the device) it will never be visible. */
+html, body{
+    height:100%;
+    overflow:hidden;
+    overscroll-behavior:none;
+}
+
 body{
+    background:#111;
+    touch-action:manipulation;
+    -webkit-user-select:none;
+    user-select:none;
+    -webkit-touch-callout:none;
+}
+
+/* Text inside form fields should still be selectable/usable normally */
+input, textarea{
+    -webkit-user-select:auto;
+    user-select:auto;
+}
+
+/* The fixed-resolution "virtual screen". JS scales this to fit the real
+   browser window (see the script at the bottom). Everything inside it is
+   positioned/sized against ITS dimensions, not the actual browser window -
+   that's what makes the two variables above a single source of truth. */
+#stage{
+    position:fixed;
+    top:50%;
+    left:50%;
+    width:var(--device-width);
+    height:var(--device-height);
+    transform:translate(-50%, -50%);
+    transform-origin:center center;
+    overflow:hidden;
     background:#efe6d3;
-    overflow-x:hidden;
+}
+
+/* background teddy roosevelt video - persistent, lives at the stage's root so
+   it is never removed/recreated by page navigation and always plays
+   regardless of which page or setting the user picks */
+#introVideo{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    z-index:-1;
+    pointer-events:none;
+}
+
+#avatarOverlay{
+    width:100%;
+    height:100%;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    padding:0 5%;
+
+    text-align:center;
+}
+
+.avatarBtn{
+    width:min(70%, calc(320px * var(--scale)));
+    margin:calc(14px * var(--scale)) 0;
+    padding:calc(18px * var(--scale));
+
+    font-size:calc(24px * var(--scale));
+
+    background:#8b5a2b;
+    color:white;
+
+    border:none;
+    border-radius:calc(12px * var(--scale));
+
+    cursor:pointer;
+    touch-action:manipulation;
 }
 
 /* Cowboy Hat Button */
 #hatButton{
     position:fixed;
     top:18%;
-    left:15px;
-    width:70px;
-    height:70px;
+    left:calc(15px * var(--scale));
+    width:calc(70px * var(--scale));
+    height:calc(70px * var(--scale));
     border:none;
     background:none;
     cursor:pointer;
     z-index:1001;
     transition:.3s;
     padding:0;
+    touch-action:manipulation;
 }
 
 /* When the menu is open, move the hat button to the right to align with the menu edge */
 body.menu-open #hatButton{
-    left:228px;
+    left:calc(228px * var(--scale));
     transform:rotate(18deg);
     pointer-events:none;
     cursor:default;
@@ -62,16 +168,16 @@ body.menu-open #hatButton:hover{
 /* Off-screen navigation menu styling */
 #menu{
     position:fixed;
-    top:0;
-    left:-280px;
-    top: 20%;
-    width:280px;
+    top:20%;
+    left:calc(-280px * var(--scale));
+    width:min(82%, calc(280px * var(--scale)));
     height:60%;
     background:#6b4423;
     color:white;
     transition:.35s;
     box-shadow:5px 0 15px rgba(0,0,0,.35);
     z-index:1000;
+    overflow-y:auto;
 }
 
 /* Class added by JavaScript to slide the menu into view */
@@ -82,24 +188,26 @@ body.menu-open #hatButton:hover{
 /* Style for the menu's close button */
 #closeBtn{
     float:right;
-    margin:15px;
+    margin:calc(15px * var(--scale));
     border:none;
     background:none;
     color:white;
-    font-size:28px;
+    font-size:calc(28px * var(--scale));
     cursor:pointer;
+    touch-action:manipulation;
 }
 
 /* Menu header styling */
 #menu h2{
-    padding:60px 25px 20px;
+    padding:calc(60px * var(--scale)) calc(25px * var(--scale)) calc(20px * var(--scale));
     border-bottom:1px solid rgba(255,255,255,.3);
+    font-size:calc(28px * var(--scale));
 }
 
 /* Menu list styling */
 #menu ul{
     list-style:none;
-    margin-top:20px;
+    margin-top:calc(20px * var(--scale));
 }
 
 #menu li{
@@ -109,51 +217,95 @@ body.menu-open #hatButton:hover{
 /* Menu link styling */
 #menu a{
     display:block;
-    padding:18px 25px;
+    padding:calc(18px * var(--scale)) calc(25px * var(--scale));
     color:white;
     text-decoration:none;
-    font-size:18px;
+    font-size:calc(18px * var(--scale));
     transition:.25s;
+    touch-action:manipulation;
 }
 
 /* Hover effect for menu links */
 #menu a:hover{
     background:#8b5a2b;
-    padding-left:35px;
+    padding-left:calc(35px * var(--scale));
 }
 
-/* Main content area styling */
+/* Main content area - centers the card in the full available space instead
+   of parking it near the top. Scrolls internally only if content (like the
+   trivia form) is taller than the screen. */
 main{
-    padding:120px 40px;
+    position:relative;
+    width:100%;
+    height:100%;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:safe center;
+    align-items:center;
+
+    padding:calc(70px * var(--scale)) calc(20px * var(--scale)) calc(50px * var(--scale));
     text-align:center;
 }
 
-/* The div where all dynamic content is loaded */
+/* When the avatar page is showing (full-bleed video look), let its content
+   stretch the full stage instead of being centered/padded like a card. */
+main:has(#content.transparent){
+    padding:0;
+    justify-content:stretch;
+    align-items:stretch;
+}
+
+/* The div where all dynamic content is loaded.
+   By default it's a translucent "card" floating over the background video
+   so text stays legible on every page - sized as a real fraction of the
+   device width so it doesn't look lost on a large screen. */
 #content{
-    margin-top:10px;
-    font-size:22px;
+    font-size:calc(26px * var(--scale));
     color:#5a3b1d;
+    background:rgba(239,230,211,.94);
+    border-radius:calc(20px * var(--scale));
+    padding:calc(28px * var(--scale));
+    max-width:min(90%, calc(620px * var(--scale)));
+    width:100%;
+    box-shadow:0 calc(8px * var(--scale)) calc(24px * var(--scale)) rgba(0,0,0,.25);
+}
+
+/* The avatar page wants the full-bleed video look instead of the card,
+   so this class strips the card styling back out and lets it fill the stage. */
+#content.transparent{
+    background:none;
+    box-shadow:none;
+    padding:0;
+    max-width:none;
+    border-radius:0;
+    width:100%;
+    height:100%;
 }
 
 /* Styling for individual trivia questions */
 .question{
     text-align:left;
-    max-width:700px;
-    margin:25px auto;
-    padding:15px;
+    max-width:min(94%, calc(700px * var(--scale)));
+    margin:calc(25px * var(--scale)) auto;
+    padding:calc(15px * var(--scale));
     background:#f8f1df;
-    border-radius:8px;
+    border-radius:calc(8px * var(--scale));
+    font-size:calc(22px * var(--scale));
 }
 
 /* Styling for the "Submit Quiz" button */
 #gradeQuiz{
-    padding:12px 30px;
-    font-size:18px;
+    padding:calc(12px * var(--scale)) calc(30px * var(--scale));
+    font-size:calc(18px * var(--scale));
     background:#8b5a2b;
     color:white;
     border:none;
-    border-radius:8px;
+    border-radius:calc(8px * var(--scale));
     cursor:pointer;
+    touch-action:manipulation;
 }
 
 #gradeQuiz:hover{
@@ -162,124 +314,122 @@ main{
 
 /* Styling for the trivia score display */
 #score{
-    margin-top:25px;
+    margin-top:calc(25px * var(--scale));
     color:#5a3b1d;
-    font-size:28px;
+    font-size:calc(28px * var(--scale));
 }
+
 
 /* The container for the Cowboy Roundup game */
 #gameArea{
     position:relative;
 
-    width:min(95vw,520px);
+    width:min(92%, calc(480px * var(--scale)));
     aspect-ratio:9 / 16;
 
-    margin:10px auto;
+    margin:calc(10px * var(--scale)) auto;
 
     background:#d8c39a;
 
-    border:4px solid #6b4423;
-    border-radius:16px;
+    border:calc(4px * var(--scale)) solid #6b4423;
+    border-radius:calc(16px * var(--scale));
 
     overflow:hidden;
 }
 
 /* Displays time and score during the game */
 #gameStats{
-
-font-size:24px;
-
-padding:15px;
-
-font-weight:bold;
-
+    font-size:calc(24px * var(--scale));
+    padding:calc(15px * var(--scale));
+    font-weight:bold;
 }
 
 /* The clickable horse image */
 #horse{
-
-position:absolute;
-
-width:90px;
-
-cursor:pointer;
-
-transition:left .25s, top .25s;
-
+    position:absolute;
+    width:calc(90px * var(--scale));
+    cursor:pointer;
+    transition:left .25s, top .25s;
+    touch-action:manipulation;
 }
 
 #horse:hover{
-
-transform:scale(1.08);
-
+    transform:scale(1.08);
 }
 
 /* Container for the "Game Over" message */
 #gameOver{
-
-position:absolute;
-
-top:50%;
-left:50%;
-
-transform:translate(-50%,-50%);
-
-text-align:center;
-
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
 }
 
 /* "Play Again" button styling */
 #playAgain{
-
-margin-top:20px;
-
-padding:12px 28px;
-
-font-size:20px;
-
-background:#8b5a2b;
-
-color:white;
-
-border:none;
-
-border-radius:8px;
-
-cursor:pointer;
-
+    margin-top:calc(20px * var(--scale));
+    padding:calc(12px * var(--scale)) calc(28px * var(--scale));
+    font-size:calc(20px * var(--scale));
+    background:#8b5a2b;
+    color:white;
+    border:none;
+    border-radius:calc(8px * var(--scale));
+    cursor:pointer;
+    touch-action:manipulation;
 }
 </style>
 </head>
 
 <body>
 
-<button id="hatButton" title="Open Menu">
-    <img src="hat.png" alt="Cowboy Hat">
-</button>
+<div id="stage">
 
-<nav id="menu">
+    <!-- Persistent background video. This lives at the stage root (not inside
+         #content) so page navigation and settings changes never remove it -
+         it always keeps playing in the back. -->
+    <video
+        id="introVideo"
+        autoplay
+        muted
+        loop
+        playsinline
+        webkit-playsinline
+        preload="auto">
 
-    <!-- Button to close the navigation menu -->
-    <button id="closeBtn">✕</button>
+        <source src="TeddyLowRes.mp4" type="video/mp4">
 
-    <h2>Menu</h2>
+    </video>
 
-    <ul>
-        <li><a href="#" data-page="Select Avatar" data-lang-key="menu.selectAvatar">Select Avatar</a></li>
-        <li><a href="#" data-page="Ask a Question" data-lang-key="menu.askQuestion">Ask a Question</a></li>
-        <li><a href="#" data-page="Prescott Trivia" data-lang-key="menu.prescottTrivia">Prescott Trivia</a></li>
-        <li><a href="#" data-page="Cowboy Roundup Game" data-lang-key="menu.cowboyRoundupGame">Cowboy Roundup Game</a></li>
-        <li><a href="#" data-page="Settings" data-lang-key="menu.settings">Settings</a></li>
-    </ul>
+    <button id="hatButton" title="Open Menu">
+        <img src="hat.png" alt="Cowboy Hat">
+    </button>
 
-</nav>
+    <nav id="menu">
 
-<main>
+        <!-- Button to close the navigation menu -->
+        <button id="closeBtn">✕</button>
 
-<!-- The initial content of the page, which is the avatar selection screen -->
-<div id="content"></div>
+        <h2>Menu</h2>
 
-</main>
+        <ul>
+            <li><a href="#" data-page="Select Avatar" data-lang-key="menu.selectAvatar">Select Avatar</a></li>
+            <li><a href="#" data-page="Ask a Question" data-lang-key="menu.askQuestion">Ask a Question</a></li>
+            <li><a href="#" data-page="Prescott Trivia" data-lang-key="menu.prescottTrivia">Prescott Trivia</a></li>
+            <li><a href="#" data-page="Cowboy Roundup Game" data-lang-key="menu.cowboyRoundupGame">Cowboy Roundup Game</a></li>
+            <li><a href="#" data-page="Settings" data-lang-key="menu.settings">Settings</a></li>
+        </ul>
+
+    </nav>
+
+    <main>
+
+        <!-- The initial content of the page, which is the avatar selection screen -->
+        <div id="content"></div>
+
+    </main>
+
+</div>
 
 <script>
 // Get references to the main interactive elements on the page
@@ -287,6 +437,19 @@ const hatButton = document.getElementById("hatButton");
 const menu = document.getElementById("menu");
 const closeBtn = document.getElementById("closeBtn");
 const content = document.getElementById("content");
+const introVideo = document.getElementById("introVideo");
+
+// --- KEEP THE BACKGROUND VIDEO ALWAYS PLAYING ---
+// No matter what page or setting the user picks, if the video is ever paused
+// (e.g. by a stray browser/OS event), immediately resume it.
+introVideo.addEventListener("pause", () => {
+    introVideo.play().catch(() => {});
+});
+document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) {
+        introVideo.play().catch(() => {});
+    }
+});
 
 // --- STATE VARIABLES ---
 let currentAvatar = "teddy.png";
@@ -317,9 +480,13 @@ function attachAvatarButtonListeners(){
             // Update the current avatar
             currentAvatar = this.dataset.img;
 
+            // Avatar has been picked - switch back to the card layout for the
+            // confirmation message (video keeps playing behind it either way)
+            content.classList.remove("transparent");
+
             // Replace the buttons with a confirmation message
             content.innerHTML = `
-                <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:350px; margin: 40px auto;">
+                <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:min(60%, calc(220px * var(--scale))); margin: 0 auto calc(20px * var(--scale)); display:block;">
                 <h2 data-lang-key="avatar.selectedHeading">${translations.avatar.selectedHeading}</h2>
                 <p data-lang-key="avatar.selectedMessage">${translations.avatar.selectedMessage.replace("Touch the hat to get started", "<br>Touch the hat to get started")}</p>
             `;
@@ -333,28 +500,48 @@ function renderPage(page) {
     currentPage = page; // Update the current page tracker
 
     if (page === "Select Avatar") {
-        // Generate the HTML for the avatar selection page
+
+        // Full-bleed video look for avatar selection: strip the card styling
+        content.classList.add("transparent");
+
+        // Generate the HTML for the avatar selection page (video itself lives
+        // at the stage root now and is already playing behind this)
         content.innerHTML = `
-            <img src="teddy.png" id="centerImage" alt="Avatar" style="max-width:350px; margin: 40px auto;">
-            <h2 data-lang-key="avatar.heading">${translations.avatar.heading}</h2>
+<div id="avatarOverlay">
 
-            <button class="avatarBtn" data-img="teddy.png" data-lang-key="avatar.theodoreRoosevelt">
-                ${translations.avatar.theodoreRoosevelt}
-            </button>
+    <h2 style="
+        color:white;
+        text-shadow:3px 3px 8px black;
+        margin-bottom:calc(40px * var(--scale));
+        font-size:calc(34px * var(--scale));
+    ">
+        ${translations.avatar.heading}
+    </h2>
 
-            <button class="avatarBtn" data-img="annie.png" data-lang-key="avatar.annieOakley">
-                ${translations.avatar.annieOakley}
-            </button>
+    <button class="avatarBtn"
+            data-img="teddy.png">
+        ${translations.avatar.theodoreRoosevelt}
+    </button>
 
-            <button class="avatarBtn" data-img="wyatt.png" data-lang-key="avatar.wyattEarp">
-                ${translations.avatar.wyattEarp}
-            </button>
-        `;
+    <button class="avatarBtn"
+            data-img="annie.png">
+        ${translations.avatar.annieOakley}
+    </button>
 
-        // Re-attach the listeners to the newly created buttons
+    <button class="avatarBtn"
+            data-img="wyatt.png">
+        ${translations.avatar.wyattEarp}
+    </button>
+
+</div>
+`;
         attachAvatarButtonListeners();
 
     } else if (page === "Prescott Trivia") {
+
+        // Card layout over the video for every other page
+        content.classList.remove("transparent");
+
         // Generate the HTML for the trivia page
         content.innerHTML = `
             <h2 data-lang-key="trivia.heading">${translations.trivia.heading}</h2>
@@ -404,7 +591,7 @@ function renderPage(page) {
                 </button>
             </form>
 
-            <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:300px; margin: 40px auto;">
+            <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:min(50%, calc(200px * var(--scale))); margin: calc(30px * var(--scale)) auto 0; display:block;">
             <h3 id="triviaScore"></h3>
         `;
 
@@ -435,9 +622,12 @@ function renderPage(page) {
         });
 
     } else if (page === "Cowboy Roundup Game") {
+
+        content.classList.remove("transparent");
+
         // Generate the HTML for the game page
         content.innerHTML = `
-            <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:250px; margin: -80px auto 20px;">
+            <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:min(30%, calc(120px * var(--scale))); margin: 0 auto calc(12px * var(--scale)); display:block;">
             <div id="gameArea">
                 <h2 data-lang-key="game.heading">${translations.game.heading}</h2>
                 <div id="gameStats">
@@ -453,11 +643,14 @@ function renderPage(page) {
         startRoundupGame();
 
     } else if (page === "Settings") {
+
+        content.classList.remove("transparent");
+
         const savedDisplaySize = localStorage.getItem("displaySize") || "website";
         const savedLanguage = localStorage.getItem("language") || "en";
         // Generate the HTML for the settings page
         content.innerHTML = `
-            <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:350px; margin: 40px auto;">
+            <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:min(50%, calc(200px * var(--scale))); margin: 0 auto calc(20px * var(--scale)); display:block;">
             <h2 data-lang-key="settings.heading">${translations.settings.heading}</h2>
 
             <div class="question">
@@ -488,11 +681,11 @@ function renderPage(page) {
                 </label>
             </div>
 
-            <button id="saveSettings" style="padding:12px 30px; font-size:18px; background:#8b5a2b; color:white; border:none; border-radius:8px; cursor:pointer;" data-lang-key="settings.save">
+            <button id="saveSettings" style="padding:calc(12px * var(--scale)) calc(30px * var(--scale)); font-size:calc(18px * var(--scale)); background:#8b5a2b; color:white; border:none; border-radius:calc(8px * var(--scale)); cursor:pointer;" data-lang-key="settings.save">
                 ${translations.settings.save}
             </button>
 
-            <h3 id="settingsSaved" style="margin-top:20px;color:#5a3b1d;"></h3>
+            <h3 id="settingsSaved" style="margin-top:calc(20px * var(--scale));color:#5a3b1d;"></h3>
         `;
 
         // Add event listener for language change
@@ -511,6 +704,8 @@ function renderPage(page) {
             document.querySelector('input[name="language"]:checked').value;
 
             // Persist settings to localStorage
+            // (Note: whatever the user picks here, the background video is
+            // never tied to this setting - it keeps playing regardless.)
             localStorage.setItem("displaySize", display);
 
             // Display a confirmation message with the selected settings
@@ -521,6 +716,7 @@ function renderPage(page) {
         });
 
     } else {
+        content.classList.remove("transparent");
         // Fallback for any pages that haven't been implemented yet
         content.innerHTML = `<h2>${page}</h2><br>${translations.common.underConstruction}`;
     }
@@ -673,5 +869,32 @@ async function initializeApp() {
 initializeApp();
 </script>
 
+<script>
+// --- STAGE SCALING (device preview) ---
+// Shrinks/grows the fixed --device-width x --device-height stage to fit
+// whatever browser window it's actually running in, preserving the true
+// aspect ratio - so you always see the exact composition, just scaled,
+// rather than a cropped slice of it. On the real device (where the browser
+// window IS the device's screen) this resolves to a scale of ~1.
+const stageEl = document.getElementById("stage");
+
+function fitStage(){
+    const rootStyles = getComputedStyle(document.documentElement);
+    const deviceWidth = parseFloat(rootStyles.getPropertyValue("--device-width"));
+    const deviceHeight = parseFloat(rootStyles.getPropertyValue("--device-height"));
+
+    const scale = Math.min(
+        window.innerWidth / deviceWidth,
+        window.innerHeight / deviceHeight
+    );
+
+    stageEl.style.transform = `translate(-50%, -50%) scale(${scale})`;
+}
+
+window.addEventListener("resize", fitStage);
+fitStage();
+</script>
+
 </body>
 </html>
+

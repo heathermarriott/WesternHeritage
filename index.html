@@ -66,7 +66,7 @@ body.menu-open #hatButton:hover{
     left:-280px;
     top: 20%;
     width:280px;
-    height:40%;
+    height:60%;
     background:#6b4423;
     color:white;
     transition:.35s;
@@ -167,24 +167,21 @@ main{
     font-size:28px;
 }
 
-#gameArea{
 /* The container for the Cowboy Roundup game */
+#gameArea{
+    position:relative;
 
-position:relative;
+    width:min(95vw,520px);
+    aspect-ratio:9 / 16;
 
-width:1000px;
-height:700px;
+    margin:10px auto;
 
-margin:auto;
+    background:#d8c39a;
 
-background:#d8c39a;
+    border:4px solid #6b4423;
+    border-radius:16px;
 
-border:4px solid #6b4423;
-
-border-radius:12px;
-
-overflow:hidden;
-
+    overflow:hidden;
 }
 
 /* Displays time and score during the game */

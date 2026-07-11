@@ -6,13 +6,15 @@
 <title>Prescott Western Heritage Center</title>
 
 <style>
+/* General reset to ensure consistent styling across browsers */
 *{
-    margin:0;
+    margin:0px;
     padding:0;
     box-sizing:border-box;
     font-family:Arial, Helvetica, sans-serif;
 }
 
+/* Basic body styles */
 body{
     background:#efe6d3;
     overflow-x:hidden;
@@ -33,6 +35,7 @@ body{
     padding:0;
 }
 
+/* When the menu is open, move the hat button to the right to align with the menu edge */
 body.menu-open #hatButton{
     left:228px;
     transform:rotate(18deg);
@@ -40,6 +43,7 @@ body.menu-open #hatButton{
     cursor:default;
 }
 
+/* Ensure the image inside the button scales correctly */
 #hatButton img{
     width:100%;
     height:100%;
@@ -50,10 +54,12 @@ body.menu-open #hatButton{
     transform:scale(1.1);
 }
 
+/* Keep the hover effect consistent when the menu is open */
 body.menu-open #hatButton:hover{
     transform:rotate(18deg) scale(1.1);
 }
-/* Menu */
+
+/* Off-screen navigation menu styling */
 #menu{
     position:fixed;
     top:0;
@@ -68,10 +74,12 @@ body.menu-open #hatButton:hover{
     z-index:1000;
 }
 
+/* Class added by JavaScript to slide the menu into view */
 #menu.open{
     left:0;
 }
 
+/* Style for the menu's close button */
 #closeBtn{
     float:right;
     margin:15px;
@@ -82,11 +90,13 @@ body.menu-open #hatButton:hover{
     cursor:pointer;
 }
 
+/* Menu header styling */
 #menu h2{
     padding:60px 25px 20px;
     border-bottom:1px solid rgba(255,255,255,.3);
 }
 
+/* Menu list styling */
 #menu ul{
     list-style:none;
     margin-top:20px;
@@ -96,6 +106,7 @@ body.menu-open #hatButton:hover{
     border-bottom:1px solid rgba(255,255,255,.15);
 }
 
+/* Menu link styling */
 #menu a{
     display:block;
     padding:18px 25px;
@@ -105,28 +116,26 @@ body.menu-open #hatButton:hover{
     transition:.25s;
 }
 
+/* Hover effect for menu links */
 #menu a:hover{
     background:#8b5a2b;
     padding-left:35px;
 }
 
+/* Main content area styling */
 main{
     padding:120px 40px;
     text-align:center;
 }
-#centerImage{
-    display:block;
-    margin:40px auto;
-    max-width:350px;
-    width:80%;
-    height:auto;
-}
+
+/* The div where all dynamic content is loaded */
 #content{
     margin-top:10px;
     font-size:22px;
     color:#5a3b1d;
 }
 
+/* Styling for individual trivia questions */
 .question{
     text-align:left;
     max-width:700px;
@@ -136,6 +145,7 @@ main{
     border-radius:8px;
 }
 
+/* Styling for the "Submit Quiz" button */
 #gradeQuiz{
     padding:12px 30px;
     font-size:18px;
@@ -150,6 +160,7 @@ main{
     background:#a66a35;
 }
 
+/* Styling for the trivia score display */
 #score{
     margin-top:25px;
     color:#5a3b1d;
@@ -157,11 +168,12 @@ main{
 }
 
 #gameArea{
+/* The container for the Cowboy Roundup game */
 
 position:relative;
 
-width:800px;
-height:550px;
+width:1000px;
+height:700px;
 
 margin:auto;
 
@@ -175,6 +187,7 @@ overflow:hidden;
 
 }
 
+/* Displays time and score during the game */
 #gameStats{
 
 font-size:24px;
@@ -185,6 +198,7 @@ font-weight:bold;
 
 }
 
+/* The clickable horse image */
 #horse{
 
 position:absolute;
@@ -203,6 +217,7 @@ transform:scale(1.08);
 
 }
 
+/* Container for the "Game Over" message */
 #gameOver{
 
 position:absolute;
@@ -216,6 +231,7 @@ text-align:center;
 
 }
 
+/* "Play Again" button styling */
 #playAgain{
 
 margin-top:20px;
@@ -246,13 +262,14 @@ cursor:pointer;
 
 <nav id="menu">
 
+    <!-- Button to close the navigation menu -->
     <button id="closeBtn">✕</button>
 
     <h2>Menu</h2>
 
     <ul>
         <li><a href="#" data-page="Select Avatar">Select Avatar</a></li>
-         <li><a href="#" data-page="Ask a Question">Ask a Question</a></li>
+        <li><a href="#" data-page="Ask a Question">Ask a Question</a></li>
         <li><a href="#" data-page="Prescott Trivia">Prescott Trivia</a></li>
         <li><a href="#" data-page="Cowboy Roundup Game">Cowboy Roundup Game</a></li>
         <li><a href="#" data-page="Settings">Settings</a></li>
@@ -262,31 +279,70 @@ cursor:pointer;
 
 <main>
 
-<!-- <h1>Welcome to Western Heritage Museum</h1> -->
-
+<!-- The initial content of the page, which is the avatar selection screen -->
 <div id="content">
-Click the cowboy hat to open the navigation menu.
+    <img src="teddy.png" id="centerImage" alt="Avatar" style="max-width:350px; margin: 40px auto;">
+    <h2>Select Your Avatar</h2>
+
+    <button class="avatarBtn" data-img="teddy.png">
+        Theodore Roosevelt
+    </button>
+
+    <button class="avatarBtn" data-img="annie.png">
+        Annie Oakley
+    </button>
+
+    <button class="avatarBtn" data-img="wyatt.png">
+        Wyatt Earp
+    </button>
 </div>
- <img src="teddy.png" id="centerImage" alt="Teddy"> 
 
 </main>
 
 <script>
+// Get references to the main interactive elements on the page
 const hatButton = document.getElementById("hatButton");
 const menu = document.getElementById("menu");
 const closeBtn = document.getElementById("closeBtn");
 const content = document.getElementById("content");
 
+// Variable to store the path of the currently selected avatar image
+let currentAvatar = "teddy.png";
+
+// Event listener to open the menu when the hat button is clicked
 hatButton.addEventListener("click", () => {
     menu.classList.add("open");
     document.body.classList.add("menu-open");
 });
 
+// Event listener to close the menu when the close button is clicked
 closeBtn.addEventListener("click", () => {
     menu.classList.remove("open");
     document.body.classList.remove("menu-open");
 });
 
+// A reusable function to attach click listeners to the avatar selection buttons
+function attachAvatarButtonListeners(){
+    document.querySelectorAll(".avatarBtn").forEach(btn => {
+        btn.addEventListener("click", function(){
+            // Update the current avatar
+            currentAvatar = this.dataset.img;
+
+            // Replace the buttons with a confirmation message
+            content.innerHTML = `
+                <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:350px; margin: 40px auto;">
+                <h2>Avatar Selected!</h2>
+                <p>Your adventure is ready to begin. Touch the hat to get started!</p>
+            `;
+        });
+    });
+}
+
+// Attach listeners to the avatar buttons that are present on the page when it first loads
+attachAvatarButtonListeners();
+
+
+// Add a click listener to every link in the navigation menu
 document.querySelectorAll("#menu a").forEach(item => {
 
     item.addEventListener("click", function(e){
@@ -294,13 +350,20 @@ document.querySelectorAll("#menu a").forEach(item => {
         e.preventDefault();
 
         const page = this.dataset.page;
-
+        
+        // Close the menu after a selection is made
         menu.classList.remove("open");
         document.body.classList.remove("menu-open");
 
-if(page === "Select Avatar"){
+        const mainDoc = document.querySelector("main");
 
+// --- DYNAMIC PAGE LOADING ---
+// Based on the 'data-page' attribute of the clicked link, generate the appropriate HTML.
+
+if(page === "Select Avatar"){
+    // Generate the HTML for the avatar selection page
     content.innerHTML = `
+        <img src="teddy.png" id="centerImage" alt="Avatar" style="max-width:350px; margin: 40px auto;">
         <h2>Select Your Avatar</h2>
 
         <button class="avatarBtn" data-img="teddy.png">
@@ -316,26 +379,12 @@ if(page === "Select Avatar"){
         </button>
     `;
 
-    document.querySelectorAll(".avatarBtn").forEach(btn => {
-
-    btn.addEventListener("click", function(){
-
-        // Change the avatar image
-        document.getElementById("centerImage").src = this.dataset.img;
-
-        // Replace the buttons with a confirmation message
-        content.innerHTML = `
-            <h2>Avatar Selected!</h2>
-            <p>Your adventure is ready to begin.</p>
-        `;
-
-    });
-
-});
+    // Re-attach the listeners to the newly created buttons
+    attachAvatarButtonListeners();
 
 }
 else if(page === "Prescott Trivia"){
-
+    // Generate the HTML for the trivia page
     content.innerHTML = `
 
     <h2>🤠 Prescott Trivia Challenge</h2>
@@ -391,12 +440,15 @@ else if(page === "Prescott Trivia"){
     <button type="button" id="gradeQuiz">
         Submit Quiz
     </button>
-
+    
     </form>
+
+    <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:300px; margin: 40px auto;">
 
     <h3 id="score"></h3>
     `;
 
+    // Add a click listener to the "Submit Quiz" button
     document.getElementById("gradeQuiz").addEventListener("click", function(){
 
         const answers = {
@@ -409,6 +461,7 @@ else if(page === "Prescott Trivia"){
 
         let score = 0;
 
+        // Loop through the correct answers and check the user's selections
         for(const question in answers){
 
             const selected = document.querySelector(
@@ -421,6 +474,7 @@ else if(page === "Prescott Trivia"){
 
         }
 
+        // Display the final score
         document.getElementById("score").innerHTML =
             `🏆 You scored <strong>${score}</strong> out of 5!`;
 
@@ -428,8 +482,10 @@ else if(page === "Prescott Trivia"){
 
 }
 else if(page === "Cowboy Roundup Game"){
-
+// Generate the HTML for the game page
 content.innerHTML = `
+
+<img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:250px; margin: -80px auto 20px;">
 
 <div id="gameArea">
 
@@ -449,12 +505,15 @@ Horses Collected:
 
 `;
 
+// Call the function to start the game logic
 startRoundupGame();
 
 }
 else if(page === "Settings"){
 
+    // Generate the HTML for the settings page
     content.innerHTML = `
+    <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:350px; margin: 40px auto;">
 
     <h2>⚙️ Settings</h2>
 
@@ -513,6 +572,7 @@ else if(page === "Settings"){
 
     `;
 
+    // Add a click listener to the "Save Settings" button
     document.getElementById("saveSettings").addEventListener("click", function(){
 
         const display =
@@ -521,6 +581,7 @@ else if(page === "Settings"){
         const language =
             document.querySelector('input[name="language"]:checked').value;
 
+        // Display a confirmation message with the selected settings
         document.getElementById("settingsSaved").innerHTML =
             `✔ Settings saved!<br><br>
              <strong>Display:</strong> ${display === "proto" ? "Website" : "Proto Luma"}<br>
@@ -531,7 +592,7 @@ else if(page === "Settings"){
 }
 
 else{
-
+    // Fallback for any pages that haven't been implemented yet
     content.innerHTML =
     "<h2>" + page + "</h2><br>This section is under construction.";
 
@@ -544,8 +605,11 @@ menu.classList.remove("open");
     });
 
 });
+
+// --- COWBOY ROUNDUP GAME LOGIC ---
 function startRoundupGame(){
 
+// Initialize game variables
 let score = 0;
 let timeLeft = 30;
 
@@ -555,14 +619,15 @@ const timerLabel = document.getElementById("time");
 const gameOver = document.getElementById("gameOver");
 const gameArea = document.getElementById("gameArea");
 
-// Reset the game display
+// Reset the game display for a new game or replay
 gameOver.innerHTML = "";
 scoreLabel.innerHTML = "0";
 timerLabel.innerHTML = "30";
 
-
+// Make sure the horse is visible at the start
 horse.style.display = "block";
 
+// Function to move the horse to a random position within the game area
 function moveHorse(){
 
     const x = Math.random() * (gameArea.clientWidth-120);
@@ -573,6 +638,7 @@ function moveHorse(){
 
 }
 
+// Move the horse to its first position
 moveHorse();
 
 horse.onclick=function(){
@@ -581,12 +647,15 @@ horse.onclick=function(){
 
     scoreLabel.innerHTML=score;
 
+    // Move the horse immediately after it's clicked
     moveHorse();
 
 };
 
-const moveTimer=setInterval(moveHorse,2000);
+// A timer to automatically move the horse every 2 seconds if it's not clicked
+const moveTimer = setInterval(moveHorse, 2000);
 
+// The main game countdown timer, runs every second
 const countdown=setInterval(function(){
 
     timeLeft--;
@@ -595,9 +664,11 @@ const countdown=setInterval(function(){
 
     if(timeLeft<=0){
 
+        // Stop the timers when time runs out
         clearInterval(moveTimer);
         clearInterval(countdown);
 
+        // Hide the horse and show the game over message
         horse.style.display="none";
 
         gameOver.innerHTML=`
@@ -609,6 +680,7 @@ const countdown=setInterval(function(){
         </button>
         `;
 
+        // Add a listener to the "Play Again" button
         document.getElementById("playAgain").addEventListener("click", function(){
 
     // Remove the game over message and button

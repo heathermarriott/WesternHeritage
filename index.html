@@ -268,11 +268,11 @@ cursor:pointer;
     <h2>Menu</h2>
 
     <ul>
-        <li><a href="#" data-page="Select Avatar">Select Avatar</a></li>
-        <li><a href="#" data-page="Ask a Question">Ask a Question</a></li>
-        <li><a href="#" data-page="Prescott Trivia">Prescott Trivia</a></li>
-        <li><a href="#" data-page="Cowboy Roundup Game">Cowboy Roundup Game</a></li>
-        <li><a href="#" data-page="Settings">Settings</a></li>
+        <li><a href="#" data-page="Select Avatar" data-lang-key="menu.selectAvatar">Select Avatar</a></li>
+        <li><a href="#" data-page="Ask a Question" data-lang-key="menu.askQuestion">Ask a Question</a></li>
+        <li><a href="#" data-page="Prescott Trivia" data-lang-key="menu.prescottTrivia">Prescott Trivia</a></li>
+        <li><a href="#" data-page="Cowboy Roundup Game" data-lang-key="menu.cowboyRoundupGame">Cowboy Roundup Game</a></li>
+        <li><a href="#" data-page="Settings" data-lang-key="menu.settings">Settings</a></li>
     </ul>
 
 </nav>
@@ -280,22 +280,7 @@ cursor:pointer;
 <main>
 
 <!-- The initial content of the page, which is the avatar selection screen -->
-<div id="content">
-    <img src="teddy.png" id="centerImage" alt="Avatar" style="max-width:350px; margin: 40px auto;">
-    <h2>Select Your Avatar</h2>
-
-    <button class="avatarBtn" data-img="teddy.png">
-        Theodore Roosevelt
-    </button>
-
-    <button class="avatarBtn" data-img="annie.png">
-        Annie Oakley
-    </button>
-
-    <button class="avatarBtn" data-img="wyatt.png">
-        Wyatt Earp
-    </button>
-</div>
+<div id="content"></div>
 
 </main>
 
@@ -306,8 +291,13 @@ const menu = document.getElementById("menu");
 const closeBtn = document.getElementById("closeBtn");
 const content = document.getElementById("content");
 
-// Variable to store the path of the currently selected avatar image
+// --- STATE VARIABLES ---
 let currentAvatar = "teddy.png";
+let currentPage = "Select Avatar"; // Track the current page for language switching
+let translations = {}; // To store the loaded language JSON
+
+
+// --- MENU CONTROLS ---
 
 // Event listener to open the menu when the hat button is clicked
 hatButton.addEventListener("click", () => {
@@ -321,6 +311,8 @@ closeBtn.addEventListener("click", () => {
     document.body.classList.remove("menu-open");
 });
 
+// --- PAGE AND CONTENT LOGIC ---
+
 // A reusable function to attach click listeners to the avatar selection buttons
 function attachAvatarButtonListeners(){
     document.querySelectorAll(".avatarBtn").forEach(btn => {
@@ -331,126 +323,96 @@ function attachAvatarButtonListeners(){
             // Replace the buttons with a confirmation message
             content.innerHTML = `
                 <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:350px; margin: 40px auto;">
-                <h2>Avatar Selected!</h2>
-                <p>Your adventure is ready to begin. Touch the hat to get started!</p>
+                <h2 data-lang-key="avatar.selectedHeading">${translations.avatar.selectedHeading}</h2>
+                <p data-lang-key="avatar.selectedMessage">${translations.avatar.selectedMessage.replace("Touch the hat to get started", "<br>Touch the hat to get started")}</p>
             `;
         });
     });
 }
 
-// Attach listeners to the avatar buttons that are present on the page when it first loads
-attachAvatarButtonListeners();
-
-
-// Add a click listener to every link in the navigation menu
-document.querySelectorAll("#menu a").forEach(item => {
-
-    item.addEventListener("click", function(e){
-
-        e.preventDefault();
-
-        const page = this.dataset.page;
-        
-        // Close the menu after a selection is made
-        menu.classList.remove("open");
-        document.body.classList.remove("menu-open");
-
-        const mainDoc = document.querySelector("main");
-
 // --- DYNAMIC PAGE LOADING ---
 // Based on the 'data-page' attribute of the clicked link, generate the appropriate HTML.
+function renderPage(page) {
+    currentPage = page; // Update the current page tracker
 
-if(page === "Select Avatar"){
-    // Generate the HTML for the avatar selection page
-    content.innerHTML = `
-        <img src="teddy.png" id="centerImage" alt="Avatar" style="max-width:350px; margin: 40px auto;">
-        <h2>Select Your Avatar</h2>
+    if (page === "Select Avatar") {
+        // Generate the HTML for the avatar selection page
+        content.innerHTML = `
+            <img src="teddy.png" id="centerImage" alt="Avatar" style="max-width:350px; margin: 40px auto;">
+            <h2 data-lang-key="avatar.heading">${translations.avatar.heading}</h2>
 
-        <button class="avatarBtn" data-img="teddy.png">
-            Theodore Roosevelt
-        </button>
+            <button class="avatarBtn" data-img="teddy.png" data-lang-key="avatar.theodoreRoosevelt">
+                ${translations.avatar.theodoreRoosevelt}
+            </button>
 
-        <button class="avatarBtn" data-img="annie.png">
-            Annie Oakley
-        </button>
+            <button class="avatarBtn" data-img="annie.png" data-lang-key="avatar.annieOakley">
+                ${translations.avatar.annieOakley}
+            </button>
 
-        <button class="avatarBtn" data-img="wyatt.png">
-            Wyatt Earp
-        </button>
-    `;
+            <button class="avatarBtn" data-img="wyatt.png" data-lang-key="avatar.wyattEarp">
+                ${translations.avatar.wyattEarp}
+            </button>
+        `;
 
-    // Re-attach the listeners to the newly created buttons
-    attachAvatarButtonListeners();
+        // Re-attach the listeners to the newly created buttons
+        attachAvatarButtonListeners();
 
-}
-else if(page === "Prescott Trivia"){
-    // Generate the HTML for the trivia page
-    content.innerHTML = `
+    } else if (page === "Prescott Trivia") {
+        // Generate the HTML for the trivia page
+        content.innerHTML = `
+            <h2 data-lang-key="trivia.heading">${translations.trivia.heading}</h2>
+            <p data-lang-key="trivia.intro">${translations.trivia.intro}</p>
 
-    <h2>🤠 Prescott Trivia Challenge</h2>
-    <p>Answer all five questions and see how well you know Prescott!</p>
+            <form id="triviaForm">
+                <div class="question">
+                    <p><strong>1. ${translations.trivia.q1}</strong></p>
+                    <label><input type="radio" name="q1" value="a"> ${translations.trivia.q1True}</label><br>
+                    <label><input type="radio" name="q1" value="b"> ${translations.trivia.q1False}</label>
+                </div>
 
-    <form id="triviaForm">
+                <div class="question">
+                    <p><strong>2. ${translations.trivia.q2}</strong></p>
+                    <label><input type="radio" name="q2" value="a"> ${translations.trivia.q2A}</label><br>
+                    <label><input type="radio" name="q2" value="b"> ${translations.trivia.q2B}</label><br>
+                    <label><input type="radio" name="q2" value="c"> ${translations.trivia.q2C}</label><br>
+                    <label><input type="radio" name="q2" value="d"> ${translations.trivia.q2D}</label>
+                </div>
 
-    <div class="question">
-    <p><strong>1. Prescott was the first territorial capital of Arizona.</strong></p>
+                <div class="question">
+                    <p><strong>3. ${translations.trivia.q3}</strong></p>
+                    <label><input type="radio" name="q3" value="a"> ${translations.trivia.q3A}</label><br>
+                    <label><input type="radio" name="q3" value="b"> ${translations.trivia.q3B}</label><br>
+                    <label><input type="radio" name="q3" value="c"> ${translations.trivia.q3C}</label><br>
+                    <label><input type="radio" name="q3" value="d"> ${translations.trivia.q3D}</label>
+                </div>
 
-    <label><input type="radio" name="q1" value="a"> True</label><br>
-    <label><input type="radio" name="q1" value="b"> False</label>
-    </div>
+                <div class="question">
+                    <p><strong>4. ${translations.trivia.q4}</strong></p>
+                    <label><input type="radio" name="q4" value="a"> ${translations.trivia.q4A}</label><br>
+                    <label><input type="radio" name="q4" value="b"> ${translations.trivia.q4B}</label><br>
+                    <label><input type="radio" name="q4" value="c"> ${translations.trivia.q4C}</label><br>
+                    <label><input type="radio" name="q4" value="d"> ${translations.trivia.q4D}</label>
+                </div>
 
-    <div class="question">
-    <p><strong>2. What famous street is known for its historic saloons?</strong></p>
+                <div class="question">
+                    <p><strong>5. ${translations.trivia.q5}</strong></p>
+                    <label><input type="radio" name="q5" value="a"> ${translations.trivia.q5A}</label><br>
+                    <label><input type="radio" name="q5" value="b"> ${translations.trivia.q5B}</label><br>
+                    <label><input type="radio" name="q5" value="c"> ${translations.trivia.q5C}</label><br>
+                    <label><input type="radio" name="q5" value="d"> ${translations.trivia.q5D}</label>
+                </div>
+                <br>
+                <button type="button" id="gradeQuiz" data-lang-key="trivia.submit">
+                    ${translations.trivia.submit}
+                </button>
+            </form>
 
-    <label><input type="radio" name="q2" value="a"> Whiskey Row</label><br>
-    <label><input type="radio" name="q2" value="b"> Main Street</label><br>
-    <label><input type="radio" name="q2" value="c"> Frontier Road</label><br>
-    <label><input type="radio" name="q2" value="d"> Gold Street</label>
-    </div>
+            <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:300px; margin: 40px auto;">
+            <h3 id="triviaScore"></h3>
+        `;
 
-    <div class="question">
-    <p><strong>3. Which large lake is located just a few miles from downtown Prescott?</strong></p>
-
-    <label><input type="radio" name="q3" value="a"> Lake Pleasant</label><br>
-    <label><input type="radio" name="q3" value="b"> Watson Lake</label><br>
-    <label><input type="radio" name="q3" value="c"> Roosevelt Lake</label><br>
-    <label><input type="radio" name="q3" value="d"> Saguaro Lake</label>
-    </div>
-
-    <div class="question">
-    <p><strong>4. Prescott is surrounded by which national forest?</strong></p>
-
-    <label><input type="radio" name="q4" value="a"> Coconino National Forest</label><br>
-    <label><input type="radio" name="q4" value="b"> Prescott National Forest</label><br>
-    <label><input type="radio" name="q4" value="c"> Kaibab National Forest</label><br>
-    <label><input type="radio" name="q4" value="d"> Apache-Sitgreaves National Forest</label>
-    </div>
-
-    <div class="question">
-    <p><strong>5. Prescott's annual rodeo is known as:</strong></p>
-
-    <label><input type="radio" name="q5" value="a"> Arizona Stampede</label><br>
-    <label><input type="radio" name="q5" value="b"> World's Oldest Rodeo</label><br>
-    <label><input type="radio" name="q5" value="c"> Cowboy Days</label><br>
-    <label><input type="radio" name="q5" value="d"> Frontier Roundup</label>
-    </div>
-
-    <br>
-
-    <button type="button" id="gradeQuiz">
-        Submit Quiz
-    </button>
-    
-    </form>
-
-    <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:300px; margin: 40px auto;">
-
-    <h3 id="score"></h3>
-    `;
-
-    // Add a click listener to the "Submit Quiz" button
-    document.getElementById("gradeQuiz").addEventListener("click", function(){
-
+        // Add a click listener to the "Submit Quiz" button
+        document.getElementById("gradeQuiz").addEventListener("click", function () {
         const answers = {
             q1: "a",
             q2: "a",
@@ -458,12 +420,10 @@ else if(page === "Prescott Trivia"){
             q4: "b",
             q5: "b"
         };
-
         let score = 0;
 
         // Loop through the correct answers and check the user's selections
-        for(const question in answers){
-
+        for (const question in answers) {
             const selected = document.querySelector(
                 `input[name="${question}"]:checked`
             );
@@ -471,140 +431,136 @@ else if(page === "Prescott Trivia"){
             if(selected && selected.value === answers[question]){
                 score++;
             }
-
         }
 
         // Display the final score
-        document.getElementById("score").innerHTML =
-            `🏆 You scored <strong>${score}</strong> out of 5!`;
+        document.getElementById("triviaScore").innerHTML = translations.trivia.scoreResult.replace("{score}", `<strong>${score}</strong>`);
+        });
 
-    });
+    } else if (page === "Cowboy Roundup Game") {
+        // Generate the HTML for the game page
+        content.innerHTML = `
+            <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:250px; margin: -80px auto 20px;">
+            <div id="gameArea">
+                <h2 data-lang-key="game.heading">${translations.game.heading}</h2>
+                <div id="gameStats">
+                    <span data-lang-key="game.time">${translations.game.time}</span> <span id="time">30</span> <span data-lang-key="game.seconds">${translations.game.seconds}</span> |
+                    <span data-lang-key="game.horsesCollected">${translations.game.horsesCollected}</span>
+                    <span id="gameScore">0</span>
+                </div>
+                <img src="horse.png" id="horse">
+                <div id="gameOver"></div>
+            </div>
+        `;
+        // Call the function to start the game logic
+        startRoundupGame();
 
-}
-else if(page === "Cowboy Roundup Game"){
-// Generate the HTML for the game page
-content.innerHTML = `
+    } else if (page === "Settings") {
+        const savedDisplaySize = localStorage.getItem("displaySize") || "website";
+        const savedLanguage = localStorage.getItem("language") || "en";
+        // Generate the HTML for the settings page
+        content.innerHTML = `
+            <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:350px; margin: 40px auto;">
+            <h2 data-lang-key="settings.heading">${translations.settings.heading}</h2>
 
-<img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:250px; margin: -80px auto 20px;">
+            <div class="question">
+                <h3 data-lang-key="settings.displaySizeHeading">${translations.settings.displaySizeHeading}</h3>
+                <p data-lang-key="settings.displaySizeIntro">${translations.settings.displaySizeIntro}</p>
+                <label>
+                    <input type="radio" name="displaySize" value="website" ${savedDisplaySize === 'website' ? 'checked' : ''}>
+                    <span data-lang-key="settings.website">${translations.settings.website}</span>
+                </label>
+                <br><br>
+                <label>
+                    <input type="radio" name="displaySize" value="proto" ${savedDisplaySize === 'proto' ? 'checked' : ''}>
+                    <span data-lang-key="settings.protoLuma">${translations.settings.protoLuma}</span>
+                </label>
+            </div>
 
-<div id="gameArea">
+            <div class="question">
+                <h3 data-lang-key="settings.languageHeading">${translations.settings.languageHeading}</h3>
+                <p data-lang-key="settings.languageIntro">${translations.settings.languageIntro}</p>
+                <label>
+                    <input type="radio" name="language" value="en" ${savedLanguage === 'en' ? 'checked' : ''}>
+                    <span data-lang-key="settings.english">${translations.settings.english}</span>
+                </label>
+                <br><br>
+                <label>
+                    <input type="radio" name="language" value="es" ${savedLanguage === 'es' ? 'checked' : ''}>
+                    <span data-lang-key="settings.spanish">${translations.settings.spanish}</span>
+                </label>
+            </div>
 
-<h2>🐎 Cowboy Roundup - click on the horse</h2>
+            <button id="saveSettings" style="padding:12px 30px; font-size:18px; background:#8b5a2b; color:white; border:none; border-radius:8px; cursor:pointer;" data-lang-key="settings.save">
+                ${translations.settings.save}
+            </button>
 
-<div id="gameStats">
-Time: <span id="time">30</span> sec |
-Horses Collected:
-<span id="score">0</span>
-</div>
+            <h3 id="settingsSaved" style="margin-top:20px;color:#5a3b1d;"></h3>
+        `;
 
-<img src="horse.png" id="horse">
+        // Add event listener for language change
+        document.querySelectorAll('input[name="language"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                loadLanguage(this.value);
+            });
+        });
 
-<div id="gameOver"></div>
-
-</div>
-
-`;
-
-// Call the function to start the game logic
-startRoundupGame();
-
-}
-else if(page === "Settings"){
-
-    // Generate the HTML for the settings page
-    content.innerHTML = `
-    <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:350px; margin: 40px auto;">
-
-    <h2>⚙️ Settings</h2>
-
-    <div class="question">
-
-        <h3>Display Size</h3>
-        <p>Select how the application should be displayed.</p>
-
-        
-        
-
-        <label>
-            <input type="radio" name="displaySize" value="website" checked>
-            Website
-        </label>
-    <br><br>
-
-        <label>
-            <input type="radio" name="displaySize" value="proto" >
-            Proto Luma
-        </label>
-
-    </div>
-
-    <div class="question">
-
-        <h3>Language</h3>
-        <p>Select your preferred language.</p>
-
-        <label>
-            <input type="radio" name="language" value="english" checked>
-            English
-        </label>
-        <br><br>
-
-        <label>
-            <input type="radio" name="language" value="spanish">
-            Spanish
-        </label>
-
-    </div>
-
-    <button id="saveSettings" style="
-        padding:12px 30px;
-        font-size:18px;
-        background:#8b5a2b;
-        color:white;
-        border:none;
-        border-radius:8px;
-        cursor:pointer;
-    ">
-        Save Settings
-    </button>
-
-    <h3 id="settingsSaved" style="margin-top:20px;color:#5a3b1d;"></h3>
-
-    `;
-
-    // Add a click listener to the "Save Settings" button
-    document.getElementById("saveSettings").addEventListener("click", function(){
-
+        // Add a click listener to the "Save Settings" button
+        document.getElementById("saveSettings").addEventListener("click", function () {
         const display =
             document.querySelector('input[name="displaySize"]:checked').value;
 
         const language =
             document.querySelector('input[name="language"]:checked').value;
 
-        // Display a confirmation message with the selected settings
-        document.getElementById("settingsSaved").innerHTML =
-            `✔ Settings saved!<br><br>
-             <strong>Display:</strong> ${display === "proto" ? "Website" : "Proto Luma"}<br>
-             <strong>Language:</strong> ${language === "english" ? "English" : "Spanish"}`;
+            // Persist settings to localStorage
+            localStorage.setItem("displaySize", display);
 
-    });
+            // Display a confirmation message with the selected settings
+            document.getElementById("settingsSaved").innerHTML =
+                `${translations.settings.saved}<br><br>
+                 <strong>${translations.settings.displayLabel}</strong> ${display === "proto" ? translations.settings.protoLuma : translations.settings.website}<br>
+                 <strong>${translations.settings.languageLabel}</strong> ${language === "en" ? translations.settings.english : translations.settings.spanish}`;
+        });
 
+    } else {
+        // Fallback for any pages that haven't been implemented yet
+        content.innerHTML = `<h2>${page}</h2><br>${translations.common.underConstruction}`;
+    }
 }
 
-else{
-    // Fallback for any pages that haven't been implemented yet
-    content.innerHTML =
-    "<h2>" + page + "</h2><br>This section is under construction.";
+// --- LANGUAGE AND TRANSLATION ---
 
+async function loadLanguage(language) {
+    try {
+        const response = await fetch(`${language}.json`);
+        translations = await response.json();
+        localStorage.setItem("language", language);
+        applyTranslations();
+    } catch (error) {
+        console.error("Error loading language file:", error);
+    }
 }
 
-menu.classList.remove("open");
-
-        menu.classList.remove("open");
-
+function applyTranslations() {
+    document.documentElement.lang = localStorage.getItem("language") || "en";
+    
+    // Update all elements with a data-lang-key attribute
+    document.querySelectorAll('[data-lang-key]').forEach(element => {
+        const key = element.getAttribute('data-lang-key');
+        const keys = key.split('.');
+        let text = translations;
+        for (const k of keys) {
+            text = text[k];
+        }
+        if (text) {
+            element.textContent = text;
+        }
     });
 
-});
+    // Re-render the current page with the new translations
+    renderPage(currentPage);
+}
 
 // --- COWBOY ROUNDUP GAME LOGIC ---
 function startRoundupGame(){
@@ -614,7 +570,7 @@ let score = 0;
 let timeLeft = 30;
 
 const horse = document.getElementById("horse");
-const scoreLabel = document.getElementById("score");
+const scoreLabel = document.getElementById("gameScore");
 const timerLabel = document.getElementById("time");
 const gameOver = document.getElementById("gameOver");
 const gameArea = document.getElementById("gameArea");
@@ -672,11 +628,11 @@ const countdown=setInterval(function(){
         horse.style.display="none";
 
         gameOver.innerHTML=`
-        <h2>Time's Up!</h2>
-        <h3>You rounded up ${score} horses!</h3>
+        <h2 data-lang-key="game.timeUp">${translations.game.timeUp}</h2>
+        <h3 data-lang-key="game.roundedUp">${translations.game.roundedUp.replace('{score}', score)}</h3>
 
         <button id="playAgain">
-            Play Again
+            ${translations.game.playAgain}
         </button>
         `;
 
@@ -696,6 +652,28 @@ const countdown=setInterval(function(){
 },1000);
 
 }
+</script>
+<script>
+// --- INITIALIZATION ---
+
+// Add a click listener to every link in the navigation menu
+document.querySelectorAll("#menu a").forEach(item => {
+    item.addEventListener("click", function(e){
+        e.preventDefault();
+        const page = this.dataset.page;
+        renderPage(page);
+        menu.classList.remove("open");
+        document.body.classList.remove("menu-open");
+    });
+});
+
+// Load the saved language (or default to English) and render the initial page
+async function initializeApp() {
+    const savedLanguage = localStorage.getItem("language") || "en";
+    await loadLanguage(savedLanguage);
+}
+
+initializeApp();
 </script>
 
 </body>

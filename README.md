@@ -12,3 +12,9 @@ ToDo:
 3) ~~full language support for html text as shown in languages.html~~
 4) check with Project Sponsors before proceeding much further with this model
 5) Implement "Ask Questions" webpage with buttons that direct the video that will play based on the list of videos that are available.  Ex. "What are the Rough Riders?", etc.
+
+To test the website:
+python3 -m http.server 8000  
+then access with access with http://localhost:8000/
+
+Proto Luma Website Dimensions: 2160 x 3840   9x16 aspect ratio

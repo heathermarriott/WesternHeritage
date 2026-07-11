@@ -18,3 +18,5 @@ python3 -m http.server 8000
 then access with access with http://localhost:8000/
 
 Proto Luma Website Dimensions: 2160 x 3840   9x16 aspect ratio
+
+ChatGPT generated graphics for: cowboy hat, horse, and 2 placeholder avatars

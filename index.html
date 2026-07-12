@@ -291,7 +291,7 @@ main:has(#content.transparent){
     max-width:min(94%, calc(700px * var(--scale)));
     margin:calc(25px * var(--scale)) auto;
     padding:calc(15px * var(--scale));
-    background:#f8f1df;
+    background:rgba(248,241,223,0.4);
     border-radius:calc(8px * var(--scale));
     font-size:calc(22px * var(--scale));
 }
@@ -378,6 +378,8 @@ main:has(#content.transparent){
     cursor:pointer;
     touch-action:manipulation;
 }
+
+
 </style>
 </head>
 
@@ -391,7 +393,6 @@ main:has(#content.transparent){
     <video
         id="introVideo"
         autoplay
-        muted
         loop
         playsinline
         webkit-playsinline
@@ -450,12 +451,20 @@ document.addEventListener("visibilitychange", () => {
         introVideo.play().catch(() => {});
     }
 });
+function switchVideo(filename) {
+    const source = introVideo.querySelector("source");
+    source.src = filename;
+    introVideo.load();
+    introVideo.play().catch(() => {});
+}
 
 // --- STATE VARIABLES ---
 let currentAvatar = "teddy.png";
 let currentPage = "Select Avatar"; // Track the current page for language switching
 let translations = {}; // To store the loaded language JSON
 
+let askQuestionCollapsed = false;
+let lastAskedLabel = "";
 
 // --- MENU CONTROLS ---
 
@@ -536,8 +545,8 @@ function renderPage(page) {
 </div>
 `;
         attachAvatarButtonListeners();
-
-    } else if (page === "Prescott Trivia") {
+    
+ } else if (page === "Prescott Trivia") {
 
         // Card layout over the video for every other page
         content.classList.remove("transparent");
@@ -654,20 +663,6 @@ function renderPage(page) {
             <h2 data-lang-key="settings.heading">${translations.settings.heading}</h2>
 
             <div class="question">
-                <h3 data-lang-key="settings.displaySizeHeading">${translations.settings.displaySizeHeading}</h3>
-                <p data-lang-key="settings.displaySizeIntro">${translations.settings.displaySizeIntro}</p>
-                <label>
-                    <input type="radio" name="displaySize" value="website" ${savedDisplaySize === 'website' ? 'checked' : ''}>
-                    <span data-lang-key="settings.website">${translations.settings.website}</span>
-                </label>
-                <br><br>
-                <label>
-                    <input type="radio" name="displaySize" value="proto" ${savedDisplaySize === 'proto' ? 'checked' : ''}>
-                    <span data-lang-key="settings.protoLuma">${translations.settings.protoLuma}</span>
-                </label>
-            </div>
-
-            <div class="question">
                 <h3 data-lang-key="settings.languageHeading">${translations.settings.languageHeading}</h3>
                 <p data-lang-key="settings.languageIntro">${translations.settings.languageIntro}</p>
                 <label>
@@ -714,14 +709,41 @@ function renderPage(page) {
                  <strong>${translations.settings.displayLabel}</strong> ${display === "proto" ? translations.settings.protoLuma : translations.settings.website}<br>
                  <strong>${translations.settings.languageLabel}</strong> ${language === "en" ? translations.settings.english : translations.settings.spanish}`;
         });
+ } else if (page === "Ask a Question") {
+
+        content.classList.remove("transparent");
+
+        content.innerHTML = `
+            <h2 data-lang-key="menu.askQuestion">${translations.menu.askQuestion}</h2>
+
+            <div class="question">
+                <button class="avatarBtn" style="width:100%;" data-video="Teddy_BuckyOneill.mp4">
+                    Who was Bucky O'Neill?
+                </button>
+            </div>
+
+            <div class="question">
+                <button class="avatarBtn" style="width:100%;" data-video="Teddy_rodeo.mp4">
+                    When did the Prescott Rodeo start?
+                </button>
+            </div>
+
+            <div class="question">
+                <button class="avatarBtn" style="width:100%;" data-video="TeddyLowRes.mp4">
+                    Who are you?
+                </button>
+            </div>
+        `;
+
+        document.querySelectorAll("#content .avatarBtn").forEach(btn => {
+            btn.addEventListener("click", function () {
+                switchVideo(this.dataset.video);
+            });
+        });
 
     } else {
-        content.classList.remove("transparent");
-        // Fallback for any pages that haven't been implemented yet
-        content.innerHTML = `<h2>${page}</h2><br>${translations.common.underConstruction}`;
-    }
-}
-
+ }
+} /*end renderPage */
 // --- LANGUAGE AND TRANSLATION ---
 
 async function loadLanguage(language) {
@@ -840,7 +862,7 @@ const countdown=setInterval(function(){
 
 });
 
-    }
+}
 
 },1000);
 
@@ -897,4 +919,3 @@ fitStage();
 
 </body>
 </html>
-

@@ -379,6 +379,51 @@ main:has(#content.transparent){
     touch-action:manipulation;
 }
 
+/* "Ask a Question" page specific styles */
+#askQuestionContainer {
+    position: relative;
+    width: 100%;
+}
+
+#askQuestionList {
+    transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    transform: translateX(0);
+    opacity: 1;
+}
+
+#askQuestionList.collapsed {
+    transform: translateX(-120%);
+    opacity: 0;
+    position: absolute; /* Collapse without affecting layout */
+}
+
+#showQuestionsBtn {
+    position: fixed;
+    top: 18%;
+    right: calc(15px * var(--scale));
+    width: calc(70px * var(--scale));
+    height: calc(70px * var(--scale));
+    padding: 0;
+    font-size: calc(40px * var(--scale));
+    font-weight: bold;
+    background: #8b5a2b;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 3px 3px 8px rgba(0,0,0,.3);
+    touch-action: manipulation;
+    z-index: 900;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease-in-out;
+}
+
+#showQuestionsBtn.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
 
 </style>
 </head>
@@ -497,7 +542,7 @@ function attachAvatarButtonListeners(){
             content.innerHTML = `
                 <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:min(60%, calc(220px * var(--scale))); margin: 0 auto calc(20px * var(--scale)); display:block;">
                 <h2 data-lang-key="avatar.selectedHeading">${translations.avatar.selectedHeading}</h2>
-                <p data-lang-key="avatar.selectedMessage">${translations.avatar.selectedMessage.replace("Touch the hat to get started", "<br>Touch the hat to get started")}</p>
+                <p data-lang-key="avatar.selectedMessage">${translations.avatar.selectedMessage}</p>
             `;
         });
     });
@@ -712,33 +757,48 @@ function renderPage(page) {
  } else if (page === "Ask a Question") {
 
         content.classList.remove("transparent");
+        content.classList.add("transparent"); // Ensure video is visible behind questions
 
         content.innerHTML = `
-            <h2 data-lang-key="menu.askQuestion">${translations.menu.askQuestion}</h2>
-
-            <div class="question">
-                <button class="avatarBtn" style="width:100%;" data-video="Teddy_BuckyOneill.mp4">
-                    Who was Bucky O'Neill?
-                </button>
-            </div>
-
-            <div class="question">
-                <button class="avatarBtn" style="width:100%;" data-video="Teddy_rodeo.mp4">
-                    When did the Prescott Rodeo start?
-                </button>
-            </div>
-
-            <div class="question">
-                <button class="avatarBtn" style="width:100%;" data-video="TeddyLowRes.mp4">
-                    Who are you?
-                </button>
+            <div id="askQuestionContainer">
+                <button id="showQuestionsBtn">?</button>
+                <div id="askQuestionList">
+                    <h2 data-lang-key="menu.askQuestion">${translations.menu.askQuestion}</h2>
+                    <div class="question">
+                        <button class="avatarBtn" style="width:100%;" data-video="Teddy_BuckyOneill.mp4">
+                            Who was Bucky O'Neill?
+                        </button>
+                    </div>
+                    <div class="question">
+                        <button class="avatarBtn" style="width:100%;" data-video="Teddy_rodeo.mp4">
+                            When did the Prescott Rodeo start?
+                        </button>
+                    </div>
+                    <div class="question">
+                        <button class="avatarBtn" style="width:100%;" data-video="TeddyLowRes.mp4">
+                            Who are you?
+                        </button>
+                    </div>
+                </div>
             </div>
         `;
 
-        document.querySelectorAll("#content .avatarBtn").forEach(btn => {
+        const questionList = document.getElementById("askQuestionList");
+        const showQuestionsBtn = document.getElementById("showQuestionsBtn");
+
+        document.querySelectorAll("#askQuestionList .avatarBtn").forEach(btn => {
             btn.addEventListener("click", function () {
                 switchVideo(this.dataset.video);
+                askQuestionCollapsed = true; // Update state
+                questionList.classList.add("collapsed");
+                showQuestionsBtn.classList.add("visible");
             });
+        });
+
+        showQuestionsBtn.addEventListener("click", function() {
+            askQuestionCollapsed = false; // Update state
+            questionList.classList.remove("collapsed");
+            showQuestionsBtn.classList.remove("visible");
         });
 
     } else {

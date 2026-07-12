@@ -20,11 +20,6 @@
     "selectedHeading": "Avatar Selected!",
     "selectedMessage": "Your adventure is ready to begin. Click the cowboy hat to open the navigation menu."
   },
-  "askQuestion": {
-    "bucky": "Who was Bucky O'Neill?",
-    "rodeo": "When did the Prescott Rodeo start?",
-    "whoAreYou": "Who are you?"
-  },
   "trivia": {
     "heading": "🤠 Prescott Trivia Challenge",
     "intro": "Answer all five questions and see how well you know Prescott!",

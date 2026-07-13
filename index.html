@@ -426,7 +426,6 @@ main:has(#content.transparent){
 
 
 </style>
-</head>
 
 <body>
 
@@ -739,9 +738,7 @@ function renderPage(page) {
         document.getElementById("saveSettings").addEventListener("click", function () {
         const display =
             document.querySelector('input[name="displaySize"]:checked').value;
-
-        const language =
-            document.querySelector('input[name="language"]:checked').value;
+            const language = document.querySelector('input[name="language"]:checked').value;
 
             // Persist settings to localStorage
             // (Note: whatever the user picks here, the background video is
@@ -765,18 +762,18 @@ function renderPage(page) {
                 <div id="askQuestionList">
                     <h2 data-lang-key="menu.askQuestion">${translations.menu.askQuestion}</h2>
                     <div class="question">
-                        <button class="avatarBtn" style="width:100%;" data-video="Teddy_BuckyOneill.mp4">
-                            Who was Bucky O'Neill?
+                        <button class="avatarBtn" style="width:100%;" data-video="Teddy_BuckyOneill.mp4" data-lang-key="askQuestion.bucky">
+                            ${translations.askQuestion.bucky}
                         </button>
                     </div>
                     <div class="question">
-                        <button class="avatarBtn" style="width:100%;" data-video="Teddy_rodeo.mp4">
-                            When did the Prescott Rodeo start?
+                        <button class="avatarBtn" style="width:100%;" data-video="Teddy_rodeo.mp4" data-lang-key="askQuestion.rodeo">
+                            ${translations.askQuestion.rodeo}
                         </button>
                     </div>
                     <div class="question">
-                        <button class="avatarBtn" style="width:100%;" data-video="TeddyLowRes.mp4">
-                            Who are you?
+                        <button class="avatarBtn" style="width:100%;" data-video="TeddyLowRes.mp4" data-lang-key="askQuestion.whoAreYou">
+                            ${translations.askQuestion.whoAreYou}
                         </button>
                     </div>
                 </div>

@@ -20,6 +20,11 @@
     "selectedHeading": "¡Personaje Seleccionado!",
     "selectedMessage": "Tu aventura está por comenzar."
   },
+  "askQuestion": {
+    "bucky": "¿Quién fue Bucky O'Neill?",
+    "rodeo": "¿Cuándo comenzó el Rodeo de Prescott?",
+    "whoAreYou": "¿Quién eres tú?"
+  },
   "trivia": {
     "heading": "🤠 Desafío de Trivia de Prescott",
     "intro": "¡Responde las cinco preguntas y descubre cuánto sabes sobre Prescott!",

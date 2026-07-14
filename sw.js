@@ -36,9 +36,6 @@ self.addEventListener('fetch', event => {
   // We only want to handle requests for video files
   if (event.request.url.endsWith('.mp4')) {
     event.respondWith(
-      caches.match(event.request)
-        .then(response => {
-          return response || fetch(event.request);
       caches.match(event.request).then(cachedResponse => {
         // If the video is in the cache, return it.
         if (cachedResponse) {
@@ -53,7 +50,6 @@ self.addEventListener('fetch', event => {
             return networkResponse;
           });
         })
-    );
       })
     )
   }

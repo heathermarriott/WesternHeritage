@@ -1,8 +1,8 @@
 const CACHE_NAME = 'western-heritage-video-cache-v1';
 const urlsToCache = [
-  'TeddyLowRes.mp4',
-  'Teddy_BuckyOneill.mp4',
-  'Teddy_rodeo.mp4'
+  'videos/TeddyLowRes.mp4',
+  'videos/Teddy_BuckyOneill.mp4',
+  'videos/Teddy_rodeo.mp4'
 ];
 
 // Install event: cache the video files

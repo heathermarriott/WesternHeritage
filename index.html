@@ -442,7 +442,7 @@ main:has(#content.transparent){
         webkit-playsinline
         preload="auto">
 
-        <source src="TeddyLowRes.mp4" type="video/mp4">
+        <source src="videos/TeddyLowRes.mp4" type="video/mp4">
 
     </video>
 
@@ -766,49 +766,109 @@ function renderPage(page) {
 
 
                 <div id="askQuestionList">
-                    <h2 data-lang-key="menu.askQuestion">${translations.menu.askQuestion}</h2>
-                    <div class="question">
-                        <button class="avatarBtn" style="width:100%;" data-video="Teddy_BuckyOneill.mp4" data-lang-key="askQuestion.bucky">
-                            ${translations.askQuestion.bucky}
-                        </button>
-                    </div>
-                    <div class="question">
-                        <button class="avatarBtn" style="width:100%;" data-video="Teddy_rodeo.mp4" data-lang-key="askQuestion.rodeo">
-                            ${translations.askQuestion.rodeo}
-                        </button>
-                    </div>
-                    <div class="question">
-                        <button class="avatarBtn" style="width:100%;" data-video="TeddyLowRes.mp4" data-lang-key="askQuestion.whoAreYou">
-                            ${translations.askQuestion.whoAreYou}
-                        </button>
-                    </div>
+                    <!-- Questions will be dynamically loaded here -->
                 </div>
             </div>
         `;
 
-        const questionList = document.getElementById("askQuestionList");
-        const showQuestionsBtn = document.getElementById("showQuestionsBtn");
-        const voiceCommandBtn = document.getElementById("voiceCommandBtn");
+        // Asynchronously fetch and render the questions from the new API
+        async function populateQuestions() {
+            const response = await fetch(`/api/questions`);
+            const questions = await response.json();
+            const currentLang = localStorage.getItem("language") || "en";
 
-        document.querySelectorAll("#askQuestionList .avatarBtn").forEach(btn => {
-            btn.addEventListener("click", function () {
-                switchVideo(this.dataset.video);
-                askQuestionCollapsed = true; // Update state
-                questionList.classList.add("collapsed");
-                showQuestionsBtn.classList.add("visible");
+            const questionList = document.getElementById("askQuestionList");
+            const showQuestionsBtn = document.getElementById("showQuestionsBtn");
+            const voiceCommandBtn = document.getElementById("voiceCommandBtn");
+
+            // Clear any existing content and add the header
+            questionList.innerHTML = `<h2 data-lang-key="menu.askQuestion">${translations.menu.askQuestion}</h2>`;
+
+            for (const q of questions) {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.innerHTML = `
+                    <button class="avatarBtn" style="width:100%;" data-video="${q.video}">
+                        ${q[currentLang]}
+                    </button>
+                `;
+                questionList.appendChild(questionDiv);
+            }
+
+            document.querySelectorAll("#askQuestionList .avatarBtn").forEach(btn => {
+                btn.addEventListener("click", function() {
+                    switchVideo(this.dataset.video);
+                    questionList.classList.add("collapsed");
+                    showQuestionsBtn.classList.add("visible");
+                });
             });
-        });
 
-        showQuestionsBtn.addEventListener("click", function() {
-            askQuestionCollapsed = false; // Update state
-            questionList.classList.remove("collapsed");
-            showQuestionsBtn.classList.remove("visible");
-        });
+            showQuestionsBtn.addEventListener("click", () => {
+                questionList.classList.remove("collapsed");
+                showQuestionsBtn.classList.remove("visible");
+            });
+            voiceCommandBtn.addEventListener("click", () => startVoiceRecognition());
+        }
 
-        voiceCommandBtn.addEventListener("click", function() {
-            startVoiceRecognition();
-        });
+        populateQuestions();
 
+    } else if (page === "Content Manager") {
+        content.classList.remove("transparent");
+        content.innerHTML = `
+            <div style="text-align: left; font-size: calc(18px * var(--scale));">
+                <h2>Add New Question</h2>
+                <p style="margin-bottom: 15px;">Fill out the form, upload the video, and click submit.</p>
+
+                <form id="content-form">
+                    <div class="question" style="background: #fff;">
+                        <label><b>Question Key</b> (short, unique, no-spaces, e.g., 'whiskeyRow')</label>
+                        <input type="text" name="key" required style="width: 100%; padding: 8px; margin-top: 5px; font-size: calc(16px * var(--scale));">
+                    </div>
+                    <div class="question" style="background: #fff;">
+                        <label><b>English Question</b></label>
+                        <input type="text" name="en" required style="width: 100%; padding: 8px; margin-top: 5px; font-size: calc(16px * var(--scale));">
+                    </div>
+                    <div class="question" style="background: #fff;">
+                        <label><b>Spanish Question</b></label>
+                        <input type="text" name="es" required style="width: 100%; padding: 8px; margin-top: 5px; font-size: calc(16px * var(--scale));">
+                    </div>
+                    <div class="question" style="background: #fff;">
+                        <label><b>Video File</b></label>
+                        <input type="file" name="video" accept="video/mp4" required style="width: 100%; padding: 8px; margin-top: 5px; font-size: calc(16px * var(--scale));">
+                    </div>
+                    <button type="submit" style="padding:calc(12px * var(--scale)) calc(30px * var(--scale)); font-size:calc(18px * var(--scale)); background:#8b5a2b; color:white; border:none; border-radius:calc(8px * var(--scale)); cursor:pointer;">Submit New Content</button>
+                </form>
+                <div id="upload-status" style="margin-top: 20px; font-weight: bold;"></div>
+            </div>
+        `;
+
+        document.getElementById('content-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            const statusDiv = document.getElementById('upload-status');
+
+            statusDiv.textContent = 'Uploading... Please wait.';
+            statusDiv.style.color = '#5a3b1d';
+
+            try {
+                const response = await fetch('/api/add_question', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                if (result.status === 'success') {
+                    statusDiv.textContent = 'Success! Content has been added. It will appear on the "Ask a Question" page.';
+                    statusDiv.style.color = 'green';
+                    form.reset();
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                statusDiv.textContent = `Error: ${error.message}`;
+                statusDiv.style.color = 'red';
+            }
+        });
     } else {
  }
 } /*end renderPage */
@@ -1031,10 +1091,16 @@ document.querySelectorAll("#menu a").forEach(item => {
 
 // Load the saved language (or default to English) and render the initial page
 async function initializeApp() {
+    // 1. Determine the initial page from the URL hash *before* rendering anything.
+    if (window.location.hash === '#content-manager') {
+        currentPage = 'Content Manager';
+    }
+
+    // 2. Load the language. This will also trigger the first render of the correct page.
     const savedLanguage = localStorage.getItem("language") || "en";
     await loadLanguage(savedLanguage);
 
-    // Register the service worker for video caching
+    // 3. Register the service worker for video caching.
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('/sw.js')

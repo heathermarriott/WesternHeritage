@@ -869,6 +869,7 @@ function startVoiceRecognition() {
 
     recognition.onstart = () => {
         voiceStatus.textContent = "Listening...";
+        introVideo.muted = true; // Mute the video to prevent audio interference
         voiceStatus.style.display = "block";
     };
 
@@ -913,6 +914,7 @@ function startVoiceRecognition() {
 
     recognition.onend = () => {
         // Hide the status message after a short delay
+        introVideo.muted = false; // Unmute the video when recognition is finished
         setTimeout(() => {
             voiceStatus.style.display = "none";
         }, 2500);

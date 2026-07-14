@@ -759,6 +759,12 @@ function renderPage(page) {
         content.innerHTML = `
             <div id="askQuestionContainer">
                 <button id="showQuestionsBtn">?</button>
+                <button id="voiceCommandBtn" title="Ask with your voice" style="position: absolute; top: calc(15px * var(--scale)); right: calc(15px * var(--scale)); width: calc(50px * var(--scale)); height: calc(50px * var(--scale)); border-radius: 50%; background: #8b5a2b; color: white; border: none; font-size: calc(28px * var(--scale)); cursor: pointer; z-index: 1002;">🎤</button>
+                <div id="voiceStatus" style="position: absolute; top: calc(75px * var(--scale)); right: calc(15px * var(--scale)); background: rgba(0,0,0,0.7); color: white; padding: calc(10px * var(--scale)); border-radius: calc(8px * var(--scale)); z-index: 1002; display: none;">
+                    Listening...
+                </div>
+
+
                 <div id="askQuestionList">
                     <h2 data-lang-key="menu.askQuestion">${translations.menu.askQuestion}</h2>
                     <div class="question">
@@ -782,6 +788,7 @@ function renderPage(page) {
 
         const questionList = document.getElementById("askQuestionList");
         const showQuestionsBtn = document.getElementById("showQuestionsBtn");
+        const voiceCommandBtn = document.getElementById("voiceCommandBtn");
 
         document.querySelectorAll("#askQuestionList .avatarBtn").forEach(btn => {
             btn.addEventListener("click", function () {
@@ -796,6 +803,10 @@ function renderPage(page) {
             askQuestionCollapsed = false; // Update state
             questionList.classList.remove("collapsed");
             showQuestionsBtn.classList.remove("visible");
+        });
+
+        voiceCommandBtn.addEventListener("click", function() {
+            startVoiceRecognition();
         });
 
     } else {
@@ -833,6 +844,83 @@ function applyTranslations() {
     // Re-render the current page with the new translations
     renderPage(currentPage);
 }
+
+// --- VOICE COMMAND RECOGNITION ---
+function startVoiceRecognition() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+        alert("Sorry, your browser doesn't support voice commands.");
+        return;
+    }
+
+    const recognition = new SpeechRecognition();
+    const currentLang = localStorage.getItem("language") || "en";
+    
+    // Map app language to speech recognition language codes
+    const langMap = { "en": "en-US", "es": "es-MX" };
+    recognition.lang = langMap[currentLang] || "en-US";
+
+    const voiceStatus = document.getElementById("voiceStatus");
+
+    // Helper function to remove accents for more flexible matching
+    const normalizeText = (text) => {
+        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    };
+
+    recognition.onstart = () => {
+        voiceStatus.textContent = "Listening...";
+        voiceStatus.style.display = "block";
+    };
+
+    recognition.onresult = (event) => {
+        const spokenText = event.results[0][0].transcript.toLowerCase().trim();
+        console.log("Heard:", spokenText);
+
+        const questionButtons = document.querySelectorAll("#askQuestionList .avatarBtn");
+        let matchFound = false;
+
+        for (const btn of questionButtons) {
+            const buttonText = btn.textContent.toLowerCase().trim().replace(/[¿?.,]/g, ''); // Clean button text
+            
+            // --- Fuzzy Matching Logic ---
+            // Normalize both spoken text and button text to remove accents.
+            const normalizedSpoken = normalizeText(spokenText);
+            const normalizedButton = normalizeText(buttonText);
+
+            // Check if all words from the button text are present in the spoken text.
+            const allKeywordsFound = normalizedButton.split(' ').every(keyword => normalizedSpoken.includes(keyword));
+            if (allKeywordsFound) {
+                voiceStatus.textContent = `Found: "${btn.textContent}"`;
+                btn.click(); // Trigger the question
+                matchFound = true;
+                break;
+            }
+        }
+
+        if (!matchFound) {
+            voiceStatus.textContent = "Sorry, I didn't recognize that question.";
+        }
+    };
+
+    recognition.onerror = (event) => {
+        console.error("Voice recognition error:", event.error);
+        if (event.error === 'no-speech') {
+            voiceStatus.textContent = "I didn't hear anything.";
+        } else {
+            voiceStatus.textContent = "Error listening.";
+        }
+    };
+
+    recognition.onend = () => {
+        // Hide the status message after a short delay
+        setTimeout(() => {
+            voiceStatus.style.display = "none";
+        }, 2500);
+    };
+
+    recognition.start();
+}
+
 
 // --- COWBOY ROUNDUP GAME LOGIC ---
 function startRoundupGame(){

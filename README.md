@@ -18,3 +18,6 @@ ChatGPT generated graphics for: cowboy hat, horse, and 2 placeholder avatars
 
 We can test this on the proto device using: http://protoapps.protohologram.com
 
+To see what videos and playlists are available on the proto from a remote location:
+https://cloud.protohologram.com/content
+

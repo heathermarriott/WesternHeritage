@@ -10,12 +10,13 @@ self.addEventListener('install', event => {
       try {
         const cache = await caches.open(CACHE_NAME);
         console.log('Service Worker: Opened cache.');
-
-        // Fetch the database directly to get the list of videos.
-        // This removes the dependency on the Python Flask server's API endpoint.
-        const response = await fetch('database.json', { cache: 'no-store' });
-        const db = await response.json();
-        const videoUrls = db.map(item => item.video);
+ 
+        // Fetch the questions text file to get the list of videos.
+        const response = await fetch('questions.txt', { cache: 'no-store' });
+        const text = await response.text();
+        const videoUrls = text.split('\n')
+                              .filter(line => line.trim() !== '')
+                              .map(line => line.split('|')[2].trim());
 
         console.log('Service Worker: Caching new videos:', videoUrls);
 

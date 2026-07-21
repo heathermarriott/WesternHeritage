@@ -273,51 +273,59 @@ function renderPage(page) {
                  <strong>${translations.settings.languageLabel}</strong> ${language === "en" ? translations.settings.english : translations.settings.spanish}`;
         });
  } else if (page === "Ask a Question") {
-
         content.classList.remove("transparent");
-        content.classList.add("transparent"); // Ensure video is visible behind questions
+        content.classList.add("transparent"); // Ensure video is visible
 
-        content.innerHTML = `
-            <div id="askQuestionContainer">
-                <button id="showQuestionsBtn">?</button>
-                <div id="askQuestionList">
-                    <h2 data-lang-key="menu.askQuestion">${translations.menu.askQuestion}</h2>
-                    <div class="question">
-                        <button class="avatarBtn" style="width:100%;" data-video="Teddy_BuckyOneill.mp4" data-lang-key="askQuestion.bucky">
-                            ${translations.askQuestion.bucky}
-                        </button>
-                    </div>
-                    <div class="question">
-                        <button class="avatarBtn" style="width:100%;" data-video="Teddy_rodeo.mp4" data-lang-key="askQuestion.rodeo">
-                            ${translations.askQuestion.rodeo}
-                        </button>
-                    </div>
-                    <div class="question">
-                        <button class="avatarBtn" style="width:100%;" data-video="TeddyLowRes.mp4" data-lang-key="askQuestion.whoAreYou">
-                            ${translations.askQuestion.whoAreYou}
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
+        // Fetch questions from the text file and render them.
+        fetch('questions.txt')
+            .then(response => response.text())
+            .then(text => {
+                const lang = localStorage.getItem("language") || "en";
+                const langIndex = lang === 'es' ? 1 : 0;
 
-        const questionList = document.getElementById("askQuestionList");
-        const showQuestionsBtn = document.getElementById("showQuestionsBtn");
+                const questionButtons = text.split('\n').filter(line => line.trim() !== '').map(line => {
+                    const parts = line.split('|');
+                    const questionText = parts[langIndex];
+                    const videoFile = parts[2];
+                    return `
+                        <div class="question">
+                            <button class="avatarBtn" style="width:100%;" data-video="${videoFile}">
+                                ${questionText}
+                            </button>
+                        </div>
+                    `;
+                }).join('');
 
-        document.querySelectorAll("#askQuestionList .avatarBtn").forEach(btn => {
-            btn.addEventListener("click", function () {
-                switchVideo(this.dataset.video);
-                askQuestionCollapsed = true; // Update state
-                questionList.classList.add("collapsed");
-                showQuestionsBtn.classList.add("visible");
+                content.innerHTML = `
+                    <div id="askQuestionContainer">
+                        <button id="showQuestionsBtn">?</button>
+                        <div id="askQuestionList">
+                            <h2 data-lang-key="menu.askQuestion">${translations.menu.askQuestion}</h2>
+                            ${questionButtons}
+                        </div>
+                    </div>
+                `;
+
+                const questionList = document.getElementById("askQuestionList");
+                const showQuestionsBtn = document.getElementById("showQuestionsBtn");
+
+                document.querySelectorAll("#askQuestionList .avatarBtn").forEach(btn => {
+                    btn.addEventListener("click", function () {
+                        const videoPath = this.dataset.video;
+                        const videoFilename = videoPath.substring(videoPath.lastIndexOf('/') + 1);
+                        switchVideo(videoFilename);
+                        askQuestionCollapsed = true; // Update state
+                        questionList.classList.add("collapsed");
+                        showQuestionsBtn.classList.add("visible");
+                    });
+                });
+
+                showQuestionsBtn.addEventListener("click", function() {
+                    askQuestionCollapsed = false; // Update state
+                    questionList.classList.remove("collapsed");
+                    showQuestionsBtn.classList.remove("visible");
+                });
             });
-        });
-
-        showQuestionsBtn.addEventListener("click", function() {
-            askQuestionCollapsed = false; // Update state
-            questionList.classList.remove("collapsed");
-            showQuestionsBtn.classList.remove("visible");
-        });
 
     } else {
  }

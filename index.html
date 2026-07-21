@@ -175,7 +175,7 @@ body.menu-open #hatButton:hover{
     background:#6b4423;
     color:white;
     transition:.35s;
-    box-shadow:5px 0 15px rgba(0,0,0,.35);
+    box-shadow: calc(5px * var(--scale)) 0 calc(15px * var(--scale)) rgba(0,0,0,.35);
     z-index:1000;
     overflow-y:auto;
 }
@@ -200,7 +200,7 @@ body.menu-open #hatButton:hover{
 /* Menu header styling */
 #menu h2{
     padding:calc(60px * var(--scale)) calc(25px * var(--scale)) calc(20px * var(--scale));
-    border-bottom:1px solid rgba(255,255,255,.3);
+    border-bottom:calc(1px * var(--scale)) solid rgba(255,255,255,.3);
     font-size:calc(28px * var(--scale));
 }
 
@@ -211,7 +211,7 @@ body.menu-open #hatButton:hover{
 }
 
 #menu li{
-    border-bottom:1px solid rgba(255,255,255,.15);
+    border-bottom:calc(1px * var(--scale)) solid rgba(255,255,255,.15);
 }
 
 /* Menu link styling */
@@ -411,7 +411,7 @@ main:has(#content.transparent){
     border: none;
     border-radius: 50%;
     cursor: pointer;
-    box-shadow: 3px 3px 8px rgba(0,0,0,.3);
+    box-shadow: calc(3px * var(--scale)) calc(3px * var(--scale)) calc(8px * var(--scale)) rgba(0,0,0,.3);
     touch-action: manipulation;
     z-index: 900;
     opacity: 0;
@@ -564,7 +564,7 @@ function renderPage(page) {
 
     <h2 style="
         color:white;
-        text-shadow:3px 3px 8px black;
+        text-shadow:calc(3px * var(--scale)) calc(3px * var(--scale)) calc(8px * var(--scale)) black;
         margin-bottom:calc(40px * var(--scale));
         font-size:calc(34px * var(--scale));
     ">
@@ -947,6 +947,19 @@ async function initializeApp() {
 
 initializeApp();
 </script>
+<script>
+// --- SERVICE WORKER REGISTRATION ---
+// Register the service worker to enable video caching for offline use and
+// improved performance. This makes the app more resilient and faster after
+// the first visit.
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+            .then(registration => console.log('Service Worker registered:', registration))
+            .catch(error => console.log('Service Worker registration failed:', error));
+    });
+}
+</script>
 
 <script>
 // --- STAGE SCALING (device preview) ---
@@ -973,6 +986,7 @@ function fitStage(){
 window.addEventListener("resize", fitStage);
 fitStage();
 </script>
+
 
 </body>
 </html>

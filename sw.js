@@ -1,26 +1,47 @@
-const CACHE_NAME = 'western-heritage-video-cache-v1';
-const urlsToCache = [
-  'TeddyLowRes.mp4',
-  'Teddy_BuckyOneill.mp4',
-  'Teddy_rodeo.mp4'
-];
+const CACHE_NAME = 'western-heritage-video-cache-v3'; // Increment cache version for update
 
 // Install event: cache the video files
 self.addEventListener('install', event => {
+  // Force the waiting service worker to become the active service worker.
+  self.skipWaiting();
+
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Opened cache');
-        return cache.addAll(urlsToCache);
-      })
+    (async () => {
+      try {
+        const cache = await caches.open(CACHE_NAME);
+        console.log('Service Worker: Opened cache.');
+
+        // Fetch the database directly to get the list of videos.
+        // This removes the dependency on the Python Flask server's API endpoint.
+        const response = await fetch('database.json', { cache: 'no-store' });
+        const db = await response.json();
+        const videoUrls = db.map(item => item.video);
+
+        console.log('Service Worker: Caching new videos:', videoUrls);
+
+        // Cache videos one by one to prevent a single failure from stopping the whole process.
+        for (const url of videoUrls) {
+          try {
+            await cache.add(url);
+          } catch (err) {
+            console.error(`Service Worker: Failed to cache ${url}`, err);
+          }
+        }
+      } catch (error) {
+        console.error('Service Worker: Failed to cache videos during install:', error);
+      }
+    })()
   );
 });
 
 // Activate event: clean up old caches
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
+    (async () => {
+      // Take control of all clients (tabs) as soon as the service worker activates.
+      await self.clients.claim();
+      const cacheNames = await caches.keys();
+      await Promise.all(
         cacheNames.map(cacheName => {
           if (cacheName !== CACHE_NAME) {
             console.log('Deleting old cache:', cacheName);
@@ -28,29 +49,40 @@ self.addEventListener('activate', event => {
           }
         })
       );
-    })
+    })()
   );
 });
 // Fetch event: serve videos from cache
 self.addEventListener('fetch', event => {
-  // We only want to handle requests for video files
+  // This service worker's fetch handler is only concerned with video files.
   if (event.request.url.endsWith('.mp4')) {
     event.respondWith(
       caches.match(event.request).then(cachedResponse => {
-        // If the video is in the cache, return it.
         if (cachedResponse) {
+          // If the video is found in the cache, return it immediately.
           return cachedResponse;
         }
 
-        // If not, fetch it from the network, cache it, and then return it.
-        return caches.open(CACHE_NAME).then(cache => {
-          return fetch(event.request).then(networkResponse => {
-            // Clone the response because it's a stream and can only be consumed once.
-            cache.put(event.request, networkResponse.clone());
-            return networkResponse;
-          });
-        })
+        // --- On-Demand Caching for Range Requests ---
+        // If not in cache, let the browser's original request go to the network for immediate playback.
+        const networkPromise = fetch(event.request);
+
+        // In the background, kick off a *separate* request for the full video file (without the Range header).
+        // This will get a 200 OK response that we can successfully cache for next time.
+        event.waitUntil(
+          (async () => {
+            const cache = await caches.open(CACHE_NAME);
+            const fullResponse = await fetch(event.request.url); // New request without Range header
+            if (fullResponse.status === 200) {
+              await cache.put(event.request.url, fullResponse);
+            }
+          })()
+        );
+
+        // Return the promise for the original network request to the browser.
+        return networkPromise;
       })
-    )
+    );
   }
+  // For any other request (like .json, .png, etc.), do nothing and let the browser handle it normally.
 });

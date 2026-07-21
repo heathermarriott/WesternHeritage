@@ -1,0 +1,26 @@
+[
+  {
+    "en": "Who was Bucky O'Neill?",
+    "es": "\u00bfQui\u00e9n era Bucky O'Neill?",
+    "key": "bucky",
+    "video": "videos/Teddy_BuckyOneill.mp4"
+  },
+  {
+    "en": "When did the Prescott Rodeo start?",
+    "es": "\u00bfCu\u00e1ndo comenz\u00f3 el Rodeo de Prescott?",
+    "key": "rodeo",
+    "video": "videos/Teddy_rodeo.mp4"
+  },
+  {
+    "en": "Who are you?",
+    "es": "\u00bfQui\u00e9n eres t\u00fa?",
+    "key": "whoAreYou",
+    "video": "videos/TeddyLowRes.mp4"
+  },
+  {
+    "en": "What is this file?",
+    "es": "Cual este file",
+    "key": "thank",
+    "video": "videos/new_exibits.mp4"
+  }
+]

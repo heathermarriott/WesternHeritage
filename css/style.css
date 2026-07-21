@@ -1,0 +1,417 @@
+/* ==========================================================================
+   QUICK CUSTOMIZATION
+   Set these two values to the Proto Luma's real screen resolution (in CSS
+   pixels). Everything else on the page - the card size/position, buttons,
+   fonts, the menu, the game board - is derived from these two numbers, so
+   changing them re-tunes the whole layout automatically.
+
+   The page builds a fixed-size "stage" at exactly this resolution and then
+   scales it (via JS, see bottom of file) to fit whatever browser window
+   you're previewing in - so you always see the true composition, just
+   shrunk/grown to fit your monitor, instead of a cropped slice of it.
+   ========================================================================== */
+:root{
+    --device-width: 2189px;
+    --device-height: 3840px;
+
+    /* The original design was tuned assuming a viewport around this wide.
+       --scale is the multiplier applied to every fixed-px value below so
+       the whole layout grows/shrinks proportionally with --device-width. */
+    --baseline-width: 550px;
+    --scale: calc(var(--device-width) / var(--baseline-width));
+}
+
+/* General reset to ensure consistent styling across browsers */
+*{
+    margin:0px;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+    -webkit-tap-highlight-color:transparent;
+}
+
+/* Basic body styles - locked to the viewport, kiosk-style (no page scroll/bounce).
+   Background here only shows up as "letterbox" bars around the stage when the
+   browser window's aspect ratio doesn't match the device's - on the real
+   device (where the window IS the device) it will never be visible. */
+html, body{
+    height:100%;
+    overflow:hidden;
+    overscroll-behavior:none;
+}
+
+body{
+    background:#111;
+    touch-action:manipulation;
+    -webkit-user-select:none;
+    user-select:none;
+    -webkit-touch-callout:none;
+}
+
+/* Text inside form fields should still be selectable/usable normally */
+input, textarea{
+    -webkit-user-select:auto;
+    user-select:auto;
+}
+
+/* The fixed-resolution "virtual screen". JS scales this to fit the real
+   browser window (see the script at the bottom). Everything inside it is
+   positioned/sized against ITS dimensions, not the actual browser window -
+   that's what makes the two variables above a single source of truth. */
+#stage{
+    position:fixed;
+    top:50%;
+    left:50%;
+    width:var(--device-width);
+    height:var(--device-height);
+    transform:translate(-50%, -50%);
+    transform-origin:center center;
+    overflow:hidden;
+    background:#efe6d3;
+}
+
+/* background teddy roosevelt video - persistent, lives at the stage's root so
+   it is never removed/recreated by page navigation and always plays
+   regardless of which page or setting the user picks */
+#introVideo{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    z-index:-1;
+    pointer-events:none;
+}
+
+#avatarOverlay{
+    width:100%;
+    height:100%;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    padding:0 5%;
+
+    text-align:center;
+}
+
+.avatarBtn{
+    width:min(70%, calc(320px * var(--scale)));
+    margin:calc(14px * var(--scale)) 0;
+    padding:calc(18px * var(--scale));
+
+    font-size:calc(24px * var(--scale));
+
+    background:#8b5a2b;
+    color:white;
+
+    border:none;
+    border-radius:calc(12px * var(--scale));
+
+    cursor:pointer;
+    touch-action:manipulation;
+}
+
+/* Cowboy Hat Button */
+#hatButton{
+    position:fixed;
+    top:18%;
+    left:calc(15px * var(--scale));
+    width:calc(70px * var(--scale));
+    height:calc(70px * var(--scale));
+    border:none;
+    background:none;
+    cursor:pointer;
+    z-index:1001;
+    transition:.3s;
+    padding:0;
+    touch-action:manipulation;
+}
+
+/* When the menu is open, move the hat button to the right to align with the menu edge */
+body.menu-open #hatButton{
+    left:calc(228px * var(--scale));
+    transform:rotate(18deg);
+    pointer-events:none;
+    cursor:default;
+}
+
+/* Ensure the image inside the button scales correctly */
+#hatButton img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+#hatButton:hover{
+    transform:scale(1.1);
+}
+
+/* Keep the hover effect consistent when the menu is open */
+body.menu-open #hatButton:hover{
+    transform:rotate(18deg) scale(1.1);
+}
+
+/* Off-screen navigation menu styling */
+#menu{
+    position:fixed;
+    top:20%;
+    left:calc(-280px * var(--scale));
+    width:min(82%, calc(280px * var(--scale)));
+    height:60%;
+    background:#6b4423;
+    color:white;
+    transition:.35s;
+    box-shadow: calc(5px * var(--scale)) 0 calc(15px * var(--scale)) rgba(0,0,0,.35);
+    z-index:1000;
+    overflow-y:auto;
+}
+
+/* Class added by JavaScript to slide the menu into view */
+#menu.open{
+    left:0;
+}
+
+/* Style for the menu's close button */
+#closeBtn{
+    float:right;
+    margin:calc(15px * var(--scale));
+    border:none;
+    background:none;
+    color:white;
+    font-size:calc(28px * var(--scale));
+    cursor:pointer;
+    touch-action:manipulation;
+}
+
+/* Menu header styling */
+#menu h2{
+    padding:calc(60px * var(--scale)) calc(25px * var(--scale)) calc(20px * var(--scale));
+    border-bottom:calc(1px * var(--scale)) solid rgba(255,255,255,.3);
+    font-size:calc(28px * var(--scale));
+}
+
+/* Menu list styling */
+#menu ul{
+    list-style:none;
+    margin-top:calc(20px * var(--scale));
+}
+
+#menu li{
+    border-bottom:calc(1px * var(--scale)) solid rgba(255,255,255,.15);
+}
+
+/* Menu link styling */
+#menu a{
+    display:block;
+    padding:calc(18px * var(--scale)) calc(25px * var(--scale));
+    color:white;
+    text-decoration:none;
+    font-size:calc(18px * var(--scale));
+    transition:.25s;
+    touch-action:manipulation;
+}
+
+/* Hover effect for menu links */
+#menu a:hover{
+    background:#8b5a2b;
+    padding-left:calc(35px * var(--scale));
+}
+
+/* Main content area - centers the card in the full available space instead
+   of parking it near the top. Scrolls internally only if content (like the
+   trivia form) is taller than the screen. */
+main{
+    position:relative;
+    width:100%;
+    height:100%;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:safe center;
+    align-items:center;
+
+    padding:calc(70px * var(--scale)) calc(20px * var(--scale)) calc(50px * var(--scale));
+    text-align:center;
+}
+
+/* When the avatar page is showing (full-bleed video look), let its content
+   stretch the full stage instead of being centered/padded like a card. */
+main:has(#content.transparent){
+    padding:0;
+    justify-content:stretch;
+    align-items:stretch;
+}
+
+/* The div where all dynamic content is loaded.
+   By default it's a translucent "card" floating over the background video
+   so text stays legible on every page - sized as a real fraction of the
+   device width so it doesn't look lost on a large screen. */
+#content{
+    font-size:calc(26px * var(--scale));
+    color:#5a3b1d;
+    background:rgba(239,230,211,.94);
+    border-radius:calc(20px * var(--scale));
+    padding:calc(28px * var(--scale));
+    max-width:min(90%, calc(620px * var(--scale)));
+    width:100%;
+    box-shadow:0 calc(8px * var(--scale)) calc(24px * var(--scale)) rgba(0,0,0,.25);
+}
+
+/* The avatar page wants the full-bleed video look instead of the card,
+   so this class strips the card styling back out and lets it fill the stage. */
+#content.transparent{
+    background:none;
+    box-shadow:none;
+    padding:0;
+    max-width:none;
+    border-radius:0;
+    width:100%;
+    height:100%;
+}
+
+/* Styling for individual trivia questions */
+.question{
+    text-align:left;
+    max-width:min(94%, calc(700px * var(--scale)));
+    margin:calc(25px * var(--scale)) auto;
+    padding:calc(15px * var(--scale));
+    background:rgba(248,241,223,0.4);
+    border-radius:calc(8px * var(--scale));
+    font-size:calc(22px * var(--scale));
+}
+
+/* Styling for the "Submit Quiz" button */
+#gradeQuiz{
+    padding:calc(12px * var(--scale)) calc(30px * var(--scale));
+    font-size:calc(18px * var(--scale));
+    background:#8b5a2b;
+    color:white;
+    border:none;
+    border-radius:calc(8px * var(--scale));
+    cursor:pointer;
+    touch-action:manipulation;
+}
+
+#gradeQuiz:hover{
+    background:#a66a35;
+}
+
+/* Styling for the trivia score display */
+#score{
+    margin-top:calc(25px * var(--scale));
+    color:#5a3b1d;
+    font-size:calc(28px * var(--scale));
+}
+
+
+/* The container for the Cowboy Roundup game */
+#gameArea{
+    position:relative;
+
+    width:min(92%, calc(480px * var(--scale)));
+    aspect-ratio:9 / 16;
+
+    margin:calc(10px * var(--scale)) auto;
+
+    background:#d8c39a;
+
+    border:calc(4px * var(--scale)) solid #6b4423;
+    border-radius:calc(16px * var(--scale));
+
+    overflow:hidden;
+}
+
+/* Displays time and score during the game */
+#gameStats{
+    font-size:calc(24px * var(--scale));
+    padding:calc(15px * var(--scale));
+    font-weight:bold;
+}
+
+/* The clickable horse image */
+#horse{
+    position:absolute;
+    width:calc(90px * var(--scale));
+    cursor:pointer;
+    transition:left .25s, top .25s;
+    touch-action:manipulation;
+}
+
+#horse:hover{
+    transform:scale(1.08);
+}
+
+/* Container for the "Game Over" message */
+#gameOver{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+}
+
+/* "Play Again" button styling */
+#playAgain{
+    margin-top:calc(20px * var(--scale));
+    padding:calc(12px * var(--scale)) calc(28px * var(--scale));
+    font-size:calc(20px * var(--scale));
+    background:#8b5a2b;
+    color:white;
+    border:none;
+    border-radius:calc(8px * var(--scale));
+    cursor:pointer;
+    touch-action:manipulation;
+}
+
+/* "Ask a Question" page specific styles */
+#askQuestionContainer {
+    position: relative;
+    width: 100%;
+}
+
+#askQuestionList {
+    transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    transform: translateX(0);
+    opacity: 1;
+}
+
+#askQuestionList.collapsed {
+    transform: translateX(-120%);
+    opacity: 0;
+    position: absolute; /* Collapse without affecting layout */
+}
+
+#showQuestionsBtn {
+    position: fixed;
+    top: 18%;
+    right: calc(15px * var(--scale));
+    width: calc(70px * var(--scale));
+    height: calc(70px * var(--scale));
+    padding: 0;
+    font-size: calc(40px * var(--scale));
+    font-weight: bold;
+    background: #8b5a2b;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: calc(3px * var(--scale)) calc(3px * var(--scale)) calc(8px * var(--scale)) rgba(0,0,0,.3);
+    touch-action: manipulation;
+    z-index: 900;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease-in-out;
+}
+
+#showQuestionsBtn.visible {
+    opacity: 1;
+    pointer-events: auto;
+}

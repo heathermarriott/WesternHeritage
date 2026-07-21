@@ -1,0 +1,84 @@
+{
+  "pageTitle": "Centro de Patrimonio del Oeste de Prescott",
+  "menu": {
+    "openMenuTitle": "Abrir Menú",
+    "title": "Menú",
+    "selectAvatar": "Seleccionar Personaje",
+    "askQuestion": "Haz Una Pregunta",
+    "prescottTrivia": "Preguntas de Trivia de Prescott",
+    "cowboyRoundupGame": "Juego de Rodeo Vaquero",
+    "settings": "Ajustes"
+  },
+  "home": {
+    "welcomeMessage": "Haz clic en el sombrero de vaquero para abrir el menú de navegación."
+  },
+  "avatar": {
+    "heading": "Selecciona Tu Personaje",
+    "theodoreRoosevelt": "Theodore Roosevelt",
+    "annieOakley": "Annie Oakley",
+    "wyattEarp": "Wyatt Earp",
+    "selectedHeading": "¡Personaje Seleccionado!",
+    "selectedMessage": "Tu aventura está por comenzar."
+  },
+  "askQuestion": {
+    "bucky": "¿Quién fue Bucky O'Neill?",
+    "rodeo": "¿Cuándo comenzó el Rodeo de Prescott?",
+    "whoAreYou": "¿Quién eres tú?"
+  },
+  "trivia": {
+    "heading": "🤠 Desafío de Trivia de Prescott",
+    "intro": "¡Responde las cinco preguntas y descubre cuánto sabes sobre Prescott!",
+    "q1": "Prescott fue la primera capital territorial de Arizona.",
+    "q1True": "Verdadero",
+    "q1False": "Falso",
+    "q2": "¿Qué calle famosa es conocida por sus cantinas históricas?",
+    "q2A": "Whiskey Row",
+    "q2B": "Calle Principal",
+    "q2C": "Camino de la Frontera",
+    "q2D": "Calle Oro",
+    "q3": "¿Qué gran lago se encuentra a pocos kilómetros del centro de Prescott?",
+    "q3A": "Lake Pleasant",
+    "q3B": "Watson Lake",
+    "q3C": "Roosevelt Lake",
+    "q3D": "Saguaro Lake",
+    "q4": "¿Prescott está rodeada por qué bosque nacional?",
+    "q4A": "Bosque Nacional Coconino",
+    "q4B": "Bosque Nacional Prescott",
+    "q4C": "Bosque Nacional Kaibab",
+    "q4D": "Bosque Nacional Apache-Sitgreaves",
+    "q5": "El rodeo anual de Prescott es conocido como:",
+    "q5A": "Estampida de Arizona",
+    "q5B": "El Rodeo Más Antiguo del Mundo",
+    "q5C": "Días del Vaquero",
+    "q5D": "Rodeo de la Frontera",
+    "submit": "Enviar Cuestionario",
+    "scoreResult": "🏆 ¡Obtuviste {score} de 5!"
+  },
+  "game": {
+    "heading": "🐎 Rodeo Vaquero - haz clic en el caballo",
+    "time": "Tiempo:",
+    "seconds": "seg",
+    "horsesCollected": "Caballos Reunidos:",
+    "timeUp": "¡Se Acabó el Tiempo!",
+    "roundedUp": "¡Reuniste {score} caballos!",
+    "playAgain": "Jugar de Nuevo"
+  },
+  "settings": {
+    "heading": "⚙️ Ajustes",
+    "displaySizeHeading": "Tamaño de Pantalla",
+    "displaySizeIntro": "Selecciona cómo se debe mostrar la aplicación.",
+    "website": "Sitio Web",
+    "protoLuma": "Proto Luma",
+    "languageHeading": "Idioma",
+    "languageIntro": "Selecciona tu idioma preferido.",
+    "english": "Inglés",
+    "spanish": "Español",
+    "save": "Guardar Ajustes",
+    "saved": "✔ ¡Ajustes guardados!",
+    "displayLabel": "Pantalla:",
+    "languageLabel": "Idioma:"
+  },
+  "common": {
+    "underConstruction": "Esta sección está en construcción."
+  }
+}

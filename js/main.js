@@ -78,13 +78,10 @@ function attachAvatarButtonListeners(){
 function renderPage(page) {
     currentPage = page; // Update the current page tracker
 
-    // Always ensure the video is visible when rendering a new page, unless the page logic hides it.
-    introVideo.style.display = 'block';
-    stage.style.backgroundImage = ''; // Clear any static background image
-
     if (page === "Select Avatar") {
-
         // Full-bleed video look for avatar selection: strip the card styling
+        introVideo.style.display = 'block';
+        stage.style.backgroundImage = ''; // Clear any static background image
         content.classList.add("transparent");
 
         // Generate the HTML for the avatar selection page (video itself lives
@@ -92,7 +89,17 @@ function renderPage(page) {
         introVideo.loop = true;
         // When returning to avatar select, stop any question video and play the default.
         switchVideo("videos/teddy/TeddyLowRes.mp4");
+    } else {
+        // For all other pages, stop the video and show the static avatar image.
+        introVideo.style.display = 'none';
+        introVideo.pause();
+        stage.style.backgroundImage = `url('${currentAvatarImg}')`;
+        stage.style.backgroundSize = 'cover';
+        stage.style.backgroundPosition = 'center';
+        content.classList.remove("transparent");
+    }
 
+    if (page === "Select Avatar") {
         content.innerHTML = `
 <div id="avatarOverlay">
 
@@ -128,10 +135,6 @@ function renderPage(page) {
         attachAvatarButtonListeners();
     
  } else if (page === "Prescott Trivia") {
-
-        // Card layout over the video for every other page
-        content.classList.remove("transparent");
-
         // Generate the HTML for the trivia page
         content.innerHTML = `
             <h2 data-lang-key="trivia.heading">${translations.trivia.heading}</h2>
@@ -212,9 +215,6 @@ function renderPage(page) {
         });
 
     } else if (page === "Cowboy Roundup Game") {
-
-        content.classList.remove("transparent");
-
         // Generate the HTML for the game page
         content.innerHTML = `
             <img src="${currentAvatarImg}" id="centerImage" alt="Avatar" style="max-width:min(30%, calc(120px * var(--scale))); margin: 0 auto calc(12px * var(--scale)); display:block;">
@@ -233,9 +233,6 @@ function renderPage(page) {
         startRoundupGame();
 
     } else if (page === "Settings") {
-
-        content.classList.remove("transparent");
-
         const savedDisplaySize = localStorage.getItem("displaySize") || "website";
         const savedLanguage = localStorage.getItem("language") || "en";
         // Generate the HTML for the settings page
@@ -289,16 +286,7 @@ function renderPage(page) {
                  <strong>${translations.settings.languageLabel}</strong> ${language === "en" ? translations.settings.english : translations.settings.spanish}`;
         });
  } else if (page === "Ask a Question") {
-        // Stop any playing video and hide the video element
-        introVideo.style.display = 'none';
-        introVideo.pause();
-
-        // Set the static avatar image as the background of the main stage
-        stage.style.backgroundImage = `url('${currentAvatarImg}')`;
-        stage.style.backgroundSize = 'cover';
-        stage.style.backgroundPosition = 'center';
-
-        content.classList.add("transparent"); // Ensure video is visible
+        content.classList.add("transparent"); // Make content transparent for this page
 
         // Fetch questions from the text file and render them.
         fetch('questions.txt')

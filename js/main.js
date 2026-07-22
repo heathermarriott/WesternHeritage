@@ -49,6 +49,15 @@ closeBtn.addEventListener("click", () => {
     document.body.classList.remove("menu-open");
 });
 
+// Add a click listener to the stage to close the menu when clicking outside
+stage.addEventListener("click", (event) => {
+    // If the menu is open and the click is not on the menu or the hat button, close it.
+    if (menu.classList.contains("open") && !menu.contains(event.target) && event.target !== hatButton && !hatButton.contains(event.target)) {
+        menu.classList.remove("open");
+        document.body.classList.remove("menu-open");
+    }
+});
+
 // --- PAGE AND CONTENT LOGIC ---
 
 // A reusable function to attach click listeners to the avatar selection buttons

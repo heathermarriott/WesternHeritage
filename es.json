@@ -59,7 +59,7 @@
     "time": "Tiempo:",
     "seconds": "seg",
     "horsesCollected": "Caballos Reunidos:",
-    "timeUp": "¡Se Acabó el Tiempo!",
+    "timeUp": "¡Tiempo Agotado!",
     "roundedUp": "¡Reuniste {score} caballos!",
     "playAgain": "Jugar de Nuevo"
   },

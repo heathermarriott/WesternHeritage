@@ -16,7 +16,7 @@ async function syncVideoCache() {
     const videoUrls = text.split('\n')
                           .map(line => line.trim())
                           .filter(line => line !== '' && !line.startsWith('#'))
-                          .map(line => line.split('|')[2].trim());
+                          .map(line => line.split('|')[3].trim()); // Video path is now the 4th item
 
     console.log('Service Worker: Current video list:', videoUrls);
 

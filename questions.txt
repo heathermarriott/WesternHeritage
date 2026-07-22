@@ -1,8 +1,9 @@
 ## Use ## at the start of a line to add a comment.
-## Format: English Question | Spanish Question | path/to/video.mp4
+## Format: AvatarID | English Question | Spanish Question | path/to/video.mp4
 ## Spanish symbols: á, é, í, ó, ú, ü, ñ, ¿, ¡
 
-Who was Bucky O'Neill?|¿Quién era Bucky O'Neill?|videos/Teddy_BuckyOneill.mp4
-When did the Prescott Rodeo start?|¿Cuándo comenzó el Rodeo de Prescott?|videos/Teddy_rodeo.mp4
-Who are you?|¿Quién eres tú?|videos/TeddyLowRes.mp4
-What is this file?|¿Qué es este archivo?|videos/new_exibits.mp4
+teddy|Who was Bucky O'Neill?|¿Quién era Bucky O'Neill?|videos/teddy/BuckyOneill.mp4
+teddy|When did the Prescott Rodeo start?|¿Cuándo comenzó el Rodeo de Prescott?|videos/teddy/rodeo.mp4
+teddy|Who are you?|¿Quién eres tú?|videos/teddy/TeddyLowRes.mp4
+annie|Tell me something about Prescott.|Cuéntame algo sobre Prescott.|videos/annie/Annie.mp4
+wyatt|What is Prescott?|¿Qué es Prescott?|videos/wyatt/Wyatt.mp4

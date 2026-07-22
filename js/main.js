@@ -1,6 +1,7 @@
 // Get references to the main interactive elements on the page
 const hatButton = document.getElementById("hatButton");
 const menu = document.getElementById("menu");
+const stage = document.getElementById("stage");
 const closeBtn = document.getElementById("closeBtn");
 const content = document.getElementById("content");
 const introVideo = document.getElementById("introVideo");
@@ -12,14 +13,22 @@ document.addEventListener("visibilitychange", () => {
 });
 function switchVideo(filename) {
     const source = introVideo.querySelector("source");
-    source.src = `videos/${filename}`;
+    source.src = filename;
     introVideo.load();
     introVideo.style.display = 'block'; // Make sure video is visible
     introVideo.play().catch(() => {});
 }
 
+function showStaticAvatar() {
+    introVideo.style.display = 'none'; // Hide video
+    introVideo.pause();
+    // Use the existing content div to show the image, ensuring it covers the area
+    content.innerHTML = `<img src="${currentAvatarImg}" id="centerImage" alt="Avatar" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">`;
+}
+
 // --- STATE VARIABLES ---
-let currentAvatar = "assets/teddy.png";
+let currentAvatarImg = "assets/teddy.png";
+let currentAvatarId = "teddy"; // Add an ID for the current avatar
 let currentPage = "Select Avatar"; // Track the current page for language switching
 let translations = {}; // To store the loaded language JSON
 
@@ -46,8 +55,9 @@ closeBtn.addEventListener("click", () => {
 function attachAvatarButtonListeners(){
     document.querySelectorAll(".avatarBtn").forEach(btn => {
         btn.addEventListener("click", function(){
-            // Update the current avatar
-            currentAvatar = this.dataset.img;
+            // Update the current avatar image and ID
+            currentAvatarImg = this.dataset.img;
+            currentAvatarId = this.dataset.avatarId;
 
             // Avatar has been picked - switch back to the card layout for the
             // confirmation message (video keeps playing behind it either way)
@@ -55,7 +65,7 @@ function attachAvatarButtonListeners(){
 
             // Replace the buttons with a confirmation message
             content.innerHTML = `
-                <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:min(60%, calc(220px * var(--scale))); margin: 0 auto calc(20px * var(--scale)); display:block;">
+                <img src="${currentAvatarImg}" id="centerImage" alt="Avatar" style="max-width:min(60%, calc(220px * var(--scale))); margin: 0 auto calc(20px * var(--scale)); display:block;">
                 <h2 data-lang-key="avatar.selectedHeading">${translations.avatar.selectedHeading}</h2>
                 <p data-lang-key="avatar.selectedMessage">${translations.avatar.selectedMessage}</p>
             `;
@@ -68,6 +78,10 @@ function attachAvatarButtonListeners(){
 function renderPage(page) {
     currentPage = page; // Update the current page tracker
 
+    // Always ensure the video is visible when rendering a new page, unless the page logic hides it.
+    introVideo.style.display = 'block';
+    stage.style.backgroundImage = ''; // Clear any static background image
+
     if (page === "Select Avatar") {
 
         // Full-bleed video look for avatar selection: strip the card styling
@@ -75,6 +89,10 @@ function renderPage(page) {
 
         // Generate the HTML for the avatar selection page (video itself lives
         // at the stage root now and is already playing behind this)
+        introVideo.loop = true;
+        // When returning to avatar select, stop any question video and play the default.
+        switchVideo("videos/teddy/TeddyLowRes.mp4");
+
         content.innerHTML = `
 <div id="avatarOverlay">
 
@@ -88,17 +106,20 @@ function renderPage(page) {
     </h2>
 
     <button class="avatarBtn"
-            data-img="assets/teddy.png">
+            data-img="assets/teddy.png"
+            data-avatar-id="teddy">
         ${translations.avatar.theodoreRoosevelt}
     </button>
 
     <button class="avatarBtn"
-            data-img="assets/annie.png">
+            data-img="assets/annie.png"
+            data-avatar-id="annie">
         ${translations.avatar.annieOakley}
     </button>
 
     <button class="avatarBtn"
-            data-img="assets/wyatt.png">
+            data-img="assets/wyatt.png"
+            data-avatar-id="wyatt">
         ${translations.avatar.wyattEarp}
     </button>
 
@@ -160,7 +181,7 @@ function renderPage(page) {
                 </button>
             </form>
 
-            <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:min(50%, calc(200px * var(--scale))); margin: calc(30px * var(--scale)) auto 0; display:block;">
+            <img src="${currentAvatarImg}" id="centerImage" alt="Avatar" style="max-width:min(50%, calc(200px * var(--scale))); margin: calc(30px * var(--scale)) auto 0; display:block;">
             <h3 id="triviaScore"></h3>
         `;
 
@@ -196,7 +217,7 @@ function renderPage(page) {
 
         // Generate the HTML for the game page
         content.innerHTML = `
-            <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:min(30%, calc(120px * var(--scale))); margin: 0 auto calc(12px * var(--scale)); display:block;">
+            <img src="${currentAvatarImg}" id="centerImage" alt="Avatar" style="max-width:min(30%, calc(120px * var(--scale))); margin: 0 auto calc(12px * var(--scale)); display:block;">
             <div id="gameArea">
                 <h2 data-lang-key="game.heading">${translations.game.heading}</h2>
                 <div id="gameStats">
@@ -219,7 +240,7 @@ function renderPage(page) {
         const savedLanguage = localStorage.getItem("language") || "en";
         // Generate the HTML for the settings page
         content.innerHTML = `
-            <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="max-width:min(50%, calc(200px * var(--scale))); margin: 0 auto calc(20px * var(--scale)); display:block;">
+            <img src="${currentAvatarImg}" id="centerImage" alt="Avatar" style="max-width:min(50%, calc(200px * var(--scale))); margin: 0 auto calc(20px * var(--scale)); display:block;">
             <h2 data-lang-key="settings.heading">${translations.settings.heading}</h2>
 
             <div class="question">
@@ -268,7 +289,15 @@ function renderPage(page) {
                  <strong>${translations.settings.languageLabel}</strong> ${language === "en" ? translations.settings.english : translations.settings.spanish}`;
         });
  } else if (page === "Ask a Question") {
-        content.classList.remove("transparent");
+        // Stop any playing video and hide the video element
+        introVideo.style.display = 'none';
+        introVideo.pause();
+
+        // Set the static avatar image as the background of the main stage
+        stage.style.backgroundImage = `url('${currentAvatarImg}')`;
+        stage.style.backgroundSize = 'cover';
+        stage.style.backgroundPosition = 'center';
+
         content.classList.add("transparent"); // Ensure video is visible
 
         // Fetch questions from the text file and render them.
@@ -290,10 +319,12 @@ function renderPage(page) {
                 const questionButtons = text.split('\n')
                     .map(line => line.trim())
                     .filter(line => line !== '' && !line.startsWith('#'))
+                    // Filter for questions matching the current avatar
+                    .filter(line => line.split('|')[0].trim() === currentAvatarId)
                     .map(line => {
                     const parts = line.split('|');
-                    const questionText = parts[langIndex];
-                    const videoFile = parts[2];
+                    const questionText = parts[langIndex + 1]; // +1 to account for avatar ID
+                    const videoFile = parts[3];
                     return `
                         <div class="question">
                             <button class="avatarBtn" style="width:100%;" data-video="${videoFile}">
@@ -319,9 +350,8 @@ function renderPage(page) {
                 document.querySelectorAll("#askQuestionList .avatarBtn").forEach(btn => {
                     btn.addEventListener("click", function () {
                         const videoPath = this.dataset.video;
-                        const videoFilename = videoPath.substring(videoPath.lastIndexOf('/') + 1);
                         introVideo.loop = false; // Play video once
-                        switchVideo(videoFilename);
+                        switchVideo(videoPath);
                         askQuestionCollapsed = true; // Update state
                         questionList.classList.add("collapsed");
                         showQuestionsBtn.classList.add("visible");
@@ -330,22 +360,21 @@ function renderPage(page) {
 
                 introVideo.addEventListener('ended', function() {
                     if (!introVideo.loop) { // Only if we are not looping (i.e., after a question video)
-                        introVideo.style.display = 'none'; // Hide video
-                        // After video ends, show the static avatar image
-                        content.innerHTML = `
-                            <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
-                            <button id="showQuestionsBtn" class="visible">?</button>
-                        `;
+                        showStaticAvatar();
+                        // Re-add the show questions button over the static image
+                        const showBtn = document.createElement('button');
+                        showBtn.id = 'showQuestionsBtn';
+                        showBtn.className = 'visible';
+                        showBtn.textContent = '?';
+                        content.appendChild(showBtn);
                     }
                 });
 
                 // When showing the list again, go back to default looping video
                 showQuestionsBtn.addEventListener("click", function() {
                     askQuestionCollapsed = false; // Update state
-                    questionList.classList.remove("collapsed");
-                    showQuestionsBtn.classList.remove("visible");
-                    introVideo.loop = true;
-                    switchVideo("TeddyLowRes.mp4");
+                    // Re-render the page to show the question list again over a static image
+                    renderPage("Ask a Question");
                 });
             });
 

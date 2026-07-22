@@ -5,12 +5,6 @@ const closeBtn = document.getElementById("closeBtn");
 const content = document.getElementById("content");
 const introVideo = document.getElementById("introVideo");
 
-// --- KEEP THE BACKGROUND VIDEO ALWAYS PLAYING ---
-// No matter what page or setting the user picks, if the video is ever paused
-// (e.g. by a stray browser/OS event), immediately resume it.
-introVideo.addEventListener("pause", () => {
-    introVideo.play().catch(() => {});
-});
 document.addEventListener("visibilitychange", () => {
     if (!document.hidden) {
         introVideo.play().catch(() => {});
@@ -20,6 +14,7 @@ function switchVideo(filename) {
     const source = introVideo.querySelector("source");
     source.src = `videos/${filename}`;
     introVideo.load();
+    introVideo.style.display = 'block'; // Make sure video is visible
     introVideo.play().catch(() => {});
 }
 
@@ -325,6 +320,7 @@ function renderPage(page) {
                     btn.addEventListener("click", function () {
                         const videoPath = this.dataset.video;
                         const videoFilename = videoPath.substring(videoPath.lastIndexOf('/') + 1);
+                        introVideo.loop = false; // Play video once
                         switchVideo(videoFilename);
                         askQuestionCollapsed = true; // Update state
                         questionList.classList.add("collapsed");
@@ -332,10 +328,24 @@ function renderPage(page) {
                     });
                 });
 
+                introVideo.addEventListener('ended', function() {
+                    if (!introVideo.loop) { // Only if we are not looping (i.e., after a question video)
+                        introVideo.style.display = 'none'; // Hide video
+                        // After video ends, show the static avatar image
+                        content.innerHTML = `
+                            <img src="${currentAvatar}" id="centerImage" alt="Avatar" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                            <button id="showQuestionsBtn" class="visible">?</button>
+                        `;
+                    }
+                });
+
+                // When showing the list again, go back to default looping video
                 showQuestionsBtn.addEventListener("click", function() {
                     askQuestionCollapsed = false; // Update state
                     questionList.classList.remove("collapsed");
                     showQuestionsBtn.classList.remove("visible");
+                    introVideo.loop = true;
+                    switchVideo("TeddyLowRes.mp4");
                 });
             });
 

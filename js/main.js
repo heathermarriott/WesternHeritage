@@ -280,10 +280,22 @@ function renderPage(page) {
         fetch('questions.txt')
             .then(response => response.text())
             .then(text => {
+                // Ask the already-running service worker to re-check
+                // questions.txt for new/removed videos. This runs on every
+                // visit to this page, not just when the service worker file
+                // itself changes, so cache updates don't require a full app
+                // update to take effect.
+                if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+                    navigator.serviceWorker.controller.postMessage('SYNC_VIDEOS');
+                }
+
                 const lang = localStorage.getItem("language") || "en";
                 const langIndex = lang === 'es' ? 1 : 0;
 
-                const questionButtons = text.split('\n').filter(line => line.trim() !== '').map(line => {
+                const questionButtons = text.split('\n')
+                    .map(line => line.trim())
+                    .filter(line => line !== '' && !line.startsWith('#'))
+                    .map(line => {
                     const parts = line.split('|');
                     const questionText = parts[langIndex];
                     const videoFile = parts[2];

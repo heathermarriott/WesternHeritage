@@ -1,4 +1,19 @@
-const CACHE_NAME = 'western-heritage-video-cache-v5'; // Increment cache version for update
+const CACHE_NAME = 'western-heritage-cache-v6'; // Increment cache version for update
+
+// List of static assets to cache on install.
+const STATIC_ASSETS = [
+  '/',
+  'index.html',
+  'css/style.css',
+  'js/main.js',
+  'en.json',
+  'questions.txt',
+  'assets/hat.png',
+  'assets/teddy.png',
+  'assets/annie.png',
+  'assets/wyatt.png',
+  'assets/horse.png'
+];
 
 // Reads questions.txt, prunes any cached videos that are no longer
 // referenced, and caches any videos that aren't cached yet. Shared by
@@ -55,11 +70,23 @@ async function syncVideoCache() {
   }
 }
 
-// Install event: cache the video files
+// Install event: cache static assets and video files
 self.addEventListener('install', event => {
   // Force the waiting service worker to become the active service worker.
   self.skipWaiting();
-  event.waitUntil(syncVideoCache());
+  event.waitUntil(
+    (async () => {
+      try {
+        const cache = await caches.open(CACHE_NAME);
+        console.log('Service Worker: Caching static assets.');
+        await cache.addAll(STATIC_ASSETS);
+      } catch (error) {
+        console.error('Service Worker: Failed to cache static assets:', error);
+      }
+      // Sync video cache after static assets are cached.
+      await syncVideoCache();
+    })()
+  );
 });
 
 // Activate event: clean up old caches
@@ -90,9 +117,12 @@ self.addEventListener('message', event => {
   }
 });
 
-// Fetch event: serve videos from cache
+// Fetch event: serve assets from cache
 self.addEventListener('fetch', event => {
-  // This service worker's fetch handler is only concerned with video files.
+  const url = new URL(event.request.url);
+  const isStaticAsset = STATIC_ASSETS.some(asset => url.pathname.endsWith(asset));
+
+  // Handle video files
   if (event.request.url.endsWith('.mp4')) {
     event.respondWith(
       caches.match(event.request).then(cachedResponse => {
@@ -121,6 +151,11 @@ self.addEventListener('fetch', event => {
         return networkPromise;
       })
     );
+  } else if (isStaticAsset) {
+    // Handle static assets (images, css, js, etc.)
+    event.respondWith(
+      caches.match(event.request).then(response => response || fetch(event.request))
+    );
   }
-  // For any other request (like .json, .png, etc.), do nothing and let the browser handle it normally.
+  // For any other request, do nothing and let the browser handle it normally.
 });

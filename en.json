@@ -26,7 +26,7 @@
     "whoAreYou": "Who are you?"
   },
   "trivia": {
-    "heading": "🤠 Prescott Trivia Challenge",
+    "heading": "Prescott Trivia Challenge",
     "intro": "Answer all five questions and see how well you know Prescott!",
     "q1": "Prescott was the first territorial capital of Arizona.",
     "q1True": "True",
@@ -52,10 +52,10 @@
     "q5C": "Cowboy Days",
     "q5D": "Frontier Roundup",
     "submit": "Submit Quiz",
-    "scoreResult": "🏆 You scored {score} out of 5!"
+    "scoreResult": "You scored {score} out of 5!"
   },
   "game": {
-    "heading": "🐎 Cowboy Roundup - click on the horse",
+    "heading": "Cowboy Roundup - click on the horse",
     "time": "Time:",
     "seconds": "sec",
     "horsesCollected": "Horses Collected:",
@@ -64,7 +64,7 @@
     "playAgain": "Play Again"
   },
   "settings": {
-    "heading": "⚙️ Settings",
+    "heading": "Settings",
     "displaySizeHeading": "Display Size",
     "displaySizeIntro": "Select how the application should be displayed.",
     "website": "Website",
@@ -74,7 +74,7 @@
     "english": "English",
     "spanish": "Spanish",
     "save": "Save Settings",
-    "saved": "✔ Settings saved!",
+    "saved": "Settings saved!",
     "displayLabel": "Display:",
     "languageLabel": "Language:"
   },

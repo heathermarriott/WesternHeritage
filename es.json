@@ -26,7 +26,7 @@
     "whoAreYou": "¿Quién eres tú?"
   },
   "trivia": {
-    "heading": "🤠 Desafío de Trivia de Prescott",
+    "heading": "Desafío de Trivia de Prescott",
     "intro": "¡Responde las cinco preguntas y descubre cuánto sabes sobre Prescott!",
     "q1": "Prescott fue la primera capital territorial de Arizona.",
     "q1True": "Verdadero",
@@ -52,7 +52,7 @@
     "q5C": "Días del Vaquero",
     "q5D": "Rodeo de la Frontera",
     "submit": "Enviar Cuestionario",
-    "scoreResult": "🏆 ¡Obtuviste {score} de 5!"
+    "scoreResult": "¡Obtuviste {score} de 5!"
   },
   "game": {
     "heading": "🐎 Rodeo Vaquero - haz clic en el caballo",
@@ -64,7 +64,7 @@
     "playAgain": "Jugar de Nuevo"
   },
   "settings": {
-    "heading": "⚙️ Ajustes",
+    "heading": "Ajustes",
     "displaySizeHeading": "Tamaño de Pantalla",
     "displaySizeIntro": "Selecciona cómo se debe mostrar la aplicación.",
     "website": "Sitio Web",

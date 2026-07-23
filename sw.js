@@ -120,7 +120,10 @@ self.addEventListener('message', event => {
 // Fetch event: serve assets from cache
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
-  const isStaticAsset = STATIC_ASSETS.some(asset => url.pathname.endsWith(asset));
+  // Check if the request's pathname is exactly one of the static assets.
+  // This is more robust than `endsWith` for paths like '/' or '/index.html'.
+  // We remove the leading '/' from the pathname to match the asset list.
+  const isStaticAsset = STATIC_ASSETS.includes(url.pathname.substring(1)) || url.pathname === '/';
 
   // Handle video files
   if (event.request.url.endsWith('.mp4')) {

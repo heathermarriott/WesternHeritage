@@ -1,4 +1,4 @@
-const CACHE_NAME = 'western-heritage-cache-v6'; // Increment cache version for update
+const CACHE_NAME = 'western-heritage-cache-v7'; // Increment cache version for update
 
 // List of static assets to cache on install.
 const STATIC_ASSETS = [
@@ -126,6 +126,11 @@ self.addEventListener('fetch', event => {
   // We remove the leading '/' from the pathname to match the asset list.
   const isStaticAsset = STATIC_ASSETS.includes(url.pathname.substring(1)) || url.pathname === '/';
 
+  // Catch any image request by extension, not just the ones hardcoded in
+  // STATIC_ASSETS - this way a new avatar/background image added later
+  // still gets cached on first load, without needing a CACHE_NAME bump.
+  const isImage = /\.(png|jpe?g|gif|webp|svg|ico)$/i.test(url.pathname);
+
   // Handle video files
   if (event.request.url.endsWith('.mp4')) {
     event.respondWith(
@@ -155,10 +160,26 @@ self.addEventListener('fetch', event => {
         return networkPromise;
       })
     );
-  } else if (isStaticAsset) {
-    // Handle static assets (images, css, js, etc.)
+  } else if (isStaticAsset || isImage) {
+    // Handle static assets and images: cache-first, and on a miss fetch
+    // from the network and store the response for next time so images
+    // added after install (e.g. new avatars) still end up cached.
     event.respondWith(
-      caches.match(event.request).then(response => response || fetch(event.request))
+      caches.match(event.request).then(cachedResponse => {
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+        return fetch(event.request).then(networkResponse => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseClone = networkResponse.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseClone));
+          }
+          return networkResponse;
+        }).catch(err => {
+          console.error('Service Worker: Failed to fetch', event.request.url, err);
+          throw err;
+        });
+      })
     );
   }
   // For any other request, do nothing and let the browser handle it normally.

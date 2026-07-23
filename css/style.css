@@ -288,6 +288,15 @@ main:has(#content.transparent){
     font-size:calc(22px * var(--scale));
 }
 
+/* Make trivia radio buttons larger and easier to tap */
+.question input[type="radio"] {
+    width: calc(25px * var(--scale));
+    height: calc(25px * var(--scale));
+    margin-right: calc(10px * var(--scale));
+    vertical-align: middle; /* Align button with the label text */
+    cursor: pointer;
+}
+
 /* Styling for the "Submit Quiz" button */
 #gradeQuiz{
     padding:calc(12px * var(--scale)) calc(30px * var(--scale));

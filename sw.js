@@ -46,7 +46,8 @@ async function syncVideoCache() {
     // files don't sit around filling up storage indefinitely.
     const cachedRequests = await cache.keys();
     for (const request of cachedRequests) {
-      if (!validUrls.has(request.url)) {
+      // Only prune .mp4 files that are no longer in the valid list.
+      if (request.url.endsWith('.mp4') && !validUrls.has(request.url)) {
         console.log('Service Worker: Pruning stale cached video:', request.url);
         await cache.delete(request);
       }

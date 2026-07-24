@@ -241,9 +241,28 @@ export function renderPage(page, context) {
                     <span data-lang-key="settings.english">${translations.settings.english}</span>
                 </label>
                 <br><br>
+
+                <label>
+                    <input type="radio" name="language" value="de" ${savedLanguage === 'de' ? 'checked' : ''}>
+                    <span data-lang-key="settings.german">${translations.settings.german}</span>
+                </label>
+                <br><br>
+
                 <label>
                     <input type="radio" name="language" value="es" ${savedLanguage === 'es' ? 'checked' : ''}>
                     <span data-lang-key="settings.spanish">${translations.settings.spanish}</span>
+                </label>
+                <br><br>
+
+                <label>
+                    <input type="radio" name="language" value="fr" ${savedLanguage === 'fr' ? 'checked' : ''}>
+                    <span data-lang-key="settings.french">${translations.settings.french}</span>
+                </label>
+                <br><br>
+
+                <label>
+                    <input type="radio" name="language" value="it" ${savedLanguage === 'it' ? 'checked' : ''}>
+                    <span data-lang-key="settings.italian">${translations.settings.italian}</span>
                 </label>
             </div>
             <button id="saveSettings" style="padding:calc(12px * var(--scale)) calc(30px * var(--scale)); font-size:calc(18px * var(--scale)); background:#8b5a2b; color:white; border:none; border-radius:calc(8px * var(--scale)); cursor:pointer;" data-lang-key="settings.save">
@@ -259,8 +278,18 @@ export function renderPage(page, context) {
 
         document.getElementById("saveSettings").addEventListener("click", function() {
             const language = document.querySelector('input[name="language"]:checked').value;
-            document.getElementById("settingsSaved").innerHTML = `${translations.settings.saved}<br><br>
-                 <strong>${translations.settings.languageLabel}</strong> ${language === "en" ? translations.settings.english : translations.settings.spanish}`;
+            const languageNames = {
+                en: translations.settings.english,
+                de: translations.settings.german,
+                es: translations.settings.spanish,
+                fr: translations.settings.french,
+                it: translations.settings.italian
+            };
+
+            document.getElementById("settingsSaved").innerHTML =
+                `${translations.settings.saved}<br><br>
+                <strong>${translations.settings.languageLabel}</strong> ${languageNames[language]}`;
+          
         });
     }
 }

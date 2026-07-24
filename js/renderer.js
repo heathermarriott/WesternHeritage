@@ -302,31 +302,31 @@ export function renderPage(page, context) {
                 <p data-lang-key="settings.languageIntro">${translations.settings.languageIntro}</p>
                 <label>
                     <input type="radio" name="language" value="en" ${savedLanguage === 'en' ? 'checked' : ''}>
-                    <span data-lang-key="settings.english">${translations.settings.english}</span>
+                    <span>English</span>
                 </label>
                 <br><br>
 
                 <label>
                     <input type="radio" name="language" value="de" ${savedLanguage === 'de' ? 'checked' : ''}>
-                    <span data-lang-key="settings.german">${translations.settings.german}</span>
+                    <span>Deutsch</span>
                 </label>
                 <br><br>
 
                 <label>
                     <input type="radio" name="language" value="es" ${savedLanguage === 'es' ? 'checked' : ''}>
-                    <span data-lang-key="settings.spanish">${translations.settings.spanish}</span>
+                    <span>Español</span>
                 </label>
                 <br><br>
 
                 <label>
                     <input type="radio" name="language" value="fr" ${savedLanguage === 'fr' ? 'checked' : ''}>
-                    <span data-lang-key="settings.french">${translations.settings.french}</span>
+                    <span>Français</span>
                 </label>
                 <br><br>
 
                 <label>
                     <input type="radio" name="language" value="it" ${savedLanguage === 'it' ? 'checked' : ''}>
-                    <span data-lang-key="settings.italian">${translations.settings.italian}</span>
+                    <span>Italiano</span>
                 </label>
             </div>
             <button id="saveSettings" style="padding:calc(12px * var(--scale)) calc(30px * var(--scale)); font-size:calc(18px * var(--scale)); background:#8b5a2b; color:white; border:none; border-radius:calc(8px * var(--scale)); cursor:pointer;" data-lang-key="settings.save">
@@ -343,11 +343,11 @@ export function renderPage(page, context) {
         document.getElementById("saveSettings").addEventListener("click", function() {
             const language = document.querySelector('input[name="language"]:checked').value;
             const languageNames = {
-                en: translations.settings.english,
-                de: translations.settings.german,
-                es: translations.settings.spanish,
-                fr: translations.settings.french,
-                it: translations.settings.italian
+                en: "English",
+                de: "Deutsch",
+                es: "Español",
+                fr: "Français",
+                it: "Italiano"
             };
 
             document.getElementById("settingsSaved").innerHTML =

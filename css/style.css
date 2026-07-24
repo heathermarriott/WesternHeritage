@@ -426,7 +426,7 @@ main:has(#content.transparent){
 }
 
 .menuFlag {
-    width: 36px;
+    width: 100px;
     height: auto;
     display: block;
     margin: 0 auto;

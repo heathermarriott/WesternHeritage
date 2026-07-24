@@ -81,5 +81,24 @@
   },
   "common": {
     "underConstruction": "Esta sección está en construcción."
+  },
+
+  "timeline": {
+    "heading": "El Sendero de Prescott",
+    "intro": "Toca cualquier marcador para seguir la historia del pueblo, a\u00f1o por a\u00f1o.",
+    "trailEnd": "El sendero contin\u00faa hoy \u2014 la historia de Prescott todav\u00eda se est\u00e1 escribiendo.",
+    "milestones": [
+      { "year": "1863", "title": "Oro en Granite Creek", "body": "Una expedici\u00f3n liderada por Joseph Walker encontr\u00f3 oro en los arroyos de las monta\u00f1as Bradshaw, atrayendo a los primeros mineros a la zona que se convertir\u00eda en Prescott." },
+      { "year": "1864", "title": "La Primera Capital de Arizona", "body": "El reci\u00e9n formado Territorio de Arizona necesitaba una sede de gobierno. Los funcionarios se reunieron y eligieron el nombre \u201cPrescott\u201d, en honor al historiador William Hickling Prescott, y el pueblo se convirti\u00f3 en la primera capital del territorio." },
+      { "year": "1867", "title": "La Capital se Traslada a Tucson", "body": "El clima pol\u00edtico cambi\u00f3 y la capital territorial se traslad\u00f3 al sur, a Tucson, frenando el crecimiento de Prescott como centro de gobierno durante una d\u00e9cada." },
+      { "year": "1877", "title": "La Capital Regresa", "body": "Prescott recuper\u00f3 su estatus de capital territorial, restaurando el pueblo como el centro pol\u00edtico de Arizona durante doce a\u00f1os m\u00e1s." },
+      { "year": "1888", "title": "El Rodeo M\u00e1s Antiguo del Mundo", "body": "Vaqueros y trabajadores de ranchos compitieron en lo que se conocer\u00eda como el Rodeo M\u00e1s Antiguo del Mundo, una tradici\u00f3n de Prescott que sigue atrayendo multitudes cada verano." },
+      { "year": "1889", "title": "La Capital se Traslada a Phoenix", "body": "La capital territorial abandon\u00f3 Prescott definitivamente, estableci\u00e9ndose en Phoenix a medida que la poblaci\u00f3n y el crecimiento del territorio se desplazaban hacia el sur." },
+      { "year": "1900", "title": "El Incendio de Whiskey Row", "body": "Un devastador incendio arras\u00f3 el centro de la ciudad, destruyendo los comercios de madera de Whiskey Row. La reconstrucci\u00f3n comenz\u00f3 casi de inmediato, esta vez en ladrillo y piedra." },
+      { "year": "1905", "title": "Se Inaugura el Elks Opera House", "body": "Un nuevo y elegante teatro abri\u00f3 sus puertas en el centro, trayendo vodevil, cine y espect\u00e1culos en vivo a la ciudad reconstruida; todav\u00eda presenta espect\u00e1culos hoy en d\u00eda." },
+      { "year": "1927", "title": "Se Inaugura el Hassayampa Inn", "body": "Este elegante hotel abri\u00f3 sus puertas en el centro, convirti\u00e9ndose r\u00e1pidamente en un lugar de encuentro para viajeros, ganaderos y lugare\u00f1os por igual." },
+      { "year": "1928", "title": "Se Funda el Museo Sharlot Hall", "body": "La pionera e historiadora Sharlot Hall abri\u00f3 un museo en la antigua Mansi\u00f3n del Gobernador Territorial, dedic\u00e1ndose a preservar la historia fronteriza de Prescott para las generaciones futuras." }
+    ]
   }
+}
 }

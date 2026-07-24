@@ -81,5 +81,24 @@
   },
   "common": {
     "underConstruction": "Cette section est en construction."
+  },
+
+  "timeline": {
+    "heading": "Le Sentier de Prescott",
+    "intro": "Touchez un rep\u00e8re pour suivre l'histoire de la ville, ann\u00e9e apr\u00e8s ann\u00e9e.",
+    "trailEnd": "Le sentier continue aujourd'hui \u2014 l'histoire de Prescott est encore en train de s'\u00e9crire.",
+    "milestones": [
+      { "year": "1863", "title": "De l'Or \u00e0 Granite Creek", "body": "Une exp\u00e9dition men\u00e9e par Joseph Walker a d\u00e9couvert de l'or dans les ruisseaux des montagnes Bradshaw, attirant les premiers mineurs dans la r\u00e9gion qui allait devenir Prescott." },
+      { "year": "1864", "title": "La Premi\u00e8re Capitale de l'Arizona", "body": "Le Territoire de l'Arizona, nouvellement form\u00e9, avait besoin d'un si\u00e8ge du gouvernement. Les responsables se sont r\u00e9unis et ont choisi le nom \u00ab Prescott \u00bb, en l'honneur de l'historien William Hickling Prescott, et la ville est devenue la premi\u00e8re capitale du territoire." },
+      { "year": "1867", "title": "La Capitale D\u00e9m\u00e9nage \u00e0 Tucson", "body": "Le vent politique a tourn\u00e9, et la capitale territoriale a \u00e9t\u00e9 d\u00e9plac\u00e9e vers le sud, \u00e0 Tucson, ralentissant la croissance de Prescott en tant que centre gouvernemental pendant une d\u00e9cennie." },
+      { "year": "1877", "title": "La Capitale Revient", "body": "Prescott a retrouv\u00e9 son statut de capitale territoriale, redevenant le centre politique de l'Arizona pendant douze ann\u00e9es suppl\u00e9mentaires." },
+      { "year": "1888", "title": "Le Rod\u00e9o le Plus Vieux du Monde", "body": "Cowboys et employ\u00e9s de ranch se sont affront\u00e9s dans ce qui allait devenir le Rod\u00e9o le Plus Vieux du Monde, une tradition de Prescott qui continue d'attirer les foules chaque \u00e9t\u00e9." },
+      { "year": "1889", "title": "La Capitale D\u00e9m\u00e9nage \u00e0 Phoenix", "body": "La capitale territoriale a quitt\u00e9 Prescott pour de bon, s'installant \u00e0 Phoenix alors que la population et la croissance du territoire se d\u00e9pla\u00e7aient vers le sud." },
+      { "year": "1900", "title": "L'Incendie de Whiskey Row", "body": "Un incendie d\u00e9vastateur a ravag\u00e9 le centre-ville, d\u00e9truisant les devantures en bois de Whiskey Row. La reconstruction a commenc\u00e9 presque imm\u00e9diatement - cette fois en brique et en pierre." },
+      { "year": "1905", "title": "Ouverture de l'Elks Opera House", "body": "Un nouveau th\u00e9\u00e2tre grandiose a ouvert ses portes au centre-ville, apportant vaudeville, cin\u00e9ma et spectacles en direct \u00e0 la ville reconstruite - il accueille encore des spectacles aujourd'hui." },
+      { "year": "1927", "title": "Ouverture du Hassayampa Inn", "body": "Cet h\u00f4tel \u00e9l\u00e9gant a ouvert ses portes au centre-ville, devenant rapidement un lieu de rassemblement pour les voyageurs, \u00e9leveurs et habitants." },
+      { "year": "1928", "title": "Fondation du Mus\u00e9e Sharlot Hall", "body": "La pionni\u00e8re et historienne Sharlot Hall a ouvert un mus\u00e9e dans l'ancienne r\u00e9sidence du gouverneur territorial, se consacrant \u00e0 pr\u00e9server l'histoire fronti\u00e8re de Prescott pour les g\u00e9n\u00e9rations futures." }
+    ]
   }
 }
+

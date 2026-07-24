@@ -81,5 +81,23 @@
   },
   "common": {
     "underConstruction": "Dieser Bereich befindet sich im Aufbau."
+  },
+
+  "timeline": {
+    "heading": "Der Prescott-Pfad",
+    "intro": "Tippe auf eine Markierung, um die Geschichte der Stadt Jahr f\u00fcr Jahr zu verfolgen.",
+    "trailEnd": "Der Pfad geht bis heute weiter \u2014 Prescotts Geschichte wird noch geschrieben.",
+    "milestones": [
+      { "year": "1863", "title": "Gold am Granite Creek", "body": "Eine von Joseph Walker gef\u00fchrte Expedition fand Gold in den B\u00e4chen der Bradshaw Mountains und lockte die ersten Bergleute in die Gegend, aus der sp\u00e4ter Prescott werden sollte." },
+      { "year": "1864", "title": "Arizonas Erste Hauptstadt", "body": "Das neu gegr\u00fcndete Arizona-Territorium brauchte einen Regierungssitz. Beamte versammelten sich und einigten sich auf den Namen \u201ePrescott\u201c zu Ehren des Historikers William Hickling Prescott, und die Stadt wurde die erste Hauptstadt des Territoriums." },
+      { "year": "1867", "title": "Hauptstadt Zieht Nach Tucson", "body": "Der politische Wind drehte sich, und die Territorialhauptstadt wurde nach S\u00fcden, nach Tucson, verlegt, was Prescotts Wachstum als Regierungszentrum f\u00fcr ein Jahrzehnt verlangsamte." },
+      { "year": "1877", "title": "Die Hauptstadt Kehrt Zur\u00fcck", "body": "Prescott gewann seinen Status als Territorialhauptstadt zur\u00fcck und war f\u00fcr weitere zw\u00f6lf Jahre wieder das politische Zentrum von Arizona." },
+      { "year": "1888", "title": "Das \u00c4lteste Rodeo der Welt", "body": "Cowboys und Ranchhelfer traten bei dem an, was als \u00c4ltestes Rodeo der Welt bekannt werden sollte - eine Prescott-Tradition, die jeden Sommer noch immer Besucher anzieht." },
+      { "year": "1889", "title": "Hauptstadt Zieht Nach Phoenix", "body": "Die Territorialhauptstadt verlie\u00df Prescott endg\u00fcltig und lie\u00df sich in Phoenix nieder, da sich Bev\u00f6lkerung und Wachstum des Territoriums nach S\u00fcden verlagerten." },
+      { "year": "1900", "title": "Das Whiskey-Row-Feuer", "body": "Ein verheerendes Feuer zerst\u00f6rte die Innenstadt und vernichtete die h\u00f6lzernen Ladenfronten der Whiskey Row. Der Wiederaufbau begann fast sofort - diesmal aus Ziegel und Stein." },
+      { "year": "1905", "title": "Elks Opera House Er\u00f6ffnet", "body": "Ein pr\u00e4chtiges neues Theater er\u00f6ffnete in der Innenstadt und brachte Variet\u00e9, Film und Live-Auftritte in die wiederaufgebaute Stadt - es zeigt noch heute Vorstellungen." },
+      { "year": "1927", "title": "Hassayampa Inn Er\u00f6ffnet", "body": "Dieses elegante Hotel \u00f6ffnete seine T\u00fcren in der Innenstadt und wurde schnell zu einem Treffpunkt f\u00fcr Reisende, Rancher und Einheimische gleicherma\u00dfen." },
+      { "year": "1928", "title": "Sharlot-Hall-Museum Gegr\u00fcndet", "body": "Die Pionierin und Historikerin Sharlot Hall er\u00f6ffnete ein Museum in der alten Residenz des Territorialgouverneurs und widmete sich der Bewahrung von Prescotts Grenzgeschichte f\u00fcr k\u00fcnftige Generationen." }
+    ]
   }
 }

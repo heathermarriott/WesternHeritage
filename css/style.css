@@ -431,3 +431,157 @@ main:has(#content.transparent){
     display: block;
     margin: 0 auto;
 }
+
+/* ==========================================================================
+   Add this block to css/style.css for the Prescott Timeline page.
+   Sizing follows the same calc(Npx * var(--scale)) pattern as the rest
+   of the site, so it scales with --device-width/--device-height.
+   ========================================================================== */
+
+.timelineHeader{
+    text-align:center;
+    margin-bottom:calc(24px * var(--scale));
+}
+
+.timelineHeader h2{
+    font-size:calc(28px * var(--scale));
+    color:#4a2f1a;
+}
+
+.timelineHeader p{
+    margin-top:calc(6px * var(--scale));
+    font-size:calc(16px * var(--scale));
+    color:#7a5c3a;
+}
+
+.trail{
+    position:relative;
+    padding-left:calc(56px * var(--scale));
+}
+
+/* the dashed "wagon trail" spine */
+.trail::before{
+    content:"";
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:calc(22px * var(--scale));
+    width:calc(4px * var(--scale));
+    background:repeating-linear-gradient(
+        to bottom,
+        #6b4423 0 calc(14px * var(--scale)),
+        transparent calc(14px * var(--scale)) calc(26px * var(--scale))
+    );
+    border-radius:calc(2px * var(--scale));
+}
+
+.milestone{
+    position:relative;
+    margin-bottom:calc(6px * var(--scale));
+    opacity:0;
+    transform:translateY(calc(14px * var(--scale)));
+    transition:opacity .5s ease, transform .5s ease;
+}
+
+.milestone.visible{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* the year marker "trail post" */
+.milestone-marker{
+    position:absolute;
+    left:calc(-56px * var(--scale));
+    top:0;
+    width:calc(48px * var(--scale));
+    height:calc(48px * var(--scale));
+    border-radius:50%;
+    background:#8b5a2b;
+    border:calc(3px * var(--scale)) solid #4a2f1a;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:calc(12px * var(--scale));
+    font-weight:bold;
+    text-align:center;
+    line-height:1.1;
+    box-shadow:0 calc(3px * var(--scale)) calc(6px * var(--scale)) rgba(0,0,0,.25);
+    cursor:pointer;
+    touch-action:manipulation;
+}
+
+.milestone-card{
+    background:#f8f1df;
+    border:1px solid rgba(107,68,35,.25);
+    border-radius:calc(10px * var(--scale));
+    padding:calc(16px * var(--scale)) calc(18px * var(--scale));
+    margin-left:calc(16px * var(--scale));
+    margin-bottom:calc(24px * var(--scale));
+    cursor:pointer;
+    touch-action:manipulation;
+    transition:box-shadow .2s;
+}
+
+.milestone-card.open{
+    box-shadow:0 calc(6px * var(--scale)) calc(18px * var(--scale)) rgba(0,0,0,.18);
+}
+
+.milestone-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:calc(12px * var(--scale));
+}
+
+.milestone-title h2{
+    font-size:calc(19px * var(--scale));
+    color:#4a2f1a;
+}
+
+.milestone-caret{
+    font-size:calc(14px * var(--scale));
+    color:#8b5a2b;
+    transition:transform .25s;
+    flex-shrink:0;
+}
+
+.milestone-card.open .milestone-caret{
+    transform:rotate(180deg);
+}
+
+.milestone-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease, opacity .2s ease, margin-top .2s ease;
+    opacity:0;
+    font-size:calc(15px * var(--scale));
+    line-height:1.5;
+    color:#6b4a2e;
+}
+
+.milestone-card.open .milestone-body{
+    max-height:calc(220px * var(--scale));
+    opacity:1;
+    margin-top:calc(10px * var(--scale));
+}
+
+.trailEnd{
+    position:relative;
+    margin-left:calc(-56px * var(--scale));
+    padding-left:calc(56px * var(--scale));
+    color:#7a5c3a;
+    font-style:italic;
+    font-size:calc(14px * var(--scale));
+}
+
+.trailEnd::before{
+    content:"";
+    position:absolute;
+    left:calc(14px * var(--scale));
+    top:calc(6px * var(--scale));
+    width:calc(20px * var(--scale));
+    height:calc(20px * var(--scale));
+    border-radius:50%;
+    background:#4a2f1a;
+}

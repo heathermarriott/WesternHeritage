@@ -82,5 +82,24 @@
   },
   "common": {
     "underConstruction": "This section is under construction."
+  },
+
+  "timeline": {
+    "heading": "The Prescott Trail",
+    "intro": "Tap any marker to follow the town's story, year by year.",
+    "trailEnd": "The trail continues today \u2014 Prescott's story is still being written.",
+    "milestones": [
+      { "year": "1863", "title": "Gold Along Granite Creek", "body": "A prospecting party led by Joseph Walker found gold in the creeks of the Bradshaw Mountains, drawing the first wave of miners into the area that would become Prescott." },
+      { "year": "1864", "title": "Arizona's First Capital", "body": "The newly formed Arizona Territory needed a seat of government. Officials gathered and settled on the name \u201cPrescott,\u201d honoring historian William Hickling Prescott, and the town became the territory's first capital." },
+      { "year": "1867", "title": "Capital Moves to Tucson", "body": "Political winds shifted, and the territorial capital was relocated south to Tucson, slowing Prescott's growth as a government center for a decade." },
+      { "year": "1877", "title": "The Capital Returns", "body": "Prescott won back its status as territorial capital, restoring the town as the political heart of Arizona for another twelve years." },
+      { "year": "1888", "title": "The World's Oldest Rodeo", "body": "Cowboys and ranch hands competed in what would become known as the World's Oldest Rodeo, a Prescott tradition that continues to draw crowds every summer." },
+      { "year": "1889", "title": "Capital Moves to Phoenix", "body": "The territorial capital left Prescott for good, settling in Phoenix as the territory's population and growth shifted southward." },
+      { "year": "1900", "title": "The Whiskey Row Fire", "body": "A devastating fire tore through downtown, destroying the wooden storefronts of Whiskey Row. Rebuilding began almost immediately - this time in brick and stone." },
+      { "year": "1905", "title": "Elks Opera House Opens", "body": "A grand new theater opened downtown, bringing vaudeville, film, and live performance to the rebuilt city - it still hosts shows today." },
+      { "year": "1927", "title": "Hassayampa Inn Opens", "body": "This elegant hotel opened its doors downtown, quickly becoming a gathering place for travelers, ranchers, and locals alike." },
+      { "year": "1928", "title": "Sharlot Hall Museum Founded", "body": "Pioneer and historian Sharlot Hall opened a museum in the old Territorial Governor's Mansion, dedicating herself to preserving Prescott's frontier history for future generations." }
+    ]
   }
+
 }

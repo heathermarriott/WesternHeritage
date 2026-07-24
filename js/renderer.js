@@ -102,6 +102,65 @@ async function renderAskAQuestionPage(context) {
     }
 }
 
+/**
+ * Renders the "Prescott Timeline" page: an interactive, tap-to-expand
+ * history trail. Milestone copy (heading/intro/trailEnd/milestones) comes
+ * from translations.timeline, so it's translated the same way as every
+ * other page - see the JSON snippet provided alongside this file.
+ * @param {Object} context - The application context.
+ */
+function renderTimelinePage(context) {
+    const { content, translations } = context;
+    const timeline = translations.timeline;
+
+    const milestoneMarkup = timeline.milestones.map((m, index) => `
+        <div class="milestone">
+            <div class="milestone-marker">${m.year}</div>
+            <div class="milestone-card" data-index="${index}">
+                <div class="milestone-title">
+                    <h2>${m.title}</h2>
+                    <span class="milestone-caret">&#9660;</span>
+                </div>
+                <div class="milestone-body">${m.body}</div>
+            </div>
+        </div>
+    `).join('');
+
+    content.innerHTML = `
+        <div class="timelineHeader">
+            <h2 data-lang-key="timeline.heading">${timeline.heading}</h2>
+            <p data-lang-key="timeline.intro">${timeline.intro}</p>
+        </div>
+        <div class="trail" id="trail">
+            ${milestoneMarkup}
+        </div>
+        <div class="trailEnd" data-lang-key="timeline.trailEnd">${timeline.trailEnd}</div>
+    `;
+
+    const trail = document.getElementById("trail");
+
+    // Tap a card (or its year marker) to expand/collapse the description
+    trail.addEventListener("click", (e) => {
+        const card = e.target.closest(".milestone-card");
+        const marker = e.target.closest(".milestone-marker");
+        const targetCard = card || (marker ? marker.nextElementSibling : null);
+        if (targetCard) {
+            targetCard.classList.toggle("open");
+        }
+    });
+
+    // Fade/slide each milestone in as it scrolls into view
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+            }
+        });
+    }, { threshold: 0.15 });
+
+    trail.querySelectorAll(".milestone").forEach(el => observer.observe(el));
+}
+
 
 // --- PUBLIC RENDER FUNCTION ---
 

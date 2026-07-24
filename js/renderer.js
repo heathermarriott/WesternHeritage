@@ -185,6 +185,8 @@ export function renderPage(page, context) {
         }
     } else {
         // Pages with a static avatar background
+        // (Prescott Timeline falls into this branch automatically, same as
+        // Trivia/Game/Settings - no changes needed here.)
         introVideo.style.display = 'none';
         introVideo.pause();
         stage.style.backgroundImage = `url('${currentAvatarImg}')`;
@@ -286,6 +288,9 @@ export function renderPage(page, context) {
                 <div id="gameOver"></div>
             </div>`;
         startRoundupGame();
+
+    } else if (page === "Prescott Timeline") {
+        renderTimelinePage(context);
 
     } else if (page === "Settings") {
         const savedLanguage = localStorage.getItem("language") || "en";

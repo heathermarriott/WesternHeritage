@@ -424,3 +424,10 @@ main:has(#content.transparent){
     opacity: 1;
     pointer-events: auto;
 }
+
+.menuFlag {
+    width: 36px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}

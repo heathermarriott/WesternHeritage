@@ -3,7 +3,7 @@
   "menu": {
     "openMenuTitle": "Open Menu",
     "title": "Menu",
-    "selectAvatar": "Select Avatar",
+    "selectAvatar": "Select Character",
     "askQuestion": "Ask a Question",
     "prescottTrivia": "Prescott Trivia",
     "cowboyRoundupGame": "Cowboy Roundup Game",
@@ -13,7 +13,7 @@
     "welcomeMessage": "Click the cowboy hat to open the navigation menu."
   },
   "avatar": {
-    "heading": "Select Your Avatar",
+    "heading": "Select Your Character",
     "theodoreRoosevelt": "Theodore Roosevelt",
     "annieOakley": "Annie Oakley",
     "wyattEarp": "Wyatt Earp",
@@ -67,12 +67,13 @@
     "heading": "Settings",
     "displaySizeHeading": "Display Size",
     "displaySizeIntro": "Select how the application should be displayed.",
-    "website": "Website",
-    "protoLuma": "Proto Luma",
     "languageHeading": "Language",
     "languageIntro": "Select your preferred language.",
     "english": "English",
     "spanish": "Spanish",
+    "german": "German",
+    "french": "French",
+    "italian": "Italian",
     "save": "Save Settings",
     "saved": "Settings saved!",
     "displayLabel": "Display:",

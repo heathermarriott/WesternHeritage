@@ -1,0 +1,85 @@
+{
+  "pageTitle": "Prescott Western Heritage Center",
+  "menu": {
+    "openMenuTitle": "Menü Öffnen",
+    "title": "Menü",
+    "selectAvatar": "Charakter Auswählen",
+    "askQuestion": "Frage Stellen",
+    "prescottTrivia": "Prescott-Quiz",
+    "cowboyRoundupGame": "Cowboy-Rodeo-Spiel",
+    "settings": "Einstellungen"
+  },
+  "home": {
+    "welcomeMessage": "Klicke auf den Cowboyhut, um das Navigationsmenü zu öffnen."
+  },
+  "avatar": {
+    "heading": "Wähle Deinen Charakter",
+    "theodoreRoosevelt": "Theodore Roosevelt",
+    "annieOakley": "Annie Oakley",
+    "wyattEarp": "Wyatt Earp",
+    "selectedHeading": "Charakter Ausgewählt!",
+    "selectedMessage": "Dein Abenteuer kann beginnen. Klicke auf den Cowboyhut, um das Navigationsmenü zu öffnen."
+  },
+  "askQuestion": {
+    "bucky": "Wer war Bucky O'Neill?",
+    "rodeo": "Wann begann das Prescott-Rodeo?",
+    "whoAreYou": "Wer bist du?"
+  },
+  "trivia": {
+    "heading": "Prescott-Quiz-Herausforderung",
+    "intro": "Beantworte alle fünf Fragen und finde heraus, wie gut du Prescott kennst!",
+    "q1": "Prescott war die erste Territorialhauptstadt von Arizona.",
+    "q1True": "Wahr",
+    "q1False": "Falsch",
+    "q2": "Welche berühmte Straße ist für ihre historischen Saloons bekannt?",
+    "q2A": "Whiskey Row",
+    "q2B": "Main Street",
+    "q2C": "Frontier Road",
+    "q2D": "Gold Street",
+    "q3": "Welcher große See liegt nur wenige Kilometer von der Innenstadt von Prescott entfernt?",
+    "q3A": "Lake Pleasant",
+    "q3B": "Watson Lake",
+    "q3C": "Roosevelt Lake",
+    "q3D": "Saguaro Lake",
+    "q4": "Von welchem Nationalforst ist Prescott umgeben?",
+    "q4A": "Coconino-Nationalforst",
+    "q4B": "Prescott-Nationalforst",
+    "q4C": "Kaibab-Nationalforst",
+    "q4D": "Apache-Sitgreaves-Nationalforst",
+    "q5": "Das jährliche Rodeo von Prescott ist bekannt als:",
+    "q5A": "Arizona Stampede",
+    "q5B": "Das Älteste Rodeo der Welt",
+    "q5C": "Cowboy Days",
+    "q5D": "Frontier Roundup",
+    "submit": "Quiz Absenden",
+    "scoreResult": "Du hast {score} von 5 Punkten erreicht!"
+  },
+  "game": {
+    "heading": "Cowboy-Rodeo - klicke auf das Pferd",
+    "time": "Zeit:",
+    "seconds": "Sek.",
+    "horsesCollected": "Gesammelte Pferde:",
+    "timeUp": "Zeit Abgelaufen!",
+    "roundedUp": "Du hast {score} Pferde eingefangen!",
+    "playAgain": "Nochmal Spielen"
+  },
+  "settings": {
+    "heading": "Einstellungen",
+    "displaySizeHeading": "Bildschirmgröße",
+    "displaySizeIntro": "Wähle aus, wie die Anwendung angezeigt werden soll.",
+    "languageHeading": "Sprache",
+    "languageIntro": "Wähle deine bevorzugte Sprache.",
+    "english": "Englisch",
+    "spanish": "Spanisch",
+    "german": "Deutsch",
+    "french": "Französisch",
+    "italian": "Italienisch",
+    "save": "Einstellungen Speichern",
+    "saved": "Einstellungen gespeichert!",
+    "displayLabel": "Anzeige:",
+    "languageLabel": "Sprache:"
+  },
+  "common": {
+    "underConstruction": "Dieser Bereich befindet sich im Aufbau."
+  }
+}

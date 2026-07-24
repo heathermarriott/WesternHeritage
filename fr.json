@@ -1,0 +1,85 @@
+{
+  "pageTitle": "Centre du Patrimoine de l'Ouest de Prescott",
+  "menu": {
+    "openMenuTitle": "Ouvrir le Menu",
+    "title": "Menu",
+    "selectAvatar": "Choisir Un Personnage",
+    "askQuestion": "Poser Une Question",
+    "prescottTrivia": "Quiz sur Prescott",
+    "cowboyRoundupGame": "Jeu du Rodéo",
+    "settings": "Paramètres"
+  },
+  "home": {
+    "welcomeMessage": "Cliquez sur le chapeau de cowboy pour ouvrir le menu de navigation."
+  },
+  "avatar": {
+    "heading": "Choisissez Votre Personnage",
+    "theodoreRoosevelt": "Theodore Roosevelt",
+    "annieOakley": "Annie Oakley",
+    "wyattEarp": "Wyatt Earp",
+    "selectedHeading": "Personnage Sélectionné !",
+    "selectedMessage": "Votre aventure est prête à commencer. Cliquez sur le chapeau de cowboy pour ouvrir le menu de navigation."
+  },
+  "askQuestion": {
+    "bucky": "Qui était Bucky O'Neill ?",
+    "rodeo": "Quand le rodéo de Prescott a-t-il commencé ?",
+    "whoAreYou": "Qui es-tu ?"
+  },
+  "trivia": {
+    "heading": "Quiz sur Prescott",
+    "intro": "Répondez aux cinq questions et découvrez à quel point vous connaissez Prescott !",
+    "q1": "Prescott a été la première capitale territoriale de l'Arizona.",
+    "q1True": "Vrai",
+    "q1False": "Faux",
+    "q2": "Quelle rue célèbre est connue pour ses saloons historiques ?",
+    "q2A": "Whiskey Row",
+    "q2B": "Main Street",
+    "q2C": "Frontier Road",
+    "q2D": "Gold Street",
+    "q3": "Quel grand lac se trouve à quelques kilomètres du centre-ville de Prescott ?",
+    "q3A": "Lake Pleasant",
+    "q3B": "Watson Lake",
+    "q3C": "Roosevelt Lake",
+    "q3D": "Saguaro Lake",
+    "q4": "Par quelle forêt nationale Prescott est-elle entourée ?",
+    "q4A": "Forêt Nationale de Coconino",
+    "q4B": "Forêt Nationale de Prescott",
+    "q4C": "Forêt Nationale de Kaibab",
+    "q4D": "Forêt Nationale d'Apache-Sitgreaves",
+    "q5": "Le rodéo annuel de Prescott est connu sous le nom de :",
+    "q5A": "Arizona Stampede",
+    "q5B": "Le Plus Vieux Rodéo du Monde",
+    "q5C": "Cowboy Days",
+    "q5D": "Frontier Roundup",
+    "submit": "Soumettre le Quiz",
+    "scoreResult": "Vous avez obtenu {score} sur 5 !"
+  },
+  "game": {
+    "heading": "Rodéo du Cowboy - cliquez sur le cheval",
+    "time": "Temps :",
+    "seconds": "sec",
+    "horsesCollected": "Chevaux Rassemblés :",
+    "timeUp": "Temps Écoulé !",
+    "roundedUp": "Vous avez rassemblé {score} chevaux !",
+    "playAgain": "Rejouer"
+  },
+  "settings": {
+    "heading": "Paramètres",
+    "displaySizeHeading": "Taille d'Affichage",
+    "displaySizeIntro": "Sélectionnez comment l'application doit être affichée.",
+    "languageHeading": "Langue",
+    "languageIntro": "Sélectionnez votre langue préférée.",
+    "english": "Anglais",
+    "spanish": "Espagnol",
+    "german": "Allemand",
+    "french": "Français",
+    "italian": "Italien",
+    "save": "Enregistrer les Paramètres",
+    "saved": "Paramètres enregistrés !",
+    "displayLabel": "Affichage :",
+    "languageLabel": "Langue :"
+  },
+  "common": {
+    "underConstruction": "Cette section est en construction."
+  }
+}

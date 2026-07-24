@@ -1,0 +1,85 @@
+{
+  "pageTitle": "Centro del Patrimonio dell'Ovest di Prescott",
+  "menu": {
+    "openMenuTitle": "Apri Menu",
+    "title": "Menu",
+    "selectAvatar": "Seleziona Personaggio",
+    "askQuestion": "Fai Una Domanda",
+    "prescottTrivia": "Quiz su Prescott",
+    "cowboyRoundupGame": "Gioco del Rodeo",
+    "settings": "Impostazioni"
+  },
+  "home": {
+    "welcomeMessage": "Clicca sul cappello da cowboy per aprire il menu di navigazione."
+  },
+  "avatar": {
+    "heading": "Seleziona Il Tuo Personaggio",
+    "theodoreRoosevelt": "Theodore Roosevelt",
+    "annieOakley": "Annie Oakley",
+    "wyattEarp": "Wyatt Earp",
+    "selectedHeading": "Personaggio Selezionato!",
+    "selectedMessage": "La tua avventura è pronta per iniziare. Clicca sul cappello da cowboy per aprire il menu di navigazione."
+  },
+  "askQuestion": {
+    "bucky": "Chi era Bucky O'Neill?",
+    "rodeo": "Quando è iniziato il Rodeo di Prescott?",
+    "whoAreYou": "Chi sei?"
+  },
+  "trivia": {
+    "heading": "Quiz su Prescott",
+    "intro": "Rispondi a tutte e cinque le domande e scopri quanto conosci Prescott!",
+    "q1": "Prescott fu la prima capitale territoriale dell'Arizona.",
+    "q1True": "Vero",
+    "q1False": "Falso",
+    "q2": "Quale famosa via è nota per i suoi storici saloon?",
+    "q2A": "Whiskey Row",
+    "q2B": "Main Street",
+    "q2C": "Frontier Road",
+    "q2D": "Gold Street",
+    "q3": "Quale grande lago si trova a pochi chilometri dal centro di Prescott?",
+    "q3A": "Lake Pleasant",
+    "q3B": "Watson Lake",
+    "q3C": "Roosevelt Lake",
+    "q3D": "Saguaro Lake",
+    "q4": "Da quale foresta nazionale è circondata Prescott?",
+    "q4A": "Foresta Nazionale di Coconino",
+    "q4B": "Foresta Nazionale di Prescott",
+    "q4C": "Foresta Nazionale di Kaibab",
+    "q4D": "Foresta Nazionale di Apache-Sitgreaves",
+    "q5": "Il rodeo annuale di Prescott è conosciuto come:",
+    "q5A": "Arizona Stampede",
+    "q5B": "Il Rodeo Più Antico del Mondo",
+    "q5C": "Cowboy Days",
+    "q5D": "Frontier Roundup",
+    "submit": "Invia Quiz",
+    "scoreResult": "Hai totalizzato {score} su 5!"
+  },
+  "game": {
+    "heading": "Rodeo del Cowboy - clicca sul cavallo",
+    "time": "Tempo:",
+    "seconds": "sec",
+    "horsesCollected": "Cavalli Radunati:",
+    "timeUp": "Tempo Scaduto!",
+    "roundedUp": "Hai radunato {score} cavalli!",
+    "playAgain": "Gioca Ancora"
+  },
+  "settings": {
+    "heading": "Impostazioni",
+    "displaySizeHeading": "Dimensione Schermo",
+    "displaySizeIntro": "Seleziona come deve essere visualizzata l'applicazione.",
+    "languageHeading": "Lingua",
+    "languageIntro": "Seleziona la lingua preferita.",
+    "english": "Inglese",
+    "spanish": "Spagnolo",
+    "german": "Tedesco",
+    "french": "Francese",
+    "italian": "Italiano",
+    "save": "Salva Impostazioni",
+    "saved": "Impostazioni salvate!",
+    "displayLabel": "Schermo:",
+    "languageLabel": "Lingua:"
+  },
+  "common": {
+    "underConstruction": "Questa sezione è in costruzione."
+  }
+}

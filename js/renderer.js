@@ -181,7 +181,7 @@ export function renderPage(page, context) {
         content.classList.add("transparent");
         if (page === "Select Avatar") {
             introVideo.loop = true;
-            context.switchVideo("videos/teddy/TeddyLowRes.mp4");
+            context.switchVideo("videos/teddy/TeddyLowRes.webm");
         }
     } else {
         // Pages with a static avatar background

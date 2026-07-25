@@ -1,4 +1,4 @@
-const CACHE_NAME = 'western-heritage-cache-v8'; // Increment cache version for update
+const CACHE_NAME = 'western-heritage-cache-v9'; // Increment cache version for update
 
 // List of static assets to cache on install.
 const STATIC_ASSETS = [
@@ -12,7 +12,8 @@ const STATIC_ASSETS = [
   'assets/teddy.png',
   'assets/annie.png',
   'assets/wyatt.png',
-  'assets/horse.png'
+  'assets/horse.png',
+  'assets/language.png'
 ];
 
 // Reads questions.txt, prunes any cached videos that are no longer

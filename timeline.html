@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prescott Timeline</title>
+
+<style>
+/* ==========================================================================
+   Design notes (for integrating into the main kiosk app):
+
+   - Palette matches the existing site: cream #efe6d3, saddle brown #8b5a2b,
+     dark brown #6b4423, ink brown #5a3b1d, tan #d8c39a.
+   - Signature element: the vertical spine is styled as a dashed wagon-trail
+     with wood-post year markers, since "a trail through time" fits the
+     Western theme better than a generic numbered list.
+   - This file is self-contained (fixed rem/vh units) so it runs on its own.
+     To drop it into the main app: move the markup into a new
+     "Prescott Timeline" branch of renderPage(), replace the vh/rem sizing
+     below with your existing calc(...px * var(--scale)) pattern, and pull
+     the milestone copy into en.json / es.json / etc. under a new
+     "timeline" key so it's translated like everything else.
+   ========================================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#efe6d3;
+    color:#5a3b1d;
+    min-height:100vh;
+}
+
+.timelinePage{
+    max-width:720px;
+    margin:0 auto;
+    padding:40px 20px 80px;
+}
+
+.timelineHeader{
+    text-align:center;
+    margin-bottom:36px;
+}
+
+.timelineHeader h1{
+    font-size:32px;
+    letter-spacing:.5px;
+    color:#4a2f1a;
+}
+
+.timelineHeader p{
+    margin-top:8px;
+    font-size:16px;
+    color:#7a5c3a;
+}
+
+/* --- The trail --- */
+.trail{
+    position:relative;
+    padding-left:56px;
+}
+
+/* the dashed "wagon trail" spine */
+.trail::before{
+    content:"";
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:22px;
+    width:4px;
+    background:repeating-linear-gradient(
+        to bottom,
+        #6b4423 0 14px,
+        transparent 14px 26px
+    );
+    border-radius:2px;
+}
+
+.milestone{
+    position:relative;
+    margin-bottom:6px;
+}
+
+/* the year marker "trail post" */
+.milestone-marker{
+    position:absolute;
+    left:-56px;
+    top:0;
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    background:#8b5a2b;
+    border:3px solid #4a2f1a;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    font-weight:bold;
+    text-align:center;
+    line-height:1.1;
+    box-shadow:0 3px 6px rgba(0,0,0,.25);
+    cursor:pointer;
+    touch-action:manipulation;
+}
+
+.milestone-card{
+    background:#f8f1df;
+    border:1px solid rgba(107,68,35,.25);
+    border-radius:10px;
+    padding:16px 18px;
+    margin-left:16px;
+    margin-bottom:24px;
+    cursor:pointer;
+    touch-action:manipulation;
+    transition:box-shadow .2s, transform .2s;
+}
+
+.milestone-card:hover{
+    box-shadow:0 4px 14px rgba(0,0,0,.12);
+}
+
+.milestone-card.open{
+    box-shadow:0 6px 18px rgba(0,0,0,.18);
+}
+
+.milestone-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+}
+
+.milestone-title h2{
+    font-size:19px;
+    color:#4a2f1a;
+}
+
+.milestone-caret{
+    font-size:14px;
+    color:#8b5a2b;
+    transition:transform .25s;
+    flex-shrink:0;
+}
+
+.milestone-card.open .milestone-caret{
+    transform:rotate(180deg);
+}
+
+.milestone-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease, opacity .2s ease, margin-top .2s ease;
+    opacity:0;
+    font-size:15px;
+    line-height:1.5;
+    color:#6b4a2e;
+}
+
+.milestone-card.open .milestone-body{
+    max-height:220px;
+    opacity:1;
+    margin-top:10px;
+}
+
+/* subtle reveal-on-scroll */
+.milestone{
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .5s ease, transform .5s ease;
+}
+
+.milestone.visible{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* end-of-trail flourish */
+.trailEnd{
+    position:relative;
+    margin-left:-56px;
+    padding-left:56px;
+    color:#7a5c3a;
+    font-style:italic;
+    font-size:14px;
+}
+
+.trailEnd::before{
+    content:"";
+    position:absolute;
+    left:14px;
+    top:6px;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:#4a2f1a;
+}
+</style>
+</head>
+
+<body>
+
+<div class="timelinePage">
+
+    <div class="timelineHeader">
+        <h1>The Prescott Trail</h1>
+        <p>Tap any marker to follow the town's story, year by year.</p>
+    </div>
+
+    <div class="trail" id="trail">
+        <!-- Milestones are rendered by JS from the data below -->
+    </div>
+
+    <div class="trailEnd">The trail continues today &mdash; Prescott's story is still being written.</div>
+
+</div>
+
+<script>
+const milestones = [
+    {
+        year: "1863",
+        title: "Gold Along Granite Creek",
+        body: "A prospecting party led by Joseph Walker found gold in the creeks of the Bradshaw Mountains, drawing the first wave of miners into the area that would become Prescott."
+    },
+    {
+        year: "1864",
+        title: "Arizona's First Capital",
+        body: "The newly formed Arizona Territory needed a seat of government. Officials gathered and settled on the name \u201cPrescott,\u201d honoring historian William Hickling Prescott, and the town became the territory's first capital."
+    },
+    {
+        year: "1867",
+        title: "Capital Moves to Tucson",
+        body: "Political winds shifted, and the territorial capital was relocated south to Tucson, slowing Prescott's growth as a government center for a decade."
+    },
+    {
+        year: "1877",
+        title: "The Capital Returns",
+        body: "Prescott won back its status as territorial capital, restoring the town as the political heart of Arizona for another twelve years."
+    },
+    {
+        year: "1888",
+        title: "The World's Oldest Rodeo",
+        body: "Cowboys and ranch hands competed in what would become known as the World's Oldest Rodeo, a Prescott tradition that continues to draw crowds every summer."
+    },
+    {
+        year: "1889",
+        title: "Capital Moves to Phoenix",
+        body: "The territorial capital left Prescott for good, settling in Phoenix as the territory's population and growth shifted southward."
+    },
+    {
+        year: "1900",
+        title: "The Whiskey Row Fire",
+        body: "A devastating fire tore through downtown, destroying the wooden storefronts of Whiskey Row. Rebuilding began almost immediately - this time in brick and stone."
+    },
+    {
+        year: "1905",
+        title: "Elks Opera House Opens",
+        body: "A grand new theater opened downtown, bringing vaudeville, film, and live performance to the rebuilt city - it still hosts shows today."
+    },
+    {
+        year: "1927",
+        title: "Hassayampa Inn Opens",
+        body: "This elegant hotel opened its doors downtown, quickly becoming a gathering place for travelers, ranchers, and locals alike."
+    },
+    {
+        year: "1928",
+        title: "Sharlot Hall Museum Founded",
+        body: "Pioneer and historian Sharlot Hall opened a museum in the old Territorial Governor's Mansion, dedicating herself to preserving Prescott's frontier history for future generations."
+    }
+];
+
+const trail = document.getElementById("trail");
+
+milestones.forEach((m, index) => {
+    const el = document.createElement("div");
+    el.className = "milestone";
+    el.innerHTML = `
+        <div class="milestone-marker">${m.year}</div>
+        <div class="milestone-card" data-index="${index}">
+            <div class="milestone-title">
+                <h2>${m.title}</h2>
+                <span class="milestone-caret">&#9660;</span>
+            </div>
+            <div class="milestone-body">${m.body}</div>
+        </div>
+    `;
+    trail.appendChild(el);
+});
+
+// Tap a card (or its marker) to expand/collapse the description
+trail.addEventListener("click", (e) => {
+    const card = e.target.closest(".milestone-card");
+    const marker = e.target.closest(".milestone-marker");
+    const targetCard = card || (marker ? marker.nextElementSibling : null);
+    if (targetCard) {
+        targetCard.classList.toggle("open");
+    }
+});
+
+// Fade/slide each milestone in as it scrolls into view
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+        }
+    });
+}, { threshold: 0.15 });
+
+document.querySelectorAll(".milestone").forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

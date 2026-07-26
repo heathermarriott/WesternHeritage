@@ -6,8 +6,8 @@
     "selectAvatar": "Charakter Auswählen",
     "askQuestion": "Frage Stellen",
     "prescottTrivia": "Prescott-Quiz",
-    "cowboyRoundupGame": "Cowboy-Rodeo-Spiel",
-    "settings": "Einstellungen"
+    "prescottTimeline": "Prescott-Zeitstrahl",
+    "cowboyRoundupGame": "Cowboy-Rodeo-Spiel"
   },
   "home": {
     "welcomeMessage": "Klicke auf den Cowboyhut, um das Navigationsmenü zu öffnen."
@@ -69,11 +69,6 @@
     "displaySizeIntro": "Wähle aus, wie die Anwendung angezeigt werden soll.",
     "languageHeading": "Sprache",
     "languageIntro": "Wähle deine bevorzugte Sprache.",
-    "english": "Englisch",
-    "spanish": "Spanisch",
-    "german": "Deutsch",
-    "french": "Französisch",
-    "italian": "Italienisch",
     "save": "Einstellungen Speichern",
     "saved": "Einstellungen gespeichert!",
     "displayLabel": "Anzeige:",

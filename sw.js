@@ -1,4 +1,4 @@
-const CACHE_NAME = 'western-heritage-cache-v7'; // Increment cache version for update
+const CACHE_NAME = 'western-heritage-cache-v9'; // Increment cache version for update
 
 // List of static assets to cache on install.
 const STATIC_ASSETS = [
@@ -12,7 +12,8 @@ const STATIC_ASSETS = [
   'assets/teddy.png',
   'assets/annie.png',
   'assets/wyatt.png',
-  'assets/horse.png'
+  'assets/horse.png',
+  'assets/language.png'
 ];
 
 // Reads questions.txt, prunes any cached videos that are no longer
@@ -47,7 +48,7 @@ async function syncVideoCache() {
     const cachedRequests = await cache.keys();
     for (const request of cachedRequests) {
       // Only prune .mp4 files that are no longer in the valid list.
-      if (request.url.endsWith('.mp4') && !validUrls.has(request.url)) {
+      if (request.url.endsWith('.webm') && !validUrls.has(request.url)) {
         console.log('Service Worker: Pruning stale cached video:', request.url);
         await cache.delete(request);
       }
@@ -80,7 +81,15 @@ self.addEventListener('install', event => {
       try {
         const cache = await caches.open(CACHE_NAME);
         console.log('Service Worker: Caching static assets.');
-        await cache.addAll(STATIC_ASSETS);
+        await Promise.all(
+          STATIC_ASSETS.map(async (assetUrl) => {
+            try {
+              await cache.add(assetUrl);
+            } catch (err) {
+              console.error(`Service Worker: Failed to cache static asset ${assetUrl}`, err);
+            }
+          })
+        );
       } catch (error) {
         console.error('Service Worker: Failed to cache static assets:', error);
       }
@@ -132,7 +141,7 @@ self.addEventListener('fetch', event => {
   const isImage = /\.(png|jpe?g|gif|webp|svg|ico)$/i.test(url.pathname);
 
   // Handle video files
-  if (event.request.url.endsWith('.mp4')) {
+  if (event.request.url.endsWith('.webm')) {
     event.respondWith(
       caches.match(event.request).then(cachedResponse => {
         if (cachedResponse) {

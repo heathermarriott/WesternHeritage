@@ -6,8 +6,8 @@
     "selectAvatar": "Seleccionar Personaje",
     "askQuestion": "Haz Una Pregunta",
     "prescottTrivia": "Preguntas de Trivia de Prescott",
-    "cowboyRoundupGame": "Juego de Rodeo Vaquero",
-    "settings": "Ajustes"
+    "prescottTimeline": "Cronología de Prescott",
+    "cowboyRoundupGame": "Juego de Rodeo Vaquero"
   },
   "home": {
     "welcomeMessage": "Haz clic en el sombrero de vaquero para abrir el menú de navegación."
@@ -69,11 +69,6 @@
     "displaySizeIntro": "Selecciona cómo se debe mostrar la aplicación.",
     "languageHeading": "Idioma",
     "languageIntro": "Selecciona tu idioma preferido.",
-    "english": "Inglés",
-    "german": "Alemán",
-    "spanish": "Español",
-    "french": "Francés",
-    "italian": "Italiano",
     "save": "Guardar Ajustes",
     "saved": "✔ ¡Ajustes guardados!",
     "displayLabel": "Pantalla:",

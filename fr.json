@@ -6,8 +6,8 @@
     "selectAvatar": "Choisir Un Personnage",
     "askQuestion": "Poser Une Question",
     "prescottTrivia": "Quiz sur Prescott",
-    "cowboyRoundupGame": "Jeu du Rodéo",
-    "settings": "Paramètres"
+    "prescottTimeline": "Chronologie de Prescott",
+    "cowboyRoundupGame": "Jeu du Rodéo"
   },
   "home": {
     "welcomeMessage": "Cliquez sur le chapeau de cowboy pour ouvrir le menu de navigation."
@@ -69,11 +69,6 @@
     "displaySizeIntro": "Sélectionnez comment l'application doit être affichée.",
     "languageHeading": "Langue",
     "languageIntro": "Sélectionnez votre langue préférée.",
-    "english": "Anglais",
-    "spanish": "Espagnol",
-    "german": "Allemand",
-    "french": "Français",
-    "italian": "Italien",
     "save": "Enregistrer les Paramètres",
     "saved": "Paramètres enregistrés !",
     "displayLabel": "Affichage :",
@@ -101,4 +96,3 @@
     ]
   }
 }
-

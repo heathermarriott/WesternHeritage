@@ -12,7 +12,7 @@ Right now the video play is laggy, so I just have placeholder images.
 
 This GitHub page is hosting the website:  ***https://heathermarriott.github.io/WesternHeritage/***
 
-#To do:
+# To do:
 1) Figure out how to run locally (bring ethernet cable)
 2) Make radio buttons bigger
 3) Heather - expand on game selection
@@ -21,7 +21,7 @@ This GitHub page is hosting the website:  ***https://heathermarriott.github.io/W
 
 
 
-#Older Notes: 
+# Older Notes: 
 1) ~~run video on local machine to reduce lag (preload videos?)~~
 2) ~~full language support for html text as shown in languages.html~~
 3) ~~check with Project Sponsors before proceeding much further with this model~~ - Doug and Dennis love the mockup :) 

@@ -10,6 +10,8 @@
    you're previewing in - so you always see the true composition, just
    shrunk/grown to fit your monitor, instead of a cropped slice of it.
    ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Rye&family=Nunito+Sans:wght@400;600;700;800&display=swap');
+
 :root{
     --device-width: 2189px;
     --device-height: 3840px;
@@ -19,6 +21,32 @@
        the whole layout grows/shrinks proportionally with --device-width. */
     --baseline-width: 550px;
     --scale: calc(var(--device-width) / var(--baseline-width));
+
+    /* ==========================================================================
+       COLOR PALETTE
+       One brown, one cream — defined once, here. Every color everywhere else
+       in this file should reference these two variables (or their -rgb
+       counterparts below, for use inside rgba()) instead of a hardcoded hex
+       value. That's what previously let the timeline's marker/heading color
+       (#4a2f1a) quietly drift from the brown used everywhere else
+       (#4f3528) — they're now the same variable, so that can't happen again.
+       ========================================================================== */
+    --color-brown: #4f3528;
+    --color-brown-rgb: 79, 53, 40;
+    --color-cream: #f8f2cb;
+    --color-cream-rgb: 248, 242, 203;
+
+    /* ==========================================================================
+       TYPOGRAPHY
+       Rye is a bold, hand-lettered "wanted poster" display face, reserved for
+       headings/titles. Nunito Sans is the clean, highly legible workhorse used
+       for body copy, buttons, and menus — decorative western display fonts get
+       hard to read at small sizes or in long passages. This is the same pairing
+       used across the rest of the Proto Luma game suite, so the whole kiosk
+       reads as one consistent experience.
+       ========================================================================== */
+    --font-display: 'Rye', serif;
+    --font-body: 'Nunito Sans', Arial, Helvetica, sans-serif;
 }
 
 /* General reset to ensure consistent styling across browsers */
@@ -26,7 +54,7 @@
     margin:0px;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
+    font-family:var(--font-body);
     -webkit-tap-highlight-color:transparent;
 }
 
@@ -41,7 +69,7 @@ html, body{
 }
 
 body{
-    background:#111;
+    background:var(--color-brown);
     touch-action:manipulation;
     -webkit-user-select:none;
     user-select:none;
@@ -67,7 +95,7 @@ input, textarea{
     transform:translate(-50%, -50%);
     transform-origin:center center;
     overflow:hidden;
-    background:#efe6d3;
+    background:var(--color-cream);
 }
 
 /* background teddy roosevelt video - persistent, lives at the stage's root so
@@ -106,9 +134,10 @@ input, textarea{
     padding:calc(18px * var(--scale));
 
     font-size:calc(24px * var(--scale));
+    font-weight:700;
 
-    background:#8b5a2b;
-    color:white;
+    background:var(--color-brown);
+    color:var(--color-cream);
 
     border:none;
     border-radius:calc(12px * var(--scale));
@@ -164,8 +193,8 @@ body.menu-open #hatButton:hover{
     left:calc(-280px * var(--scale));
     width:min(82%, calc(280px * var(--scale)));
     height:60%;
-    background:#6b4423;
-    color:white;
+    background:var(--color-brown);
+    color:var(--color-cream);
     transition:.35s;
     box-shadow: calc(5px * var(--scale)) 0 calc(15px * var(--scale)) rgba(0,0,0,.35);
     z-index:1000;
@@ -183,7 +212,7 @@ body.menu-open #hatButton:hover{
     margin:calc(15px * var(--scale));
     border:none;
     background:none;
-    color:white;
+    color:var(--color-cream);
     font-size:calc(28px * var(--scale));
     cursor:pointer;
     touch-action:manipulation;
@@ -192,8 +221,10 @@ body.menu-open #hatButton:hover{
 /* Menu header styling */
 #menu h2{
     padding:calc(60px * var(--scale)) calc(25px * var(--scale)) calc(20px * var(--scale));
-    border-bottom:calc(1px * var(--scale)) solid rgba(255,255,255,.3);
+    border-bottom:calc(1px * var(--scale)) solid rgba(var(--color-cream-rgb),.3);
     font-size:calc(28px * var(--scale));
+    font-family:var(--font-display);
+    letter-spacing:.5px;
 }
 
 /* Menu list styling */
@@ -203,14 +234,14 @@ body.menu-open #hatButton:hover{
 }
 
 #menu li{
-    border-bottom:calc(1px * var(--scale)) solid rgba(255,255,255,.15);
+    border-bottom:calc(1px * var(--scale)) solid rgba(var(--color-cream-rgb),.15);
 }
 
 /* Menu link styling */
 #menu a{
     display:block;
     padding:calc(18px * var(--scale)) calc(25px * var(--scale));
-    color:white;
+    color:var(--color-cream);
     text-decoration:none;
     font-size:calc(18px * var(--scale));
     transition:.25s;
@@ -219,7 +250,7 @@ body.menu-open #hatButton:hover{
 
 /* Hover effect for menu links */
 #menu a:hover{
-    background:#8b5a2b;
+    background:var(--color-brown);
     padding-left:calc(35px * var(--scale));
 }
 
@@ -256,8 +287,8 @@ main:has(#content.transparent){
    device width so it doesn't look lost on a large screen. */
 #content{
     font-size:calc(26px * var(--scale));
-    color:#5a3b1d;
-    background:rgba(239,230,211,.94);
+    color:var(--color-brown);
+    background:rgba(var(--color-cream-rgb),.94);
     border-radius:calc(20px * var(--scale));
     padding:calc(28px * var(--scale));
     max-width:min(90%, calc(620px * var(--scale)));
@@ -283,7 +314,7 @@ main:has(#content.transparent){
     max-width:min(94%, calc(700px * var(--scale)));
     margin:calc(25px * var(--scale)) auto;
     padding:calc(15px * var(--scale));
-    background:rgba(248,241,223,0.4);
+    background:rgba(var(--color-cream-rgb),.40);
     border-radius:calc(8px * var(--scale));
     font-size:calc(22px * var(--scale));
 }
@@ -301,8 +332,9 @@ main:has(#content.transparent){
 #gradeQuiz{
     padding:calc(12px * var(--scale)) calc(30px * var(--scale));
     font-size:calc(18px * var(--scale));
-    background:#8b5a2b;
-    color:white;
+    font-weight:700;
+    background:var(--color-brown);
+    color:var(--color-cream);
     border:none;
     border-radius:calc(8px * var(--scale));
     cursor:pointer;
@@ -310,13 +342,13 @@ main:has(#content.transparent){
 }
 
 #gradeQuiz:hover{
-    background:#a66a35;
+    background:var(--color-brown);
 }
 
 /* Styling for the trivia score display */
 #score{
     margin-top:calc(25px * var(--scale));
-    color:#5a3b1d;
+    color:var(--color-brown);
     font-size:calc(28px * var(--scale));
 }
 
@@ -330,9 +362,9 @@ main:has(#content.transparent){
 
     margin:calc(10px * var(--scale)) auto;
 
-    background:#d8c39a;
+    background:var(--color-cream);
 
-    border:calc(4px * var(--scale)) solid #6b4423;
+    border:calc(4px * var(--scale)) solid var(--color-brown);
     border-radius:calc(16px * var(--scale));
 
     overflow:hidden;
@@ -372,8 +404,9 @@ main:has(#content.transparent){
     margin-top:calc(20px * var(--scale));
     padding:calc(12px * var(--scale)) calc(28px * var(--scale));
     font-size:calc(20px * var(--scale));
-    background:#8b5a2b;
-    color:white;
+    font-weight:700;
+    background:var(--color-brown);
+    color:var(--color-cream);
     border:none;
     border-radius:calc(8px * var(--scale));
     cursor:pointer;
@@ -407,8 +440,8 @@ main:has(#content.transparent){
     padding: 0;
     font-size: calc(40px * var(--scale));
     font-weight: bold;
-    background: #8b5a2b;
-    color: white;
+    background: var(--color-brown);
+    color: var(--color-cream);
     border: none;
     border-radius: 50%;
     cursor: pointer;
@@ -445,13 +478,15 @@ main:has(#content.transparent){
 
 .timelineHeader h2{
     font-size:calc(28px * var(--scale));
-    color:#4a2f1a;
+    color:var(--color-brown);
+    font-family:var(--font-display);
+    letter-spacing:.5px;
 }
 
 .timelineHeader p{
     margin-top:calc(6px * var(--scale));
     font-size:calc(16px * var(--scale));
-    color:#7a5c3a;
+    color:var(--color-brown);
 }
 
 .trail{
@@ -469,7 +504,7 @@ main:has(#content.transparent){
     width:calc(4px * var(--scale));
     background:repeating-linear-gradient(
         to bottom,
-        #6b4423 0 calc(14px * var(--scale)),
+        var(--color-brown) 0 calc(14px * var(--scale)),
         transparent calc(14px * var(--scale)) calc(26px * var(--scale))
     );
     border-radius:calc(2px * var(--scale));
@@ -496,9 +531,9 @@ main:has(#content.transparent){
     width:calc(48px * var(--scale));
     height:calc(48px * var(--scale));
     border-radius:50%;
-    background:#8b5a2b;
-    border:calc(3px * var(--scale)) solid #4a2f1a;
-    color:white;
+    background:var(--color-brown);
+    border:calc(3px * var(--scale)) solid var(--color-brown);
+    color:var(--color-cream);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -512,8 +547,8 @@ main:has(#content.transparent){
 }
 
 .milestone-card{
-    background:#f8f1df;
-    border:1px solid rgba(107,68,35,.25);
+    background:var(--color-cream);
+    border:1px solid rgba(var(--color-brown-rgb),.25);
     border-radius:calc(10px * var(--scale));
     padding:calc(16px * var(--scale)) calc(18px * var(--scale));
     margin-left:calc(16px * var(--scale));
@@ -528,6 +563,7 @@ main:has(#content.transparent){
 }
 
 .milestone-title{
+    color:var(--color-brown);
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -536,12 +572,14 @@ main:has(#content.transparent){
 
 .milestone-title h2{
     font-size:calc(19px * var(--scale));
-    color:#4a2f1a;
+    color:var(--color-brown);
+    font-family:var(--font-display);
+    letter-spacing:.5px;
 }
 
 .milestone-caret{
     font-size:calc(14px * var(--scale));
-    color:#8b5a2b;
+    color:var(--color-brown);
     transition:transform .25s;
     flex-shrink:0;
 }
@@ -557,7 +595,7 @@ main:has(#content.transparent){
     opacity:0;
     font-size:calc(15px * var(--scale));
     line-height:1.5;
-    color:#6b4a2e;
+    color:var(--color-brown);
 }
 
 .milestone-card.open .milestone-body{
@@ -570,7 +608,7 @@ main:has(#content.transparent){
     position:relative;
     margin-left:calc(-56px * var(--scale));
     padding-left:calc(56px * var(--scale));
-    color:#7a5c3a;
+    color:var(--color-brown);
     font-style:italic;
     font-size:calc(14px * var(--scale));
 }
@@ -583,5 +621,5 @@ main:has(#content.transparent){
     width:calc(20px * var(--scale));
     height:calc(20px * var(--scale));
     border-radius:50%;
-    background:#4a2f1a;
+    background:var(--color-brown);
 }

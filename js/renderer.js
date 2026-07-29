@@ -207,7 +207,7 @@ export function renderPage(page, context) {
                     ${translations.avatar.theodoreRoosevelt}
                 </button>
                 <button class="avatarBtn" data-img="assets/annie.png" data-avatar-id="annie">
-                    ${translations.avatar.annieOakley}
+                    ${translations.avatar.bigNoseKate}
                 </button>
                 <button class="avatarBtn" data-img="assets/wyatt.png" data-avatar-id="wyatt">
                     ${translations.avatar.wyattEarp}

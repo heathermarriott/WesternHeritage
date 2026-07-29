@@ -14,6 +14,9 @@
   },
   "avatar": {
     "heading": "Selecciona Tu Personaje",
+    "theodoreRoosevelt": "Theodore Roosevelt",
+    "bigNoseKate": "Big Nose Kate",
+    "wyattEarp": "Wyatt Earp",
     "selectedHeading": "¡Personaje Seleccionado!",
     "selectedMessage": "Tu aventura está por comenzar."
   },

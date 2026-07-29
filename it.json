@@ -14,6 +14,9 @@
   },
   "avatar": {
     "heading": "Seleziona Il Tuo Personaggio",
+    "theodoreRoosevelt": "Theodore Roosevelt",
+    "bigNoseKate": "Big Nose Kate",
+    "wyattEarp": "Wyatt Earp",
     "selectedHeading": "Personaggio Selezionato!",
     "selectedMessage": "La tua avventura è pronta per iniziare. Clicca sul cappello da cowboy per aprire il menu di navigazione."
   },

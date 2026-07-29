@@ -270,7 +270,22 @@ export function renderPage(page, context) {
     // --- Page-Specific Content ---
 
     if (page === "Select Avatar") {
-        renderSelectAvatarPage(context);
+        content.innerHTML = `
+            <div id="avatarOverlay">
+                <h2 style="color:white; text-shadow:calc(3px * var(--scale)) calc(3px * var(--scale)) calc(8px * var(--scale)) black; margin-bottom:calc(40px * var(--scale)); font-size:calc(34px * var(--scale));">
+                    ${translations.avatar.heading}
+                </h2>
+                <button class="avatarBtn" data-img="assets/teddy.png" data-avatar-id="teddy">
+                    ${translations.avatar.theodoreRoosevelt}
+                </button>
+                <button class="avatarBtn" data-img="assets/annie.png" data-avatar-id="annie">
+                    ${translations.avatar.bigNoseKate}
+                </button>
+                <button class="avatarBtn" data-img="assets/wyatt.png" data-avatar-id="wyatt">
+                    ${translations.avatar.wyattEarp}
+                </button>
+            </div>`;
+        attachAvatarButtonListeners(content, context);
 
     } else if (page === "Ask a Question") {
         renderAskAQuestionPage(context);

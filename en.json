@@ -15,9 +15,6 @@
   },
   "avatar": {
     "heading": "Select Your Character",
-    "theodoreRoosevelt": "Theodore Roosevelt",
-    "annieOakley": "Annie Oakley",
-    "wyattEarp": "Wyatt Earp",
     "selectedHeading": "Avatar Selected!",
     "selectedMessage": "Your adventure is ready to begin. Click the cowboy hat to open the navigation menu."
   },

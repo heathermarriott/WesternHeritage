@@ -14,9 +14,6 @@
   },
   "avatar": {
     "heading": "Selecciona Tu Personaje",
-    "theodoreRoosevelt": "Theodore Roosevelt",
-    "annieOakley": "Annie Oakley",
-    "wyattEarp": "Wyatt Earp",
     "selectedHeading": "¡Personaje Seleccionado!",
     "selectedMessage": "Tu aventura está por comenzar."
   },
@@ -96,4 +93,3 @@
     ]
   }
 }
-

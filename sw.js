@@ -7,6 +7,7 @@ const STATIC_ASSETS = [
   'css/style.css',
   'js/main.js',
   'en.json',
+  'avatars.txt',
   'questions.txt',
   'assets/hat.png',
   'assets/teddy.png',

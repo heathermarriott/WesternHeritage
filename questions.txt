@@ -6,3 +6,4 @@ teddy|videos/teddy/rodeo.webm|When did the Prescott Rodeo start?|¿Cuándo comen
 teddy|videos/teddy/TeddyLowRes.webm|Who are you?|¿Quién eres tú?|Wer bist du?|Qui es-tu?|Chi sei?
 annie|videos/annie/Annie.webm|Tell me something about Prescott.|Cuéntame algo sobre Prescott.|Erzähl mir etwas über Prescott.|Parlez-moi de Prescott.|Raccontami qualcosa di Prescott.
 wyatt|videos/wyatt/Wyatt.webm|What is Prescott?|¿Qué es Prescott?|Was ist Prescott?|Qu'est-ce que Prescott?|Cos'è Prescott?
+sharlot|videos/sharlot/Sharlot.webm|What is Prescott?|¿Qué es Prescott?|Was ist Prescott?|Qu'est-ce que Prescott?|Cos'è Prescott?

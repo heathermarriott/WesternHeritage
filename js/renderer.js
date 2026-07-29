@@ -35,6 +35,44 @@ function attachAvatarButtonListeners(container, context) {
 }
 
 /**
+ * Fetches avatars from avatars.txt and renders the "Select Avatar" page.
+ * @param {Object} context - The application context.
+ */
+async function renderSelectAvatarPage(context) {
+    const { content, translations } = context;
+    try {
+        const response = await fetch('avatars.txt');
+        const text = await response.text();
+
+        const avatarButtons = text
+            .split('\n')
+            .map(line => line.trim())
+            .filter(line => line && !line.startsWith('#'))
+            .map(line => {
+                const [id, img, name] = line.split('|');
+                const displayName = name ? name.trim() : id.trim(); // Use the name from the file, or fallback to the ID
+                return `
+                    <button class="avatarBtn" data-img="${img.trim()}" data-avatar-id="${id.trim()}">
+                        ${displayName}
+                    </button>
+                `;
+            }).join('');
+
+        content.innerHTML = `
+            <div id="avatarOverlay">
+                <h2 style="color:white; text-shadow:calc(3px * var(--scale)) calc(3px * var(--scale)) calc(8px * var(--scale)) black; margin-bottom:calc(40px * var(--scale)); font-size:calc(34px * var(--scale));" data-lang-key="avatar.heading">
+                    ${translations.avatar.heading}
+                </h2>
+                ${avatarButtons}
+            </div>`;
+        attachAvatarButtonListeners(content, context);
+    } catch (error) {
+        console.error("Failed to load and render avatars:", error);
+        content.innerHTML = `<p>Error loading characters. Please try again.</p>`;
+    }
+}
+
+/**
  * Fetches questions from questions.txt and renders the "Ask a Question" page.
  * @param {Object} context - The application context.
  */
@@ -198,6 +236,24 @@ export function renderPage(page, context) {
         if (page === "Select Avatar") {
             introVideo.loop = true;
             context.switchVideo("videos/teddy/TeddyLowRes.webm");
+        } else if (page === "Ask a Question") {
+            // For the "Ask a Question" page, find the first video for the
+            // current avatar and use it as the looping background.
+            (async () => {
+                try {
+                    const response = await fetch('questions.txt');
+                    const text = await response.text();
+                    const firstVideo = text.split('\n')
+                        .find(line => line.trim().startsWith(currentAvatarId + '|'))
+                        ?.split('|')[1]?.trim();
+
+                    introVideo.loop = true;
+                    context.switchVideo(firstVideo || "videos/teddy/TeddyLowRes.webm"); // Fallback if no video found
+                } catch (error) {
+                    console.error("Could not set background video for avatar:", error);
+                    context.switchVideo("videos/teddy/TeddyLowRes.webm"); // Fallback on error
+                }
+            })();
         }
     } else {
         // Pages with a static avatar background
@@ -214,22 +270,7 @@ export function renderPage(page, context) {
     // --- Page-Specific Content ---
 
     if (page === "Select Avatar") {
-        content.innerHTML = `
-            <div id="avatarOverlay">
-                <h2 style="color:white; text-shadow:calc(3px * var(--scale)) calc(3px * var(--scale)) calc(8px * var(--scale)) black; margin-bottom:calc(40px * var(--scale)); font-size:calc(34px * var(--scale));">
-                    ${translations.avatar.heading}
-                </h2>
-                <button class="avatarBtn" data-img="assets/teddy.png" data-avatar-id="teddy">
-                    ${translations.avatar.theodoreRoosevelt}
-                </button>
-                <button class="avatarBtn" data-img="assets/annie.png" data-avatar-id="annie">
-                    ${translations.avatar.annieOakley}
-                </button>
-                <button class="avatarBtn" data-img="assets/wyatt.png" data-avatar-id="wyatt">
-                    ${translations.avatar.wyattEarp}
-                </button>
-            </div>`;
-        attachAvatarButtonListeners(content, context);
+        renderSelectAvatarPage(context);
 
     } else if (page === "Ask a Question") {
         renderAskAQuestionPage(context);

@@ -14,9 +14,6 @@
   },
   "avatar": {
     "heading": "Choisissez Votre Personnage",
-    "theodoreRoosevelt": "Theodore Roosevelt",
-    "annieOakley": "Annie Oakley",
-    "wyattEarp": "Wyatt Earp",
     "selectedHeading": "Personnage Sélectionné !",
     "selectedMessage": "Votre aventure est prête à commencer. Cliquez sur le chapeau de cowboy pour ouvrir le menu de navigation."
   },

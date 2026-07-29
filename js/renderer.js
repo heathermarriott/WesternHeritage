@@ -48,17 +48,33 @@ async function renderAskAQuestionPage(context) {
             navigator.serviceWorker.controller.postMessage('SYNC_VIDEOS');
         }
 
-        const lang = localStorage.getItem("language") || "en";
-        const langIndex = lang === 'es' ? 1 : 0;
+        const lines = text.split('\n').map(line => line.trim()).filter(line => line !== '');
+        const header = lines.find(line => line.startsWith('## Format:'));
+        const questions = lines.filter(line => !line.startsWith('#'));
 
-        const questionButtons = text.split('\n')
-            .map(line => line.trim())
-            .filter(line => line !== '' && !line.startsWith('#'))
+        let langMap = { 'en': 2 }; // Default to English in column 2 (0-indexed)
+        if (header) {
+            const columns = header.substring('## Format:'.length).split('|').map(s => s.trim());
+            for (let i = 0; i < columns.length; i++) {
+                if (columns[i].startsWith('lang:')) {
+                    const langCode = columns[i].substring('lang:'.length);
+                    langMap[langCode] = i;
+                }
+            }
+        }
+
+        const lang = localStorage.getItem("language") || "en";
+        const langIndex = langMap[lang] || langMap['en']; // Use selected language or fallback to English
+        const fallbackIndex = langMap['en'];
+
+        const questionButtons = questions
             .filter(line => line.split('|')[0].trim() === context.currentAvatarId)
             .map(line => {
                 const parts = line.split('|');
-                const questionText = parts[langIndex + 1];
-                const videoFile = parts[3];
+                // Use translated question, or English if translation is missing/empty
+                const questionText = (parts[langIndex] && parts[langIndex].trim()) ? parts[langIndex].trim() : parts[fallbackIndex].trim();
+                const videoFile = parts[1].trim();
+
                 return `
                     <div class="question">
                         <button class="avatarBtn" style="width:100%;" data-video="${videoFile}">

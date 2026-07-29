@@ -328,32 +328,12 @@ export function renderPage(page, context) {
                     <input type="radio" name="language" value="it" ${savedLanguage === 'it' ? 'checked' : ''}>
                     <span>Italiano</span>
                 </label>
-            </div>
-            <button id="saveSettings" style="padding:calc(12px * var(--scale)) calc(30px * var(--scale)); font-size:calc(18px * var(--scale)); background:#8b5a2b; color:white; border:none; border-radius:calc(8px * var(--scale)); cursor:pointer;" data-lang-key="settings.save">
-                ${translations.settings.save}
-            </button>
-            <h3 id="settingsSaved" style="margin-top:calc(20px * var(--scale));color:#5a3b1d;"></h3>`;
+            </div>`;
 
         document.querySelectorAll('input[name="language"]').forEach(radio => {
             radio.addEventListener('change', function() {
                 context.loadLanguage(this.value);
             });
-        });
-
-        document.getElementById("saveSettings").addEventListener("click", function() {
-            const language = document.querySelector('input[name="language"]:checked').value;
-            const languageNames = {
-                en: "English",
-                de: "Deutsch",
-                es: "Español",
-                fr: "Français",
-                it: "Italiano"
-            };
-
-            document.getElementById("settingsSaved").innerHTML =
-                `${translations.settings.saved}<br><br>
-                <strong>${translations.settings.languageLabel}</strong> ${languageNames[language]}`;
-          
         });
     }
 }

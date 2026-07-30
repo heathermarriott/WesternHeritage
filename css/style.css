@@ -14,7 +14,7 @@
 
 :root{
     --device-width: 2189px;
-    --device-height: 3840px;
+    --device-height: 3890px;
 
     /* The original design was tuned assuming a viewport around this wide.
        --scale is the multiplier applied to every fixed-px value below so

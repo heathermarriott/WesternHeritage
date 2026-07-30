@@ -35,6 +35,44 @@ function attachAvatarButtonListeners(container, context) {
 }
 
 /**
+ * Fetches avatars from avatars.txt and renders the "Select Avatar" page.
+ * @param {Object} context - The application context.
+ */
+async function renderSelectAvatarPage(context) {
+    const { content, translations } = context;
+    try {
+        const response = await fetch('avatars.txt');
+        const text = await response.text();
+
+        const avatarButtons = text
+            .split('\n')
+            .map(line => line.trim())
+            .filter(line => line && !line.startsWith('#'))
+            .map(line => {
+                const [id, img, name] = line.split('|');
+                const displayName = name ? name.trim() : id.trim(); // Use the name from the file, or fallback to the ID
+                return `
+                    <button class="avatarBtn" data-img="${img.trim()}" data-avatar-id="${id.trim()}">
+                        ${displayName}
+                    </button>
+                `;
+            }).join('');
+
+        content.innerHTML = `
+            <div id="avatarOverlay">
+                <h2 style="color:white; text-shadow:calc(3px * var(--scale)) calc(3px * var(--scale)) calc(8px * var(--scale)) black; margin-bottom:calc(40px * var(--scale)); font-size:calc(34px * var(--scale));" data-lang-key="avatar.heading">
+                    ${translations.avatar.heading}
+                </h2>
+                ${avatarButtons}
+            </div>`;
+        attachAvatarButtonListeners(content, context);
+    } catch (error) {
+        console.error("Failed to load and render avatars:", error);
+        content.innerHTML = `<p>Error loading characters. Please try again.</p>`;
+    }
+}
+
+/**
  * Fetches questions from questions.txt and renders the "Ask a Question" page.
  * @param {Object} context - The application context.
  */
@@ -48,17 +86,33 @@ async function renderAskAQuestionPage(context) {
             navigator.serviceWorker.controller.postMessage('SYNC_VIDEOS');
         }
 
-        const lang = localStorage.getItem("language") || "en";
-        const langIndex = lang === 'es' ? 1 : 0;
+        const lines = text.split('\n').map(line => line.trim()).filter(line => line !== '');
+        const header = lines.find(line => line.startsWith('## Format:'));
+        const questions = lines.filter(line => !line.startsWith('#'));
 
-        const questionButtons = text.split('\n')
-            .map(line => line.trim())
-            .filter(line => line !== '' && !line.startsWith('#'))
+        let langMap = { 'en': 2 }; // Default to English in column 2 (0-indexed)
+        if (header) {
+            const columns = header.substring('## Format:'.length).split('|').map(s => s.trim());
+            for (let i = 0; i < columns.length; i++) {
+                if (columns[i].startsWith('lang:')) {
+                    const langCode = columns[i].substring('lang:'.length);
+                    langMap[langCode] = i;
+                }
+            }
+        }
+
+        const lang = localStorage.getItem("language") || "en";
+        const langIndex = langMap[lang] || langMap['en']; // Use selected language or fallback to English
+        const fallbackIndex = langMap['en'];
+
+        const questionButtons = questions
             .filter(line => line.split('|')[0].trim() === context.currentAvatarId)
             .map(line => {
                 const parts = line.split('|');
-                const questionText = parts[langIndex + 1];
-                const videoFile = parts[3];
+                // Use translated question, or English if translation is missing/empty
+                const questionText = (parts[langIndex] && parts[langIndex].trim()) ? parts[langIndex].trim() : parts[fallbackIndex].trim();
+                const videoFile = parts[1].trim();
+
                 return `
                     <div class="question">
                         <button class="avatarBtn" style="width:100%;" data-video="${videoFile}">
@@ -182,6 +236,24 @@ export function renderPage(page, context) {
         if (page === "Select Avatar") {
             introVideo.loop = true;
             context.switchVideo("videos/teddy/TeddyLowRes.webm");
+        } else if (page === "Ask a Question") {
+            // For the "Ask a Question" page, find the first video for the
+            // current avatar and use it as the looping background.
+            (async () => {
+                try {
+                    const response = await fetch('questions.txt');
+                    const text = await response.text();
+                    const firstVideo = text.split('\n')
+                        .find(line => line.trim().startsWith(currentAvatarId + '|'))
+                        ?.split('|')[1]?.trim();
+
+                    introVideo.loop = true;
+                    context.switchVideo(firstVideo || "videos/teddy/TeddyLowRes.webm"); // Fallback if no video found
+                } catch (error) {
+                    console.error("Could not set background video for avatar:", error);
+                    context.switchVideo("videos/teddy/TeddyLowRes.webm"); // Fallback on error
+                }
+            })();
         }
     } else {
         // Pages with a static avatar background
@@ -198,22 +270,7 @@ export function renderPage(page, context) {
     // --- Page-Specific Content ---
 
     if (page === "Select Avatar") {
-        content.innerHTML = `
-            <div id="avatarOverlay">
-                <h2 style="color:white; text-shadow:calc(3px * var(--scale)) calc(3px * var(--scale)) calc(8px * var(--scale)) black; margin-bottom:calc(40px * var(--scale)); font-size:calc(34px * var(--scale));">
-                    ${translations.avatar.heading}
-                </h2>
-                <button class="avatarBtn" data-img="assets/teddy.png" data-avatar-id="teddy">
-                    ${translations.avatar.theodoreRoosevelt}
-                </button>
-                <button class="avatarBtn" data-img="assets/annie.png" data-avatar-id="annie">
-                    ${translations.avatar.bigNoseKate}
-                </button>
-                <button class="avatarBtn" data-img="assets/wyatt.png" data-avatar-id="wyatt">
-                    ${translations.avatar.wyattEarp}
-                </button>
-            </div>`;
-        attachAvatarButtonListeners(content, context);
+        renderSelectAvatarPage(context);
 
     } else if (page === "Ask a Question") {
         renderAskAQuestionPage(context);
@@ -328,32 +385,12 @@ export function renderPage(page, context) {
                     <input type="radio" name="language" value="it" ${savedLanguage === 'it' ? 'checked' : ''}>
                     <span>Italiano</span>
                 </label>
-            </div>
-            <button id="saveSettings" style="padding:calc(12px * var(--scale)) calc(30px * var(--scale)); font-size:calc(18px * var(--scale)); background:#8b5a2b; color:white; border:none; border-radius:calc(8px * var(--scale)); cursor:pointer;" data-lang-key="settings.save">
-                ${translations.settings.save}
-            </button>
-            <h3 id="settingsSaved" style="margin-top:calc(20px * var(--scale));color:#5a3b1d;"></h3>`;
+            </div>`;
 
         document.querySelectorAll('input[name="language"]').forEach(radio => {
             radio.addEventListener('change', function() {
                 context.loadLanguage(this.value);
             });
-        });
-
-        document.getElementById("saveSettings").addEventListener("click", function() {
-            const language = document.querySelector('input[name="language"]:checked').value;
-            const languageNames = {
-                en: "English",
-                de: "Deutsch",
-                es: "Español",
-                fr: "Français",
-                it: "Italiano"
-            };
-
-            document.getElementById("settingsSaved").innerHTML =
-                `${translations.settings.saved}<br><br>
-                <strong>${translations.settings.languageLabel}</strong> ${languageNames[language]}`;
-          
         });
     }
 }

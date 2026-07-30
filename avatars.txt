@@ -1,0 +1,5 @@
+## Format: avatarId | imagePath | displayName
+## Each line defines one avatar for the selection screen.
+teddy|assets/teddy.png|Theodore Roosevelt
+annie|assets/annie.png|Big Nose Kate
+wyatt|assets/wyatt.png|Wyatt Earp

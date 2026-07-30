@@ -1,6 +1,5 @@
-## Use ## at the start of a line to add a comment.
-## Format: AvatarID | English Question | Spanish Question | path/to/video.webm
-## Spanish symbols: á, é, í, ó, ú, ü, ñ, ¿, ¡
+## Use ## for comments. Define columns in a header line.
+## Format: avatarId | videoFile | lang:en | lang:es | lang:de | lang:fr | lang:it
 
 teddy|Who are you?|¿Quién eres tú?|videos/teddy/TeddyLowRes.webm
 teddy|When did the Prescott Rodeo start?|¿Cuándo comenzó el Rodeo de Prescott?|videos/teddy/rodeo.webm

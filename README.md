@@ -39,3 +39,4 @@ ChatGPT generated graphics for: cowboy hat, horse, and 2 placeholder avatars
 
 We can test this on the proto device using: ***http://protoapps.protohologram.com***
 
+To convert to webm: ffmpeg -i .\input.mp4 -c:v libvpx-vp9 -b:v 8M -vf "scale=2160:3840" -c:a libopus -b:a 320k -ar 48000 -ac 2 .\output.webm

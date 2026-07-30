@@ -1,4 +1,4 @@
-const CACHE_NAME = 'western-heritage-cache-v10'; // Increment cache version for update
+const CACHE_NAME = 'western-heritage-cache-v11'; // Increment cache version for update
 
 // List of static assets to cache on install.
 const STATIC_ASSETS = [
@@ -145,6 +145,51 @@ self.addEventListener('message', event => {
   }
 });
 
+// Given a cached full (200) video response and the original request, builds
+// the correctly-sliced 206 Partial Content response the <video> element is
+// expecting. Plain caches.match() doesn't do this slicing on its own - it
+// only matches by URL, so a Range-bearing request needs to be turned into
+// the right byte slice manually. Returns the full response unmodified if no
+// Range header was present.
+async function buildRangeResponse(request, cachedResponse) {
+  const rangeHeader = request.headers.get('range');
+  if (!rangeHeader) {
+    return cachedResponse;
+  }
+
+  const buffer = await cachedResponse.clone().arrayBuffer();
+  const size = buffer.byteLength;
+
+  const match = /bytes=(\d*)-(\d*)/.exec(rangeHeader);
+  if (!match) {
+    return cachedResponse;
+  }
+
+  const start = match[1] ? parseInt(match[1], 10) : 0;
+  const end = match[2] ? parseInt(match[2], 10) : size - 1;
+
+  if (start >= size || end >= size || start > end) {
+    return new Response(null, {
+      status: 416,
+      statusText: 'Range Not Satisfiable',
+      headers: { 'Content-Range': `bytes */${size}` }
+    });
+  }
+
+  const slice = buffer.slice(start, end + 1);
+
+  return new Response(slice, {
+    status: 206,
+    statusText: 'Partial Content',
+    headers: {
+      'Content-Type': cachedResponse.headers.get('Content-Type') || 'video/webm',
+      'Content-Range': `bytes ${start}-${end}/${size}`,
+      'Content-Length': String(slice.byteLength),
+      'Accept-Ranges': 'bytes'
+    }
+  });
+}
+
 // Fetch event: serve assets from cache
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
@@ -161,10 +206,14 @@ self.addEventListener('fetch', event => {
   // Handle video files
   if (event.request.url.endsWith('.webm')) {
     event.respondWith(
-      caches.match(event.request).then(cachedResponse => {
+      // Match by URL string (not the Request object) so the incoming
+      // Range header doesn't prevent finding an already-cached full
+      // response - caches.match() would otherwise miss on every single
+      // playback since the video element always sends a Range request.
+      caches.match(event.request.url).then(async cachedResponse => {
         if (cachedResponse) {
-          // If the video is found in the cache, return it immediately.
-          return cachedResponse;
+          // Found it - slice out the requested byte range ourselves.
+          return buildRangeResponse(event.request, cachedResponse);
         }
 
         // --- On-Demand Caching for Range Requests ---

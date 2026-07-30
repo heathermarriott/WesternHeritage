@@ -1,4 +1,4 @@
-const CACHE_NAME = 'western-heritage-cache-v9'; // Increment cache version for update
+const CACHE_NAME = 'western-heritage-cache-v10'; // Increment cache version for update
 
 // List of static assets to cache on install.
 const STATIC_ASSETS = [
@@ -58,16 +58,32 @@ async function syncVideoCache() {
 
     // Cache any videos that aren't already cached. Skipping ones already
     // present avoids re-downloading the whole library on every sync.
+    // Videos are cached in small parallel batches rather than one at a
+    // time - downloading them sequentially means the total wait is the
+    // SUM of every video's download time, so a handful of large files
+    // (or a slow dev server) can make it look like caching has stalled
+    // on whichever file happens to be downloading.
+    const CONCURRENCY = 4;
+    const urlsToCache = [];
     for (const url of videoUrls) {
       const alreadyCached = await cache.match(url);
       if (!alreadyCached) {
-        try {
-          await cache.add(url);
-          console.log('Service Worker: Cached new video:', url);
-        } catch (err) {
-          console.error(`Service Worker: Failed to cache ${url}`, err);
-        }
+        urlsToCache.push(url);
       }
+    }
+
+    async function cacheOne(url) {
+      try {
+        await cache.add(url);
+        console.log('Service Worker: Cached new video:', url);
+      } catch (err) {
+        console.error(`Service Worker: Failed to cache ${url}`, err);
+      }
+    }
+
+    for (let i = 0; i < urlsToCache.length; i += CONCURRENCY) {
+      const batch = urlsToCache.slice(i, i + CONCURRENCY);
+      await Promise.all(batch.map(cacheOne));
     }
   } catch (error) {
     console.error('Service Worker: Failed to sync video cache:', error);

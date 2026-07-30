@@ -2,7 +2,7 @@
  Notes for meeting 10:30am July 30th
  1) How will device be used.  Should games be seperate apps or all in one app?
  2) Handling of adding new questions.  Limitations of Switching Languages (menu text only, avatar still speaks English).  Is it still worth having the questions translated to other languages if the ansers are all in English.
- 3) Handoff of this work once done.  Can someone from the museum (maybe the Webmaster Ann) create a GitHub account and be added as a collaborator to this repository)
+ 3) Handoff of this work once done.  Can someone from the museum create a GitHub account and be added as a collaborator to this repository)
  4) Suggestions for minor changes - colors, fonts to match museum website?  Tweak trivia questions or wording of any screens.  Suggestions for future work.
 
 

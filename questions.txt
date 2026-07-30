@@ -2,8 +2,10 @@
 ## Format: AvatarID | English Question | Spanish Question | path/to/video.webm
 ## Spanish symbols: á, é, í, ó, ú, ü, ñ, ¿, ¡
 
-teddy|Who was Bucky O'Neill?|¿Quién era Bucky O'Neill?|videos/teddy/BuckyOneill.webm
-teddy|When did the Prescott Rodeo start?|¿Cuándo comenzó el Rodeo de Prescott?|videos/teddy/rodeo.webm
 teddy|Who are you?|¿Quién eres tú?|videos/teddy/TeddyLowRes.webm
+teddy|When did the Prescott Rodeo start?|¿Cuándo comenzó el Rodeo de Prescott?|videos/teddy/rodeo.webm
+teddy|Who was Bucky O'Neill?|¿Quién era Bucky O'Neill?|videos/teddy/BuckyOneill.webm
+teddy|What can I do in Prescott?|¿Qué puedo hacer en Prescott?|videos/teddy/Prescott.webm
+teddy|Tell me about the First U.S. Volunteer Cavalry.|Háblame del Primer Regimiento de Caballería Voluntaria de los Estados Unidos.|videos/teddy/RoughRiders.webm
 annie|Tell me something about Prescott.|Cuéntame algo sobre Prescott.|videos/annie/Annie.webm
 wyatt|What is Prescott?|¿Qué es Prescott?|videos/wyatt/Wyatt.webm

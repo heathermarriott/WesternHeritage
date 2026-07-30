@@ -369,7 +369,7 @@ main:has(#content.transparent){
 
     margin:calc(10px * var(--scale)) auto;
 
-    background:var(--color-cream);
+    background:green;
 
     border:calc(4px * var(--scale)) solid var(--color-brown);
     border-radius:calc(16px * var(--scale));

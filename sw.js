@@ -31,9 +31,10 @@ async function syncVideoCache() {
     const response = await fetch('questions.txt', { cache: 'no-store' });
     const text = await response.text();
     const videoUrls = text.split('\n')
-                          .map(line => line.trim()) // Keep this line
-                          .filter(line => line !== '' && !line.startsWith('#') && line.includes('|'))
-                          .map(line => line.split('|')[1].trim()); // Video path is now the 2nd item
+                          .map(line => line.trim())
+                          .filter(line => line && !line.startsWith('#') && line.includes('|'))
+                          .map(line => line.split('|')[1].trim()) // Video path is always the 2nd item
+                          .filter(url => url); // Filter out any empty/undefined URLs
 
     console.log('Service Worker: Current video list:', videoUrls);
 

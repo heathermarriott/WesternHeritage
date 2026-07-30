@@ -90,28 +90,31 @@ async function renderAskAQuestionPage(context) {
         const header = lines.find(line => line.startsWith('## Format:'));
         const questions = lines.filter(line => !line.startsWith('#'));
 
-        let langMap = { 'en': 2 }; // Default to English in column 2 (0-indexed)
+        let textLangMap = {};  // Map for question text
+
         if (header) {
             const columns = header.substring('## Format:'.length).split('|').map(s => s.trim());
             for (let i = 0; i < columns.length; i++) {
-                if (columns[i].startsWith('lang:')) {
-                    const langCode = columns[i].substring('lang:'.length);
-                    langMap[langCode] = i;
+                if (columns[i].startsWith('text:')) {
+                    const langCode = columns[i].substring('text:'.length);
+                    textLangMap[langCode] = i;
                 }
             }
         }
 
+        // Fallback to English text if not explicitly defined in header
+        // Based on new format: avatarId(0)|videoFile(1)|text:en(2)|...
+        textLangMap['en'] = textLangMap['en'] || 2;
+
         const lang = localStorage.getItem("language") || "en";
-        const langIndex = langMap[lang] || langMap['en']; // Use selected language or fallback to English
-        const fallbackIndex = langMap['en'];
+        const textIndex = textLangMap[lang] || textLangMap['en'];
 
         const questionButtons = questions
             .filter(line => line.split('|')[0].trim() === context.currentAvatarId)
             .map(line => {
                 const parts = line.split('|');
-                // Use translated question, or English if translation is missing/empty
-                const questionText = (parts[langIndex] && parts[langIndex].trim()) ? parts[langIndex].trim() : parts[fallbackIndex].trim();
-                const videoFile = parts[1].trim();
+                const questionText = (parts[textIndex] && parts[textIndex].trim()) ? parts[textIndex].trim() : parts[textLangMap['en']].trim();
+                const videoFile = parts[1].trim(); // Video is always in the second column
 
                 return `
                     <div class="question">
@@ -237,23 +240,34 @@ export function renderPage(page, context) {
             introVideo.loop = true;
             context.switchVideo("videos/teddy/TeddyLowRes.webm");
         } else if (page === "Ask a Question") {
-            // For the "Ask a Question" page, find the first video for the
+            // If a question video is playing (not looping), we're returning to the
+            // list, so just show the static avatar. Otherwise, set up the
+            // looping background video for the page.
+            if (introVideo.loop) {
             // current avatar and use it as the looping background.
             (async () => {
                 try {
                     const response = await fetch('questions.txt');
                     const text = await response.text();
-                    const firstVideo = text.split('\n')
+                    const firstVideoForAvatar = text.split('\n')
                         .find(line => line.trim().startsWith(currentAvatarId + '|'))
                         ?.split('|')[1]?.trim();
 
                     introVideo.loop = true;
-                    context.switchVideo(firstVideo || "videos/teddy/TeddyLowRes.webm"); // Fallback if no video found
+                    context.switchVideo(firstVideoForAvatar || "videos/teddy/TeddyLowRes.webm"); // Fallback if no video found
                 } catch (error) {
                     console.error("Could not set background video for avatar:", error);
                     context.switchVideo("videos/teddy/TeddyLowRes.webm"); // Fallback on error
                 }
             })();
+            } else {
+                // A question video was just playing. Show the static avatar.
+                introVideo.style.display = 'none';
+                introVideo.pause();
+                stage.style.backgroundImage = `url('${currentAvatarImg}')`;
+                stage.style.backgroundSize = 'cover';
+                stage.style.backgroundPosition = 'center';
+            }
         }
     } else {
         // Pages with a static avatar background

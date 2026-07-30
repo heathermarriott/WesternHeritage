@@ -1,10 +1,10 @@
 ## Use ## for comments. Define columns in a header line.
-## Format: avatarId | videoFile | lang:en | lang:es | lang:de | lang:fr | lang:it
+## Format: avatarId | videoFile | text:en | text:es | text:de | text:fr | text:it
 
-teddy|Who are you?|¿Quién eres tú?|videos/teddy/TeddyLowRes.webm
-teddy|When did the Prescott Rodeo start?|¿Cuándo comenzó el Rodeo de Prescott?|videos/teddy/rodeo.webm
-teddy|Who was Bucky O'Neill?|¿Quién era Bucky O'Neill?|videos/teddy/BuckyOneill.webm
-teddy|What can I do in Prescott?|¿Qué puedo hacer en Prescott?|videos/teddy/Prescott.webm
-teddy|Tell me about the First U.S. Volunteer Cavalry.|Háblame del Primer Regimiento de Caballería Voluntaria de los Estados Unidos.|videos/teddy/RoughRiders.webm
-annie|Tell me something about Prescott.|Cuéntame algo sobre Prescott.|videos/annie/Annie.webm
-wyatt|What is Prescott?|¿Qué es Prescott?|videos/wyatt/Wyatt.webm
+teddy|videos/teddy/BuckyOneill.webm|Who was Bucky O'Neill?|¿Quién era Bucky O'Neill?|Wer war Bucky O'Neill?|Qui était Bucky O'Neill?|Chi era Bucky O'Neill?
+teddy|videos/teddy/rodeo.webm|When did the Prescott Rodeo start?|¿Cuándo comenzó el Rodeo de Prescott?|Wann hat das Prescott Rodeo begonnen?|Quand le rodéo de Prescott a-t-il commencé?|Quando è iniziato il Rodeo di Prescott?
+teddy|videos/teddy/TeddyLowRes.webm|Who are you?|¿Quién eres tú?|Wer bist du?|Qui es-tu?|Chi sei?
+annie|videos/annie/Annie.webm|Tell me something about Prescott.|Cuéntame algo sobre Prescott.|Erzähl mir etwas über Prescott.|Parlez-moi de Prescott.|Raccontami qualcosa di Prescott.
+wyatt|videos/wyatt/Wyatt.webm|What is Prescott?|¿Qué es Prescott?|Was ist Prescott?|Qu'est-ce que Prescott?|Cos'è Prescott?
+teddy|videos/teddy/Prescott.webm|What can I do in Prescott?|¿Qué puedo hacer en Prescott?|Was kann ich in Prescott tun?|Que puis-je faire à Prescott?|Cosa posso fare a Prescott?
+teddy|videos/teddy/RoughRiders.webm|Tell me about the First U.S. Volunteer Cavalry.|Háblame del Primer Regimiento de Caballería Voluntaria de los Estados Unidos.|Erzählen Sie mir von der First U.S. Volunteer Cavalry.|Parlez-moi de la First U.S. Volunteer Cavalry.|Mi parli della First U.S. Volunteer Cavalry.

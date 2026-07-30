@@ -3,4 +3,3 @@
 teddy|assets/teddy.png|Theodore Roosevelt
 annie|assets/annie.png|Big Nose Kate
 wyatt|assets/wyatt.png|Wyatt Earp
-sharlot|assets/sharlot.png|Sharlot Hall

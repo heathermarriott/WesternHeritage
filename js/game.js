@@ -21,12 +21,14 @@ export function startRoundupGame() {
     const timerLabel = document.getElementById("time");
     const gameOver = document.getElementById("gameOver");
     const gameArea = document.getElementById("gameArea");
+    const gameStats = document.getElementById("gameStats");
 
     // Reset the game display for a new game or replay
     gameOver.innerHTML = "";
     scoreLabel.innerHTML = "0";
     timerLabel.innerHTML = "30";
 
+    gameStats.style.display = "block";
     // Make sure the horse is visible at the start
     horse.style.display = "block";
 
@@ -64,6 +66,7 @@ export function startRoundupGame() {
 
             // Hide the horse and show the game over message
             horse.style.display = "none";
+            gameStats.style.display = "none";
 
             gameOver.innerHTML = `
                 <h2 data-lang-key="game.timeUp">${translations.game.timeUp}</h2>

@@ -7,7 +7,7 @@
     "askQuestion": "Poser Une Question",
     "prescottTrivia": "Quiz sur Prescott",
     "prescottTimeline": "Chronologie de Prescott",
-    "cowboyRoundupGame": "Jeu du Rodéo"
+    "games": "Jeux"
   },
   "home": {
     "welcomeMessage": "Cliquez sur le chapeau de cowboy pour ouvrir le menu de navigation."
@@ -52,13 +52,65 @@
     "scoreResult": "Vous avez obtenu {score} sur 5 !"
   },
   "game": {
-    "heading": "Rodéo du Cowboy - cliquez sur le cheval",
+    "backToGames": "Retour au Menu des Jeux",
+    "cowboyRoundupTitle": "Rassembler les Cowboys",
+    "cowboyRoundupSubtitle": "Cliquez sur les chevaux dès qu'ils apparaissent pour les rassembler avant la fin du temps imparti !",
     "time": "Temps :",
-    "seconds": "sec",
-    "horsesCollected": "Chevaux Rassemblés :",
+    "seconds": "sec.",
+    "horsesCollected": "Chevaux Rassemblés: ",
     "timeUp": "Temps Écoulé !",
     "roundedUp": "Vous avez rassemblé {score} chevaux !",
-    "playAgain": "Rejouer"
+    "playAgain": "Rejouer",
+    "heading": "Rassembler les Cowboys - cliquez sur le cheval",
+    "leanLeft": "PENCHER À GAUCHE",
+    "leanRight": "PENCHER À DROITE",
+    "newRide": "Nouvelle Monte",
+    "rodeoHint": "Regardez de quel côté le taureau bascule, puis maintenez le bouton de penchement opposé pour corriger. Ça devient de plus en plus sauvage plus vous tenez longtemps !",
+    "rodeoModalL6": "Ne mordez pas la poussière : Si vous vous penchez trop d'un côté, vous êtes éjecté. Appuyez sur 'Nouvelle Monte' pour remonter."
+  },
+  "gamesMenu": {
+    "title": "Jeux",
+    "panForGold": "Chercher de l'Or",
+    "rodeoReflexes": "Réflexes de Rodéo",
+    "backToMain": "Retour au Menu Principal",
+    "panForGoldTitle": "Chercher de l'Or",
+    "panForGoldSubtitle": "Vous avez une pelle par partie. Enlevez la boue et attrapez l'or avant qu'il ne disparaisse !",
+    "panForGoldHudRound": "Cette Manche",
+    "panForGoldHudBest": "Meilleur",
+    "panForGoldHudGames": "Parties",
+    "panForGoldEmptyBanner": "La batée est vide — appuyez sur 'Nouvelle Pelle' pour rejouer !",
+    "panForGoldNewScoopBtn": "Nouvelle Pelle",
+    "panForGoldHelpBtn": "Comment Jouer",
+    "panForGoldHint": "Faites glisser votre doigt dans la batée pour enlever la terre. Touchez l'or, les gemmes ou les roches pour les ramasser !",
+    "panForGoldModalTitle": "Comment Jouer",
+    "panForGoldModalL1": "Une Pelle : Chaque partie vous donne une batée pleine de terre, de gravier et de trésors cachés.",
+    "panForGoldModalL2": "Laver : Faites glisser votre doigt dans la batée pour enlever la terre, comme un vrai chercheur d'or.",
+    "panForGoldModalL3": "Ramasser : Une fois qu'un flocon d'or, une pépite ou une gemme est découvert, touchez-le pour l'ajouter à votre butin. Les roches grises ne valent rien !",
+    "panForGoldModalL4": "Rejouer : Quand la batée est vide, appuyez sur 'Nouvelle Pelle' pour commencer une nouvelle partie. Votre meilleur score est sauvegardé.",
+    "panForGoldModalCloseBtn": "Compris !",
+    "panForGoldCollectibles": {
+      "rock": "Roche",
+      "gold_flake": "Paillette d'Or",
+      "gold_nugget": "Pépite d'Or",
+      "ruby": "Rubis",
+      "sapphire": "Saphir",
+      "emerald": "Émeraude"
+    },
+    "rodeoReflexesTitle": "Réflexes de Rodéo",
+    "rodeoReflexesSubtitle": "Restez en équilibre pendant 8 secondes pour un 'Ride Qualifié'. Un soubresaut de trop et vous êtes à terre !",
+    "rodeoReflexesHudRideTime": "Temps de Monte",
+    "rodeoReflexesHudBestTime": "Meilleur Temps",
+    "rodeoReflexesHudRides": "Montes",
+    "rodeoReflexesDanger": "ACCROCHE-TOI !",
+    "rodeoReflexesQualified": "8 SECONDES ! RIDE QUALIFIÉ !",
+    "rodeoReflexesBucked": "ÉJECTÉ !",
+    "rodeoReflexesStart": "Appuyez sur 'Nouvelle Monte' pour grimper !",
+    "rodeoModalL1": "Montez : Appuyez sur 'Nouvelle Monte' pour commencer une nouvelle monte.",
+    "rodeoModalL2": "Surveillez l'Inclinaison : Le taureau se cabre et s'incline au hasard. Regardez de quel côté vous basculez.",
+    "rodeoModalL3": "Contre-Penchez : Maintenez le bouton de penchement du côté opposé pour recentrer votre poids.",
+    "rodeoModalL4": "Attention à l'Avertissement : Quand vous commencez à glisser et que l'écran clignote en rouge, vous êtes sur le point de lâcher prise — contre-penchez fort !",
+    "rodeoModalL5": "Tenez la Distance : Restez 8 secondes pour un Ride Qualifié — puis continuez pour du temps bonus si vous osez !",
+    "rodeoReflexesQualifiedRideSuffix": " — Ride Qualifié !"
   },
   "settings": {
     "heading": "Paramètres",

@@ -5,7 +5,6 @@
  * for all the different pages in the application.
  */
 
-import { startRoundupGame } from './game.js';
 
 // --- PRIVATE HELPER FUNCTIONS ---
 
@@ -344,21 +343,6 @@ export function renderPage(page, context) {
             }
             document.getElementById("triviaScore").innerHTML = translations.trivia.scoreResult.replace("{score}", `<strong>${score}</strong>`);
         });
-
-    } else if (page === "Cowboy Roundup Game") {
-        content.innerHTML = `
-            <img src="${currentAvatarImg}" id="centerImage" alt="Avatar" style="max-width:min(30%, calc(120px * var(--scale))); margin: 0 auto calc(12px * var(--scale)); display:block;">
-            <div id="gameArea">
-                <h2 data-lang-key="game.heading">${translations.game.heading}</h2>
-                <div id="gameStats">
-                    <span data-lang-key="game.time">${translations.game.time}</span> <span id="time">30</span> <span data-lang-key="game.seconds">${translations.game.seconds}</span> |
-                    <span data-lang-key="game.horsesCollected">${translations.game.horsesCollected}</span>
-                    <span id="gameScore">0</span>
-                </div>
-                <img src="assets/horse.png" id="horse">
-                <div id="gameOver"></div>
-            </div>`;
-        startRoundupGame();
 
     } else if (page === "Prescott Timeline") {
         renderTimelinePage(context);

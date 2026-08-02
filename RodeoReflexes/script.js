@@ -39,6 +39,7 @@
   let bestTimeMs = Number(localStorage.getItem('rodeo_best_time_ms') || 0);
   let rideCount = Number(localStorage.getItem('rodeo_ride_count') || 0);
   bestTimeEl.textContent = (bestTimeMs / 1000).toFixed(1) + 's';
+  let translations = {};
   rideCountEl.textContent = rideCount;
 
   // ---------- Game state ----------
@@ -257,7 +258,8 @@
     if (!bannerShownForThisBuck && throwAnimMs >= THROW_BANNER_DELAY_MS) {
       bannerShownForThisBuck = true;
       const finalMs = pendingBuckStats.finalMs;
-      buckoffTimeEl.textContent = (finalMs / 1000).toFixed(1) + 's' + (finalMs >= QUALIFY_MS ? ' — Qualified Ride!' : '');
+      const suffix = finalMs >= QUALIFY_MS ? (translations.gamesMenu?.rodeoReflexesQualifiedRideSuffix || ' — Qualified Ride!') : '';
+      buckoffTimeEl.textContent = (finalMs / 1000).toFixed(1) + 's' + suffix;
       buckoffBanner.classList.add('show');
     }
   }
@@ -570,11 +572,41 @@
     if (e.target === modalOverlay) modalOverlay.classList.remove('show');
   });
 
-  // ---------- Init ----------
-  requestAnimationFrame(loop);
-
-  if (!localStorage.getItem('rodeo_seen_help')) {
-    modalOverlay.classList.add('show');
-    localStorage.setItem('rodeo_seen_help', '1');
+  // --- Translation Loader ---
+  async function applyPageTranslations() {
+    const savedLanguage = localStorage.getItem("language") || "en";
+    try {
+        const response = await fetch(`../../${savedLanguage}.json`);
+        translations = await (response.ok ? response.json() : (await fetch('../../en.json')).json());
+    } catch (error) {
+        console.error("Failed to load language file, falling back to English.", error);
+        translations = await (await fetch('../../en.json')).json();
+    }
+    document.querySelectorAll('[data-lang-key]').forEach(el => {
+        const key = el.getAttribute('data-lang-key');
+        const text = key.split('.').reduce((o, i) => o ? o[i] : undefined, translations);
+        if (text) {
+            const childSpan = el.querySelector('span');
+            if (childSpan) {
+                childSpan.textContent = text;
+            } else {
+                el.textContent = text;
+            }
+        }
+    });
   }
+
+  // ---------- Init ----------
+  async function initializeGame() {
+    await applyPageTranslations();
+    requestAnimationFrame(loop);
+
+    if (!localStorage.getItem('rodeo_seen_help')) {
+      modalOverlay.classList.add('show');
+      localStorage.setItem('rodeo_seen_help', '1');
+    }
+  }
+
+  initializeGame();
+
 })();

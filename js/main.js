@@ -1,4 +1,3 @@
-import { startRoundupGame, setTranslations as setGameTranslations } from './game.js';
 import { renderPage as renderPageFromModule } from './renderer.js';
 import { loadLanguage as loadLanguageFromModule, applyTranslationsToDom } from './i18n.js';
 import { initializeUI, switchVideo, showStaticAvatar } from './ui.js';
@@ -20,7 +19,7 @@ document.addEventListener("visibilitychange", () => {
 // --- STATE VARIABLES ---
 let currentAvatarImg = "assets/teddy.png";
 let currentAvatarId = "teddy"; // Add an ID for the current avatar
-let currentPage = "Select Avatar"; // Track the current page
+let currentPage = localStorage.getItem('lastPage') || "Select Avatar"; // Track the current page
 let translations = {}; // To store the loaded language JSON
 
 // --- MENU CONTROLS ---
@@ -55,7 +54,6 @@ function renderPage(page) {
 
 async function loadLanguage(language) {
     translations = await loadLanguageFromModule(language);
-    setGameTranslations(translations); // Pass translations to the game module
     applyTranslations();
 }
 
@@ -74,6 +72,11 @@ document.querySelectorAll("#menu a").forEach(item => {
     item.addEventListener("click", function(e){
         e.preventDefault();
         const page = this.dataset.page;
+        if (page === "Games") {
+            localStorage.setItem('lastPage', currentPage);
+            window.location.href = 'games.html';
+            return;
+        }
         renderPage(page);
         menu.classList.remove("open");
         document.body.classList.remove("menu-open");
@@ -93,6 +96,10 @@ async function initializeApp() {
 
     const savedLanguage = localStorage.getItem("language") || "en";
     await loadLanguage(savedLanguage);
+
+    // After initializing, we can clear the lastPage so a fresh visit
+    // to the site starts at the beginning.
+    localStorage.removeItem('lastPage');
 }
 
 initializeApp();

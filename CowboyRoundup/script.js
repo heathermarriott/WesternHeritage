@@ -17,10 +17,10 @@ const gameStats = document.getElementById("gameStats"); // This is the container
 async function loadLanguage() {
     const savedLanguage = localStorage.getItem("language") || "en";
     try {
-        const response = await fetch(`../../${savedLanguage}.json`);
+        const response = await fetch(`../${savedLanguage}.json`);
         if (!response.ok) {
             // Fallback to English if the language file doesn't exist
-            const enResponse = await fetch('../../en.json');
+            const enResponse = await fetch('../en.json');
             translations = await enResponse.json();
         } else {
             translations = await response.json();
@@ -29,7 +29,7 @@ async function loadLanguage() {
     } catch (error) {
         console.error("Failed to load language file, falling back to English.", error);
         try {
-            const enResponse = await fetch('../../en.json');
+            const enResponse = await fetch('../en.json');
             translations = await enResponse.json();
             applyTranslations();
         } catch (e) {

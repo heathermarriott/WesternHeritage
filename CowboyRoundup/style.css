@@ -2,6 +2,20 @@ body {
     background: #2a3a4a;
 }
 
+/* Local #stage override: the shared css/style.css centers #stage with
+   top:50%/left:50% + translate(-50%,-50%), but this page's fitStage()
+   script (see index.html) overwrites the transform with its own
+   translate()+scale() that assumes the stage starts at the top-left
+   corner (like RodeoReflexes/PanForGoldGame do). Without this override,
+   losing the -50%,-50% self-centering shift throws the whole stage far
+   off-position. */
+#stage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform-origin: top left;
+}
+
 .scene {
     position: relative;
     width: 100%;
@@ -168,7 +182,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex-shrink: 1;
+    flex: 1 1 auto;
     min-height: 0;
     width: 100%;
 }
@@ -224,12 +238,17 @@ body {
 }
 
 /* Corral-style frame: double border with a warm inset ring so the play
-   area reads as a fenced-in official arena rather than a plain box. */
+   area reads as a fenced-in official arena rather than a plain box.
+   Grows to fill whatever vertical space is left below the HUD (instead of
+   sitting at a small fixed size and leaving empty ground showing below
+   it) — width is then derived from that height via the aspect-ratio. */
 #gameArea {
     position: relative;
-    width: min(92%, calc(480px * var(--scale)));
+    flex: 1 1 auto;
+    min-height: 0;
+    width: auto;
     aspect-ratio: 9 / 16;
-    max-height: 62vh;
+    max-width: min(92%, calc(600px * var(--scale)));
     margin: clamp(4px, 1vh, calc(10px * var(--scale))) auto;
     background: #a3b98b;
     border: calc(4px * var(--scale)) solid var(--color-brown);
@@ -238,8 +257,6 @@ body {
     border-radius: calc(16px * var(--scale));
     overflow: hidden;
     box-shadow: inset 0 0 24px rgba(0,0,0,0.25), 0 6px 18px rgba(0,0,0,0.35);
-    flex-shrink: 1;
-    min-height: 0;
 }
 
 #gameOver {

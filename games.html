@@ -23,6 +23,15 @@
             box-shadow: 0 calc(8px * var(--scale)) calc(24px * var(--scale)) rgba(0,0,0,.25);
             max-width: min(90%, calc(620px * var(--scale)));
         }
+        /* Add stage styling for scaling */
+        #stage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 2189px; /* Match main app's --device-width */
+            height: 3890px; /* Match main app's --device-height */
+            transform-origin: top left;
+        }
         h1 {
             font-family: var(--font-display);
             font-size: calc(32px * var(--scale));
@@ -87,6 +96,19 @@
 
         // Load translations when the page loads
         applyPageTranslations();
+
+        // --- Stage Scaling Logic ---
+        function fitStage() {
+            const stage = document.getElementById('stage');
+            const stageW = 2189;
+            const stageH = 3890;
+            const scale = Math.min(window.innerWidth / stageW, window.innerHeight / stageH);
+            const offsetX = (window.innerWidth - stageW * scale) / 2;
+            const offsetY = (window.innerHeight - stageH * scale) / 2;
+            stage.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+        }
+        window.addEventListener('resize', fitStage);
+        fitStage();
     </script>
 </body>
 </html>

@@ -42,6 +42,19 @@
             e.preventDefault();
             window.history.back();
         });
+
+        // --- Stage Scaling Logic ---
+        function fitStage() {
+            const stage = document.getElementById('stage');
+            const stageW = 2189;
+            const stageH = 3890;
+            const scale = Math.min(window.innerWidth / stageW, window.innerHeight / stageH);
+            const offsetX = (window.innerWidth - stageW * scale) / 2;
+            const offsetY = (window.innerHeight - stageH * scale) / 2;
+            stage.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+        }
+        window.addEventListener('resize', fitStage);
+        fitStage();
     </script>
 </body>
 </html>

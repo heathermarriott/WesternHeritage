@@ -32,7 +32,7 @@ html, body{
 /* Fixed-resolution kiosk stage: designed at 2160x3840 (9x16) and scaled
    to fit whatever viewport it's rendered in via JS (see script.js) */
 #stage{
-  position:absolute;
+  position:fixed;
   top:0; left:0;
   width:2160px;
   height:3840px;

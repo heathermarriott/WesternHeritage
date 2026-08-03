@@ -5,7 +5,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pan for Gold!</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="../../css/style.css"> <!-- Main stylesheet for shared styles -->
+<link rel="stylesheet" href="style.css"> <!-- Game-specific styles -->
 </head>
 <body>
 
@@ -16,23 +17,23 @@
       <div class="river"></div>
 
       <header class="title">
-        <h1>⛏️ Pan for Gold</h1>
-        <p class="subtitle">You get one scoop per play. Swirl away the mud and grab the gold before it's gone!</p>
+        <h1 data-lang-key="gamesMenu.panForGoldTitle">⛏️ Pan for Gold</h1>
+        <p class="subtitle" data-lang-key="gamesMenu.panForGoldSubtitle">You get one scoop per play. Swirl away the mud and grab the gold before it's gone!</p>
       </header>
 
       <main class="game-wrap">
 
         <section class="hud">
           <div class="stat">
-            <span class="stat-label">This Round</span>
+            <span class="stat-label" data-lang-key="gamesMenu.panForGoldHudRound">This Round</span>
             <span class="stat-value" id="sessionScore">0</span>
           </div>
           <div class="stat">
-            <span class="stat-label">Best Ever</span>
+            <span class="stat-label" data-lang-key="gamesMenu.panForGoldHudBest">Best Ever</span>
             <span class="stat-value" id="bestScore">0</span>
           </div>
           <div class="stat">
-            <span class="stat-label">Games Played</span>
+            <span class="stat-label" data-lang-key="gamesMenu.panForGoldHudGames">Games Played</span>
             <span class="stat-value" id="scoopCount">0</span>
           </div>
         </section>
@@ -41,33 +42,80 @@
           <div class="pan-rim" id="panRim">
             <canvas id="panCanvas" width="1400" height="1400"></canvas>
           </div>
-          <div class="empty-banner" id="emptyBanner">Pan's empty — hit New Scoop to play again!</div>
+          <div class="empty-banner" id="emptyBanner" data-lang-key="gamesMenu.panForGoldEmptyBanner">Pan's empty — hit New Scoop to play again!</div>
         </section>
 
         <section class="controls">
-          <button id="scoopBtn" class="btn btn-primary">🪣 New Scoop</button>
-          <button id="helpBtn" class="btn btn-secondary">❓ How to Play</button>
+          <button id="scoopBtn" class="btn btn-primary" data-lang-key="gamesMenu.panForGoldNewScoopBtn">🪣 New Scoop</button>
+          <button id="helpBtn" class="btn btn-secondary" data-lang-key="gamesMenu.panForGoldHelpBtn">❓ How to Play</button>
         </section>
 
-        <p class="hint">Drag your finger inside the pan to wash the dirt away. Tap any gold, gem, or rock once it's uncovered to collect it!</p>
+        <p class="hint" data-lang-key="gamesMenu.panForGoldHint">Drag your finger inside the pan to wash the dirt away. Tap any gold, gem, or rock once it's uncovered to collect it!</p>
+
+        <a href="#" id="backToGames" class="game-link" style="margin-top: calc(20px * var(--scale));"><button class="avatarBtn" style="background: #888; font-size: calc(20px * var(--scale));" data-lang-key="game.backToGames">Back to Games Menu</button></a>
 
       </main>
     </div>
 
     <div class="modal-overlay" id="modalOverlay">
       <div class="modal">
-        <h2>How to Play</h2>
+        <h2 data-lang-key="gamesMenu.panForGoldModalTitle">How to Play</h2>
         <ol>
-          <li><strong>One Scoop:</strong> Each play gives you a single pan full of riverbed dirt, gravel, and hidden treasure.</li>
-          <li><strong>Swirl:</strong> Drag your finger around inside the pan to wash the dirt away, just like a real prospector.</li>
-          <li><strong>Collect:</strong> Once dirt clears off a gold flake, nugget, or gem, tap it to add it to your haul. Plain gray rocks are worthless!</li>
-          <li><strong>Play Again:</strong> When the pan is empty, hit "New Scoop" to start a brand new game. Your best score is saved on this device.</li>
+          <li data-lang-key="gamesMenu.panForGoldModalL1"><strong>One Scoop:</strong> Each play gives you a single pan full of riverbed dirt, gravel, and hidden treasure.</li>
+          <li data-lang-key="gamesMenu.panForGoldModalL2"><strong>Swirl:</strong> Drag your finger around inside the pan to wash the dirt away, just like a real prospector.</li>
+          <li data-lang-key="gamesMenu.panForGoldModalL3"><strong>Collect:</strong> Once dirt clears off a gold flake, nugget, or gem, tap it to add it to your haul. Plain gray rocks are worthless!</li>
+          <li data-lang-key="gamesMenu.panForGoldModalL4"><strong>Play Again:</strong> When the pan is empty, hit "New Scoop" to start a brand new game. Your best score is saved on this device.</li>
         </ol>
-        <button id="closeModal" class="btn btn-primary">Got it!</button>
+        <button id="closeModal" class="btn btn-primary" data-lang-key="gamesMenu.panForGoldModalCloseBtn">Got it!</button>
       </div>
     </div>
   </div>
 
 <script src="script.js"></script>
+<script>
+    // --- Translation Loader ---
+    async function applyPageTranslations() {
+        const savedLanguage = localStorage.getItem("language") || "en";
+        let translations = {};
+        try {
+            const response = await fetch(`../../${savedLanguage}.json`);
+            translations = await (response.ok ? response.json() : (await fetch('../../en.json')).json());
+        } catch (error) {
+            console.error("Failed to load language file, falling back to English.", error);
+            translations = await (await fetch('../../en.json')).json();
+        }
+        document.querySelectorAll('[data-lang-key]').forEach(el => {
+            const key = el.getAttribute('data-lang-key');
+            const text = key.split('.').reduce((o, i) => o ? o[i] : undefined, translations);
+            if (text) {
+                // Handle emojis in buttons
+                const emoji = el.textContent.match(/[\u{1F000}-\u{1FFFF}]/u);
+                el.textContent = (emoji ? emoji[0] + ' ' : '') + text;
+            }
+        });
+    }
+
+    // Go back to the previous page (games.html) without adding to history
+    document.getElementById('backToGames').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.history.back();
+    });
+
+    // Load translations when the page loads
+    applyPageTranslations();
+
+    // --- Stage Scaling Logic ---
+    function fitStage() {
+        const stage = document.getElementById('stage');
+        const stageW = 2160;
+        const stageH = 3840;
+        const scale = Math.min(window.innerWidth / stageW, window.innerHeight / stageH);
+        const offsetX = (window.innerWidth - stageW * scale) / 2;
+        const offsetY = (window.innerHeight - stageH * scale) / 2;
+        stage.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+    }
+    window.addEventListener('resize', fitStage);
+    fitStage();
+</script>
 </body>
 </html>

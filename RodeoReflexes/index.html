@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rodeo Reflexes</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="../../css/style.css"> <!-- Main stylesheet for shared styles -->
+<link rel="stylesheet" href="style.css"> <!-- Game-specific styles -->
 </head>
 <body>
 
@@ -15,23 +16,23 @@
       <div class="arena-ground"></div>
 
       <header class="title">
-        <h1>🤠 Rodeo Reflexes</h1>
-        <p class="subtitle">Stay balanced for the full 8 seconds to score a Qualified Ride. One buck too many and you're off!</p>
+        <h1 data-lang-key="gamesMenu.rodeoReflexesTitle">Rodeo Reflexes</h1>
+        <p class="subtitle" data-lang-key="gamesMenu.rodeoReflexesSubtitle">Stay balanced for the full 8 seconds to score a Qualified Ride. One buck too many and you're off!</p>
       </header>
 
       <main class="game-wrap">
 
         <section class="hud">
           <div class="stat">
-            <span class="stat-label">Ride Time</span>
+            <span class="stat-label" data-lang-key="gamesMenu.rodeoReflexesHudRideTime">Ride Time</span>
             <span class="stat-value" id="rideTime">0.0s</span>
           </div>
           <div class="stat">
-            <span class="stat-label">Best Time</span>
+            <span class="stat-label" data-lang-key="gamesMenu.rodeoReflexesHudBestTime">Best Time</span>
             <span class="stat-value" id="bestTime">0.0s</span>
           </div>
           <div class="stat">
-            <span class="stat-label">Rides</span>
+            <span class="stat-label" data-lang-key="gamesMenu.rodeoReflexesHudRides">Rides</span>
             <span class="stat-value" id="rideCount">0</span>
           </div>
         </section>
@@ -39,47 +40,56 @@
         <section class="arena-area">
           <div class="arena-frame" id="arenaFrame">
             <canvas id="arenaCanvas" width="1400" height="1400"></canvas>
-            <div class="danger-banner" id="dangerBanner">⚠ HANG ON!</div>
-            <div class="qualified-banner" id="qualifiedBanner">🔔 8 SECONDS! QUALIFIED RIDE!</div>
+            <div class="danger-banner" id="dangerBanner" data-lang-key="gamesMenu.rodeoReflexesDanger">HANG ON!</div>
+            <div class="qualified-banner" id="qualifiedBanner" data-lang-key="gamesMenu.rodeoReflexesQualified">8 SECONDS! QUALIFIED RIDE!</div>
             <div class="buckoff-banner" id="buckoffBanner">
-              <div class="buckoff-title">BUCKED OFF!</div>
+              <div class="buckoff-title" data-lang-key="gamesMenu.rodeoReflexesBucked">BUCKED OFF!</div>
               <div class="buckoff-time" id="buckoffTime">0.0s</div>
             </div>
-            <div class="start-banner" id="startBanner">Tap "New Ride" to climb into the chute!</div>
+            <div class="start-banner" id="startBanner" data-lang-key="gamesMenu.rodeoReflexesStart">Tap "New Ride" to climb into the chute!</div>
           </div>
         </section>
 
         <section class="lean-controls">
-          <button class="lean-btn lean-left" id="leanLeftBtn">◀<span>LEAN LEFT</span></button>
-          <button class="lean-btn lean-right" id="leanRightBtn">▶<span>LEAN RIGHT</span></button>
+          <button class="lean-btn lean-left" id="leanLeftBtn">◀<span data-lang-key="game.leanLeft">LEAN LEFT</span></button>
+          <button class="lean-btn lean-right" id="leanRightBtn">▶<span data-lang-key="game.leanRight">LEAN RIGHT</span></button>
         </section>
 
         <section class="controls">
-          <button id="rideBtn" class="btn btn-primary">🐂 New Ride</button>
-          <button id="helpBtn" class="btn btn-secondary">❓ How to Play</button>
+          <button id="rideBtn" class="btn btn-primary" data-lang-key="game.newRide">New Ride</button>
+          <button id="helpBtn" class="btn btn-secondary" data-lang-key="gamesMenu.panForGoldHelpBtn">How to Play</button>
         </section>
 
-        <p class="hint">Watch which way the bull tips, then hold the <em>opposite</em> lean button to correct it. It only gets wilder the longer you hang on!</p>
+        <p class="hint" data-lang-key="game.rodeoHint">Watch which way the bull tips, then hold the <em>opposite</em> lean button to correct it. It only gets wilder the longer you hang on!</p>
+
+        <a href="#" id="backToGames" class="game-link" style="margin-top: calc(20px * var(--scale));"><button class="avatarBtn" style="background: #888; font-size: calc(20px * var(--scale));" data-lang-key="game.backToGames">Back to Games Menu</button></a>
 
       </main>
     </div>
 
     <div class="modal-overlay" id="modalOverlay">
       <div class="modal">
-        <h2>How to Play</h2>
+        <h2 data-lang-key="gamesMenu.panForGoldModalTitle">How to Play</h2>
         <ol>
-          <li><strong>Climb On:</strong> Tap "New Ride" to start a fresh ride out of the chute.</li>
-          <li><strong>Watch the Tilt:</strong> The bull bucks and leans left or right at random. Watch which way your rider is tipping.</li>
-          <li><strong>Counter-Lean:</strong> Hold the lean button on the <em>opposite</em> side of the tilt to shift your weight back toward center.</li>
-          <li><strong>Watch for the Warning:</strong> When the rider starts sliding and the screen flashes red, you're about to lose your grip — counter-lean hard!</li>
-          <li><strong>Go the Distance:</strong> Stay on for a full 8 seconds to score a Qualified Ride — then keep going for bonus time if you dare!</li>
-          <li><strong>Don't Eat Dirt:</strong> Tip too far one way and you're bucked off. Tap "New Ride" to climb back on.</li>
+          <li data-lang-key="gamesMenu.rodeoModalL1"><strong>Climb On:</strong> Tap "New Ride" to start a fresh ride out of the chute.</li>
+          <li data-lang-key="gamesMenu.rodeoModalL2"><strong>Watch the Tilt:</strong> The bull bucks and leans left or right at random. Watch which way your rider is tipping.</li>
+          <li data-lang-key="gamesMenu.rodeoModalL3"><strong>Counter-Lean:</strong> Hold the lean button on the <em>opposite</em> side of the tilt to shift your weight back toward center.</li>
+          <li data-lang-key="gamesMenu.rodeoModalL4"><strong>Watch for the Warning:</strong> When the rider starts sliding and the screen flashes red, you're about to lose your grip — counter-lean hard!</li>
+          <li data-lang-key="gamesMenu.rodeoModalL5"><strong>Go the Distance:</strong> Stay on for a full 8 seconds to score a Qualified Ride — then keep going for bonus time if you dare!</li>
+          <li data-lang-key="game.rodeoModalL6"><strong>Don't Eat Dirt:</strong> Tip too far one way and you're bucked off. Tap "New Ride" to climb back on.</li>
         </ol>
-        <button id="closeModal" class="btn btn-primary">Got it!</button>
+        <button id="closeModal" class="btn btn-primary" data-lang-key="gamesMenu.panForGoldModalCloseBtn">Got It!</button>
       </div>
     </div>
   </div>
 
 <script src="script.js"></script>
+<script>
+    // Go back to the previous page (games.html) without adding to history
+    document.getElementById('backToGames').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.history.back();
+    });
+</script>
 </body>
 </html>

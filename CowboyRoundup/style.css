@@ -1,0 +1,278 @@
+body {
+    background: #2a3a4a;
+}
+
+.scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Warm golden-hour sky with a soft sun glow and slow-drifting clouds,
+   in the same painterly spirit as the sky layers on the other games. */
+.sky {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 65%;
+    background: linear-gradient(180deg, #f5a05c 0%, #f2c27e 18%, #a9d6ec 55%, #7ec2ea 100%);
+    overflow: hidden;
+    z-index: -3;
+}
+
+.sky::before {
+    /* sun glow */
+    content: "";
+    position: absolute;
+    top: 6%;
+    right: 12%;
+    width: 16vmin;
+    height: 16vmin;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,244,214,0.95) 0%, rgba(255,224,150,0.55) 40%, rgba(255,224,150,0) 72%);
+}
+
+.sky::after {
+    /* drifting clouds, doubled up in the background-position so the loop is seamless */
+    content: "";
+    position: absolute;
+    top: 12%;
+    left: 0;
+    width: 220%;
+    height: 22%;
+    background-image:
+        radial-gradient(ellipse 8% 55% at 10% 50%, rgba(255,255,255,0.55), transparent 70%),
+        radial-gradient(ellipse 6% 40% at 16% 60%, rgba(255,255,255,0.5), transparent 70%),
+        radial-gradient(ellipse 7% 50% at 55% 40%, rgba(255,255,255,0.45), transparent 70%),
+        radial-gradient(ellipse 5% 35% at 60% 55%, rgba(255,255,255,0.4), transparent 70%);
+    animation: driftClouds 90s linear infinite;
+    opacity: 0.8;
+}
+
+@keyframes driftClouds {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+/* Distant mesa/mountain silhouette bridging the sky and ground, like the
+   crowd/riverbank band on the other two games. */
+.hills {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 48%;
+    height: 20%;
+    z-index: -2;
+    background:
+        linear-gradient(200deg, transparent 48%, rgba(120,86,66,0.55) 48.5%),
+        linear-gradient(160deg, transparent 60%, rgba(93,66,52,0.6) 60.5%),
+        linear-gradient(210deg, transparent 40%, rgba(150,108,80,0.4) 40.5%);
+    background-size: 45% 100%, 60% 100%, 38% 100%;
+    background-position: 0% 100%, 40% 100%, 78% 100%;
+    background-repeat: repeat-x;
+    opacity: 0.85;
+}
+
+/* Sun-baked ground with a fenced horizon line and a subtle worn-trail texture. */
+.ground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 35%;
+    background:
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.03) 0 3px, transparent 3px 26px),
+        linear-gradient(180deg, #d1ab7c 0%, #a17c48 60%, #8a6538 100%);
+    z-index: -1;
+}
+
+.ground::before {
+    /* horizon fence-line, echoing the arena/riverbank edge treatment */
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: calc(3px * var(--scale, 1));
+    background: rgba(72, 48, 26, 0.7);
+    box-shadow: 0 calc(6px * var(--scale, 1)) calc(14px * var(--scale, 1)) rgba(0,0,0,0.25);
+}
+
+/* Top-aligned (not centered) so long, wrapped translations push content
+   downward instead of getting clipped off the top of the stage. A vertical
+   scroll fallback protects against any remaining overflow on short screens. */
+.game-wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: clamp(10px, 2.5vh, calc(20px * var(--scale))) calc(20px * var(--scale));
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: clamp(8px, 1.8vh, calc(16px * var(--scale)));
+    flex-shrink: 0;
+    width: 100%;
+    max-width: calc(560px * var(--scale));
+}
+
+/* Official plaque-style rule flanking the title, like a museum placard */
+.title::before,
+.title::after {
+    content: "";
+    display: block;
+    height: 3px;
+    width: min(70%, calc(320px * var(--scale)));
+    margin: 0 auto;
+    background: linear-gradient(90deg, transparent, var(--color-brown) 20%, var(--color-brown) 80%, transparent);
+    opacity: 0.55;
+}
+
+.title::before {
+    margin-bottom: clamp(6px, 1.2vh, calc(10px * var(--scale)));
+}
+
+.title::after {
+    margin-top: clamp(6px, 1.2vh, calc(10px * var(--scale)));
+}
+
+.title h1 {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 4.4vh, calc(48px * var(--scale)));
+    line-height: 1.15;
+    color: var(--color-brown);
+    text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.4);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.title .subtitle {
+    font-size: clamp(12px, 2vh, calc(18px * var(--scale)));
+    line-height: 1.35;
+    color: var(--color-brown);
+    max-width: 85%;
+    margin: clamp(4px, 1vh, calc(8px * var(--scale))) auto 0;
+    opacity: 0.9;
+}
+
+#gameContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 1;
+    min-height: 0;
+    width: 100%;
+}
+
+/* Brass-plaque HUD: a double-lined "official" badge look instead of a
+   plain rounded box, with a subtle engraved highlight along the top edge. */
+#gameHud {
+    position: relative;
+    background: linear-gradient(180deg, rgba(var(--color-brown-rgb), 0.82), rgba(var(--color-brown-rgb), 0.68));
+    color: var(--color-cream);
+    padding: clamp(6px, 1.4vh, calc(10px * var(--scale))) clamp(14px, 3vh, calc(24px * var(--scale)));
+    border-radius: calc(10px * var(--scale));
+    margin-bottom: clamp(8px, 1.6vh, calc(14px * var(--scale)));
+    font-size: clamp(13px, 2.2vh, calc(20px * var(--scale)));
+    font-family: var(--font-display);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 2px solid rgba(var(--color-cream-rgb), 0.55);
+    outline: 1px solid rgba(var(--color-brown-rgb), 0.9);
+    outline-offset: 3px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.25);
+    backdrop-filter: blur(3px);
+    flex-shrink: 0;
+}
+
+#gameStats {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(4px, 1vh, calc(8px * var(--scale)));
+    align-items: center;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
+    gap: calc(16px * var(--scale));
+    max-width: calc(320px * var(--scale));
+}
+
+.stat-item span:first-child {
+    opacity: 0.85;
+    font-size: 0.85em;
+}
+
+.score-value {
+    display: inline-block;
+    min-width: calc(40px * var(--scale));
+    text-align: right;
+    color: #f4d78c;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+
+/* Corral-style frame: double border with a warm inset ring so the play
+   area reads as a fenced-in official arena rather than a plain box. */
+#gameArea {
+    position: relative;
+    width: min(92%, calc(480px * var(--scale)));
+    aspect-ratio: 9 / 16;
+    max-height: 62vh;
+    margin: clamp(4px, 1vh, calc(10px * var(--scale))) auto;
+    background: #a3b98b;
+    border: calc(4px * var(--scale)) solid var(--color-brown);
+    outline: 2px solid rgba(var(--color-cream-rgb), 0.6);
+    outline-offset: -8px;
+    border-radius: calc(16px * var(--scale));
+    overflow: hidden;
+    box-shadow: inset 0 0 24px rgba(0,0,0,0.25), 0 6px 18px rgba(0,0,0,0.35);
+    flex-shrink: 1;
+    min-height: 0;
+}
+
+#gameOver {
+    flex-shrink: 0;
+}
+
+#gameOver h2 {
+    font-size: clamp(24px, 5vh, calc(48px * var(--scale)));
+    color: var(--color-brown);
+    text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#gameOver p {
+    font-size: clamp(14px, 2.6vh, calc(24px * var(--scale)));
+    margin-top: clamp(6px, 1vh, calc(10px * var(--scale)));
+    color: var(--color-brown);
+    font-family: var(--font-display);
+}
+
+/* Official "back to menu" button — a leather-tone plaque button rather
+   than a flat grey box, matching the rest of the western signage. */
+.game-link {
+    flex-shrink: 0;
+    margin-top: clamp(10px, 2vh, calc(20px * var(--scale))) !important;
+}
+
+.game-link .avatarBtn {
+    background: linear-gradient(180deg, #8a6a45, #6b4f30) !important;
+    border: 2px solid rgba(var(--color-cream-rgb), 0.5);
+    font-size: clamp(13px, 2.4vh, calc(20px * var(--scale))) !important;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+}

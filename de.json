@@ -7,16 +7,13 @@
     "askQuestion": "Frage Stellen",
     "prescottTrivia": "Prescott-Quiz",
     "prescottTimeline": "Prescott-Zeitstrahl",
-    "cowboyRoundupGame": "Cowboy-Rodeo-Spiel"
+    "games": "Spiele"
   },
   "home": {
     "welcomeMessage": "Klicke auf den Cowboyhut, um das Navigationsmenü zu öffnen."
   },
   "avatar": {
     "heading": "Wähle Deinen Charakter",
-    "theodoreRoosevelt": "Theodore Roosevelt",
-    "bigNoseKate": "Big Nose Kate",
-    "wyattEarp": "Wyatt Earp",
     "selectedHeading": "Charakter Ausgewählt!",
     "selectedMessage": "Dein Abenteuer kann beginnen. Klicke auf den Cowboyhut, um das Navigationsmenü zu öffnen."
   },
@@ -55,13 +52,65 @@
     "scoreResult": "Du hast {score} von 5 Punkten erreicht!"
   },
   "game": {
-    "heading": "Cowboy-Rodeo - klicke auf das Pferd",
+    "backToGames": "Zurück zum Spielemenü",
+    "cowboyRoundupTitle": "Cowboy-Zusammentrieb",
+    "cowboyRoundupSubtitle": "Klicke auf die Pferde, sobald sie erscheinen, um sie vor Ablauf der Zeit zusammenzutreiben!",
     "time": "Zeit:",
     "seconds": "Sek.",
-    "horsesCollected": "Gesammelte Pferde:",
+    "horsesCollected": "Gesammelte Pferde: ",
     "timeUp": "Zeit Abgelaufen!",
-    "roundedUp": "Du hast {score} Pferde eingefangen!",
-    "playAgain": "Nochmal Spielen"
+    "roundedUp": "Du hast {score} Pferde zusammengetrieben!",
+    "playAgain": "Nochmal spielen",
+    "heading": "Cowboy-Zusammentrieb - klicke auf das Pferd",
+    "leanLeft": "NACH LINKS LEHNEN",
+    "leanRight": "NACH RECHTS LEHNEN",
+    "newRide": "Neuer Ritt",
+    "rodeoHint": "Achte darauf, in welche Richtung der Stier kippt, und halte die entgegengesetzte Lehn-Taste gedrückt, um zu korrigieren. Je länger du durchhältst, desto wilder wird es!",
+    "rodeoModalL6": "Falle nicht herunter: Wenn du zu weit zur Seite kippst, wirst du abgeworfen. Tippe auf 'Neuer Ritt', um wieder aufzusteigen."
+  },
+  "gamesMenu": {
+    "title": "Spiele",
+    "panForGold": "Goldwaschen",
+    "rodeoReflexes": "Rodeo-Reflexe",
+    "backToMain": "Zurück zum Hauptmenü",
+    "panForGoldTitle": "Goldwaschen",
+    "panForGoldSubtitle": "Du hast einen Schöpfer pro Spiel. Spüle den Schlamm weg und schnapp dir das Gold, bevor es weg ist!",
+    "panForGoldHudRound": "Diese Runde",
+    "panForGoldHudBest": "Bester",
+    "panForGoldHudGames": "Spiele",
+    "panForGoldEmptyBanner": "Pfanne ist leer — drücke 'Neuer Schöpfer', um erneut zu spielen!",
+    "panForGoldNewScoopBtn": "Neuer Schöpfer",
+    "panForGoldHelpBtn": "Spielanleitung",
+    "panForGoldHint": "Ziehe deinen Finger in der Pfanne, um den Schmutz wegzuwaschen. Tippe auf Gold, Edelsteine oder Steine, um sie zu sammeln!",
+    "panForGoldModalTitle": "Spielanleitung",
+    "panForGoldModalL1": "Ein Schöpfer: Jedes Spiel gibt dir eine Pfanne voll mit Flussbett-Schmutz, Kies und verborgenen Schätzen.",
+    "panForGoldModalL2": "Spülen: Ziehe deinen Finger in der Pfanne herum, um den Schmutz wegzuwaschen, genau wie ein echter Goldgräber.",
+    "panForGoldModalL3": "Sammeln: Sobald Schmutz von einem Goldflocken, Nugget oder Edelstein entfernt ist, tippe darauf, um es zu deiner Beute hinzuzufügen. Graue Steine sind wertlos!",
+    "panForGoldModalL4": "Erneut spielen: Wenn die Pfanne leer ist, drücke 'Neuer Schöpfer', um ein neues Spiel zu starten. Dein bester Punktestand wird gespeichert.",
+    "panForGoldModalCloseBtn": "Verstanden!",
+    "panForGoldCollectibles": {
+      "rock": "Stein",
+      "gold_flake": "Goldflocke",
+      "gold_nugget": "Goldklumpen",
+      "ruby": "Rubin",
+      "sapphire": "Saphir",
+      "emerald": "Smaragd"
+    },
+    "rodeoReflexesTitle": "Rodeo-Reflexe",
+    "rodeoReflexesSubtitle": "Bleib 8 Sekunden im Gleichgewicht für einen 'Qualifizierten Ritt'. Ein Bocksprung zu viel und du bist runter!",
+    "rodeoReflexesHudRideTime": "Rittzeit",
+    "rodeoReflexesHudBestTime": "Bestzeit",
+    "rodeoReflexesHudRides": "Ritte",
+    "rodeoReflexesDanger": "FESTHALTEN!",
+    "rodeoReflexesQualified": "8 SEKUNDEN! QUALIFIZIERTER RITT!",
+    "rodeoReflexesBucked": "ABGEWORFEN!",
+    "rodeoReflexesStart": "Tippe auf 'Neuer Ritt', um in die Startbox zu steigen!",
+    "rodeoModalL1": "Aufsteigen: Tippe auf 'Neuer Ritt', um einen neuen Ritt zu starten.",
+    "rodeoModalL2": "Achte auf die Neigung: Der Stier bockt und neigt sich zufällig nach links oder rechts. Achte darauf, in welche Richtung du kippst.",
+    "rodeoModalL3": "Gegenlehnen: Halte die Lehn-Taste auf der gegenüberliegenden Seite der Neigung gedrückt, um dein Gewicht wieder zur Mitte zu verlagern.",
+    "rodeoModalL4": "Achte auf die Warnung: Wenn du zu rutschen beginnst und der Bildschirm rot blinkt, verlierst du den Halt — lehne dich stark dagegen!",
+    "rodeoModalL5": "Halte durch: Bleibe 8 Sekunden drauf für einen Qualifizierten Ritt — und mach weiter für Bonuszeit, wenn du dich traust!",
+    "rodeoReflexesQualifiedRideSuffix": " — Qualifizierter Ritt!"
   },
   "settings": {
     "heading": "Einstellungen",

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'western-heritage-cache-v9'; // Increment cache version for update
+const CACHE_NAME = 'western-heritage-cache-v11'; // Increment cache version for update
 
 // List of static assets to cache on install.
 const STATIC_ASSETS = [
@@ -7,6 +7,7 @@ const STATIC_ASSETS = [
   'css/style.css',
   'js/main.js',
   'en.json',
+  'avatars.txt',
   'questions.txt',
   'assets/hat.png',
   'assets/teddy.png',
@@ -31,8 +32,9 @@ async function syncVideoCache() {
     const text = await response.text();
     const videoUrls = text.split('\n')
                           .map(line => line.trim())
-                          .filter(line => line !== '' && !line.startsWith('#'))
-                          .map(line => line.split('|')[3].trim()); // Video path is now the 4th item
+                          .filter(line => line && !line.startsWith('#') && line.includes('|'))
+                          .map(line => line.split('|')[1].trim()) // Video path is always the 2nd item
+                          .filter(url => url); // Filter out any empty/undefined URLs
 
     console.log('Service Worker: Current video list:', videoUrls);
 
@@ -56,16 +58,32 @@ async function syncVideoCache() {
 
     // Cache any videos that aren't already cached. Skipping ones already
     // present avoids re-downloading the whole library on every sync.
+    // Videos are cached in small parallel batches rather than one at a
+    // time - downloading them sequentially means the total wait is the
+    // SUM of every video's download time, so a handful of large files
+    // (or a slow dev server) can make it look like caching has stalled
+    // on whichever file happens to be downloading.
+    const CONCURRENCY = 4;
+    const urlsToCache = [];
     for (const url of videoUrls) {
       const alreadyCached = await cache.match(url);
       if (!alreadyCached) {
-        try {
-          await cache.add(url);
-          console.log('Service Worker: Cached new video:', url);
-        } catch (err) {
-          console.error(`Service Worker: Failed to cache ${url}`, err);
-        }
+        urlsToCache.push(url);
       }
+    }
+
+    async function cacheOne(url) {
+      try {
+        await cache.add(url);
+        console.log('Service Worker: Cached new video:', url);
+      } catch (err) {
+        console.error(`Service Worker: Failed to cache ${url}`, err);
+      }
+    }
+
+    for (let i = 0; i < urlsToCache.length; i += CONCURRENCY) {
+      const batch = urlsToCache.slice(i, i + CONCURRENCY);
+      await Promise.all(batch.map(cacheOne));
     }
   } catch (error) {
     console.error('Service Worker: Failed to sync video cache:', error);
@@ -127,6 +145,51 @@ self.addEventListener('message', event => {
   }
 });
 
+// Given a cached full (200) video response and the original request, builds
+// the correctly-sliced 206 Partial Content response the <video> element is
+// expecting. Plain caches.match() doesn't do this slicing on its own - it
+// only matches by URL, so a Range-bearing request needs to be turned into
+// the right byte slice manually. Returns the full response unmodified if no
+// Range header was present.
+async function buildRangeResponse(request, cachedResponse) {
+  const rangeHeader = request.headers.get('range');
+  if (!rangeHeader) {
+    return cachedResponse;
+  }
+
+  const buffer = await cachedResponse.clone().arrayBuffer();
+  const size = buffer.byteLength;
+
+  const match = /bytes=(\d*)-(\d*)/.exec(rangeHeader);
+  if (!match) {
+    return cachedResponse;
+  }
+
+  const start = match[1] ? parseInt(match[1], 10) : 0;
+  const end = match[2] ? parseInt(match[2], 10) : size - 1;
+
+  if (start >= size || end >= size || start > end) {
+    return new Response(null, {
+      status: 416,
+      statusText: 'Range Not Satisfiable',
+      headers: { 'Content-Range': `bytes */${size}` }
+    });
+  }
+
+  const slice = buffer.slice(start, end + 1);
+
+  return new Response(slice, {
+    status: 206,
+    statusText: 'Partial Content',
+    headers: {
+      'Content-Type': cachedResponse.headers.get('Content-Type') || 'video/webm',
+      'Content-Range': `bytes ${start}-${end}/${size}`,
+      'Content-Length': String(slice.byteLength),
+      'Accept-Ranges': 'bytes'
+    }
+  });
+}
+
 // Fetch event: serve assets from cache
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
@@ -143,10 +206,14 @@ self.addEventListener('fetch', event => {
   // Handle video files
   if (event.request.url.endsWith('.webm')) {
     event.respondWith(
-      caches.match(event.request).then(cachedResponse => {
+      // Match by URL string (not the Request object) so the incoming
+      // Range header doesn't prevent finding an already-cached full
+      // response - caches.match() would otherwise miss on every single
+      // playback since the video element always sends a Range request.
+      caches.match(event.request.url).then(async cachedResponse => {
         if (cachedResponse) {
-          // If the video is found in the cache, return it immediately.
-          return cachedResponse;
+          // Found it - slice out the requested byte range ourselves.
+          return buildRangeResponse(event.request, cachedResponse);
         }
 
         // --- On-Demand Caching for Range Requests ---

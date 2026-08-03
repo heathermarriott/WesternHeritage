@@ -14,7 +14,7 @@
 
 :root{
     --device-width: 2189px;
-    --device-height: 3840px;
+    --device-height: 3890px;
 
     /* The original design was tuned assuming a viewport around this wide.
        --scale is the multiplier applied to every fixed-px value below so
@@ -369,7 +369,7 @@ main:has(#content.transparent){
 
     margin:calc(10px * var(--scale)) auto;
 
-    background:var(--color-cream);
+    background:green;
 
     border:calc(4px * var(--scale)) solid var(--color-brown);
     border-radius:calc(16px * var(--scale));

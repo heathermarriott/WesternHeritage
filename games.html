@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games - Western Heritage</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background-color: var(--color-cream);
+            color: var(--color-brown);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .game-menu-container {
+            text-align: center;
+            background: rgba(var(--color-cream-rgb), .94);
+            padding: calc(40px * var(--scale));
+            border-radius: calc(20px * var(--scale));
+            box-shadow: 0 calc(8px * var(--scale)) calc(24px * var(--scale)) rgba(0,0,0,.25);
+            max-width: min(90%, calc(620px * var(--scale)));
+        }
+        /* Add stage styling for scaling */
+        #stage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 2189px; /* Match main app's --device-width */
+            height: 3890px; /* Match main app's --device-height */
+            transform-origin: top left;
+        }
+        h1 {
+            font-family: var(--font-display);
+            font-size: calc(32px * var(--scale));
+            margin-bottom: calc(30px * var(--scale));
+        }
+        .game-link {
+            display: block;
+            margin: calc(20px * var(--scale)) 0;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="stage">
+        <main>
+            <div class="game-menu-container">
+                <h1 data-lang-key="gamesMenu.title">Games</h1>
+                <a href="CowboyRoundup/index.html" class="game-link"><button class="avatarBtn" data-lang-key="game.cowboyRoundupTitle">Cowboy Roundup</button></a>
+                <a href="PanForGoldGame/index.html" class="game-link"><button class="avatarBtn" data-lang-key="gamesMenu.panForGold">Pan for Gold</button></a>
+                <a href="RodeoReflexes/index.html" class="game-link"><button class="avatarBtn" data-lang-key="gamesMenu.rodeoReflexes">Rodeo Reflexes</button></a>
+                <a href="#" id="backButton" class="game-link" style="margin-top: calc(40px * var(--scale));"><button class="avatarBtn" style="background: #888;" data-lang-key="gamesMenu.backToMain">Back to Main Menu</button></a>
+            </div>
+        </main>
+    </div>
+    <script>
+        // --- Translation Loader ---
+        async function applyPageTranslations() {
+            const savedLanguage = localStorage.getItem("language") || "en";
+            let translations = {};
+
+            try {
+                const response = await fetch(`${savedLanguage}.json`);
+                if (!response.ok) {
+                    const enResponse = await fetch('en.json');
+                    translations = await enResponse.json();
+                } else {
+                    translations = await response.json();
+                }
+            } catch (error) {
+                console.error("Failed to load language file, falling back to English.", error);
+                const enResponse = await fetch('en.json');
+                translations = await enResponse.json();
+            }
+
+            document.querySelectorAll('[data-lang-key]').forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                const keys = key.split('.');
+                let text = translations;
+                for (const k of keys) {
+                    text = text ? text[k] : undefined;
+                }
+                if (text) element.textContent = text;
+            });
+        }
+
+        // --- Back Button Logic ---
+        document.getElementById('backButton').addEventListener('click', function(e) {
+            e.preventDefault();
+            // Go back to the previous page in history, which is the main app
+            window.history.back();
+        });
+
+        // Load translations when the page loads
+        applyPageTranslations();
+
+        // --- Stage Scaling Logic ---
+        function fitStage() {
+            const stage = document.getElementById('stage');
+            const stageW = 2189;
+            const stageH = 3890;
+            const scale = Math.min(window.innerWidth / stageW, window.innerHeight / stageH);
+            const offsetX = (window.innerWidth - stageW * scale) / 2;
+            const offsetY = (window.innerHeight - stageH * scale) / 2;
+            stage.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+        }
+        window.addEventListener('resize', fitStage);
+        fitStage();
+    </script>
+</body>
+</html>

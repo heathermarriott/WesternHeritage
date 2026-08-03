@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pan for Gold!</title>
-<link rel="stylesheet" href="../../css/style.css"> <!-- Main stylesheet for shared styles -->
+<link rel="stylesheet" href="../css/style.css"> <!-- Main stylesheet for shared styles -->
 <link rel="stylesheet" href="style.css"> <!-- Game-specific styles -->
 </head>
 <body>
@@ -78,11 +78,11 @@
         const savedLanguage = localStorage.getItem("language") || "en";
         let translations = {};
         try {
-            const response = await fetch(`../../${savedLanguage}.json`);
-            translations = await (response.ok ? response.json() : (await fetch('../../en.json')).json());
+            const response = await fetch(`../${savedLanguage}.json`);
+            translations = await (response.ok ? response.json() : (await fetch('../en.json')).json());
         } catch (error) {
             console.error("Failed to load language file, falling back to English.", error);
-            translations = await (await fetch('../../en.json')).json();
+            translations = await (await fetch('../en.json')).json();
         }
         document.querySelectorAll('[data-lang-key]').forEach(el => {
             const key = el.getAttribute('data-lang-key');

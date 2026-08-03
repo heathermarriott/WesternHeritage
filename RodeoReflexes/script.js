@@ -576,11 +576,11 @@
   async function applyPageTranslations() {
     const savedLanguage = localStorage.getItem("language") || "en";
     try {
-        const response = await fetch(`../../${savedLanguage}.json`);
-        translations = await (response.ok ? response.json() : (await fetch('../../en.json')).json());
+        const response = await fetch(`../${savedLanguage}.json`);
+        translations = await (response.ok ? response.json() : (await fetch('../en.json')).json());
     } catch (error) {
         console.error("Failed to load language file, falling back to English.", error);
-        translations = await (await fetch('../../en.json')).json();
+        translations = await (await fetch('../en.json')).json();
     }
     document.querySelectorAll('[data-lang-key]').forEach(el => {
         const key = el.getAttribute('data-lang-key');

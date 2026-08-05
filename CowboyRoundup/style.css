@@ -291,3 +291,66 @@ body {
     text-transform: uppercase;
     box-shadow: 0 14px 0 rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2);
 }
+
+/* Speed-select overlay, shown before a round starts and again from the
+   game-over screen via "Change Speed". Matches #gameOver's centered
+   placement inside #gameArea, but only one of the two is ever visible at a
+   time since renderSpeedSelect()/startGame() each clear the other. */
+#speedSelect {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 85%;
+}
+
+#speedSelect.visible {
+    display: block;
+}
+
+#speedSelect h2 {
+    font-size: clamp(20px, 4vh, calc(38px * var(--scale)));
+    color: var(--color-brown);
+    text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: clamp(10px, 2vh, calc(20px * var(--scale)));
+}
+
+.speed-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(8px, 1.6vh, calc(14px * var(--scale)));
+}
+
+.speed-btn {
+    width: min(100%, calc(280px * var(--scale)));
+}
+
+/* Highlights whichever speed was last played, so returning to this screen
+   via "Change Speed" shows the current mode instead of looking reset. */
+.speed-btn.speed-selected {
+    background: linear-gradient(180deg, #d99a3e, #b5762a) !important;
+    box-shadow: 0 14px 0 rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.35), 0 0 0 3px rgba(244,215,140,0.8);
+}
+
+/* "Change Speed" button on the game-over screen, sitting next to Play
+   Again rather than stacked full-width like the selection screen buttons. */
+#gameOver .speed-btn {
+    width: auto;
+    margin-top: calc(20px * var(--scale));
+    margin-left: calc(12px * var(--scale));
+    padding: calc(12px * var(--scale)) calc(28px * var(--scale));
+    font-size: calc(22px * var(--scale));
+    font-family: var(--font-display);
+    letter-spacing: .5px;
+    background: var(--color-brown);
+    color: var(--color-cream);
+    border: none;
+    border-radius: calc(8px * var(--scale));
+    cursor: pointer;
+    touch-action: manipulation;
+}

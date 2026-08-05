@@ -385,11 +385,14 @@ main:has(#content.transparent){
     letter-spacing:.5px;
 }
 
-/* The clickable horse image */
+/* The clickable horse image. Hidden by default so it doesn't flash on
+   screen behind the speed-select overlay before a round starts - script.js
+   sets display:block when a round actually begins. */
 #horse{
     position:absolute;
     width:calc(90px * var(--scale));
     cursor:pointer;
+    display:none;
     transition:left .25s, top .25s;
     touch-action:manipulation;
 }

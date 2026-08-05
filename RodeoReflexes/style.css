@@ -351,6 +351,20 @@ html, body{
   padding-bottom: 80px;
 }
 
+/* Official "back to menu" button — a leather-tone plaque button rather
+   than a flat grey box, matching the rest of the western signage. */
+.game-link {
+  flex-shrink: 0;
+  margin-top: 20px !important;
+}
+
+.game-link .avatarBtn {
+  background: linear-gradient(180deg, #8a6a45, #6b4f30) !important;
+  border: 2px solid rgba(245,236,217,0.5);
+  text-transform: uppercase;
+  box-shadow: 0 14px 0 rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
 .modal-overlay{
   position:absolute; inset:0;
   background: rgba(20,14,8,0.72);

@@ -287,9 +287,7 @@ body {
 
 .game-link .avatarBtn {
     background: linear-gradient(180deg, #8a6a45, #6b4f30) !important;
-    border: 2px solid rgba(var(--color-cream-rgb), 0.5);
-    font-size: clamp(13px, 2.4vh, calc(20px * var(--scale))) !important;
-    letter-spacing: 0.5px;
+    border: 2px solid rgba(245,236,217,0.5);    letter-spacing: 0.5px;
     text-transform: uppercase;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+    box-shadow: 0 14px 0 rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2);
 }

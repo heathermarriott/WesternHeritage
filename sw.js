@@ -1,20 +1,49 @@
-const CACHE_NAME = 'western-heritage-cache-v11'; // Increment cache version for update
+const CACHE_NAME = 'western-heritage-cache-v12'; // Increment cache version for update
 
-// List of static assets to cache on install.
+// List of static assets to cache on install. This needs to include every
+// page/script/style/data file the app can navigate or fetch to, not just the
+// main menu - games.html and the individual game pages are full-navigation
+// targets (window.location.href), and the ES module files imported by
+// main.js are separate network requests, so all of them have to be listed
+// explicitly here to be available before the first (possibly offline) visit.
 const STATIC_ASSETS = [
   '/',
   'index.html',
+  'games.html',
   'css/style.css',
   'js/main.js',
+  'js/i18n.js',
+  'js/renderer.js',
+  'js/ui.js',
   'en.json',
+  'es.json',
+  'fr.json',
+  'de.json',
+  'it.json',
   'avatars.txt',
   'questions.txt',
+  // Game pages (each is a full navigation target from games.html)
+  'CowboyRoundup/index.html',
+  'CowboyRoundup/style.css',
+  'CowboyRoundup/script.js',
+  'PanForGoldGame/index.html',
+  'PanForGoldGame/style.css',
+  'PanForGoldGame/script.js',
+  'RodeoReflexes/index.html',
+  'RodeoReflexes/style.css',
+  'RodeoReflexes/script.js',
+  // Images - listed explicitly so they're cached on install rather than
+  // waiting for a first (possibly offline) request to trigger the
+  // opportunistic isImage path below.
   'assets/hat.png',
   'assets/teddy.png',
   'assets/annie.png',
   'assets/wyatt.png',
   'assets/horse.png',
-  'assets/language.png'
+  'assets/flags.png',
+  'assets/appIcon1080x1080.png',
+  'assets/PanningForGoldAppIcon.png',
+  'assets/RodeoReflexesAppIcon.png'
 ];
 
 // Reads questions.txt, prunes any cached videos that are no longer
@@ -203,6 +232,14 @@ self.addEventListener('fetch', event => {
   // still gets cached on first load, without needing a CACHE_NAME bump.
   const isImage = /\.(png|jpe?g|gif|webp|svg|ico)$/i.test(url.pathname);
 
+  // Same idea for pages/scripts/styles/data files: a new game page, script,
+  // or translation file added later still gets cached the first time it's
+  // requested, even if nobody remembers to add it to STATIC_ASSETS. This is
+  // a same-origin GET-only kiosk app, so caching these opportunistically is
+  // safe - it's just a fallback net under the explicit install-time list
+  // above, not a replacement for it.
+  const isCacheableFile = /\.(html|css|js|json|txt)$/i.test(url.pathname);
+
   // Handle video files
   if (event.request.url.endsWith('.webm')) {
     event.respondWith(
@@ -236,10 +273,16 @@ self.addEventListener('fetch', event => {
         return networkPromise;
       })
     );
-  } else if (isStaticAsset || isImage) {
-    // Handle static assets and images: cache-first, and on a miss fetch
-    // from the network and store the response for next time so images
-    // added after install (e.g. new avatars) still end up cached.
+  } else if (isStaticAsset || isImage || isCacheableFile) {
+    // Only intercept GET requests - a cache can't usefully store the
+    // response to a POST/etc, and trying to would just throw.
+    if (event.request.method !== 'GET') {
+      return;
+    }
+    // Handle static assets, images, and pages/scripts/styles/data: cache-
+    // first, and on a miss fetch from the network and store the response
+    // for next time so files added after install (e.g. a new game page or
+    // a new avatar image) still end up cached.
     event.respondWith(
       caches.match(event.request).then(cachedResponse => {
         if (cachedResponse) {

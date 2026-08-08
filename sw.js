@@ -1,4 +1,4 @@
-const CACHE_NAME = 'western-heritage-cache-v14'; // Increment cache version for update
+const CACHE_NAME = 'western-heritage-cache-v18'; // Increment cache version for update
 
 // List of static assets to cache on install. This needs to include every
 // page/script/style/data file the app can navigate or fetch to, not just the
@@ -43,7 +43,18 @@ const STATIC_ASSETS = [
   'assets/flags.png',
   'assets/appIcon1080x1080.png',
   'assets/PanningForGoldAppIcon.png',
-  'assets/RodeoReflexesAppIcon.png'
+  'assets/RodeoReflexesAppIcon.png',
+  // Self-hosted fonts (replaces the old Google Fonts @import
+  'assets/fonts/rye-latin-400-normal.woff2',
+  'assets/fonts/rye-latin-400-normal.woff',
+  'assets/fonts/nunito-sans-latin-400-normal.woff2',
+  'assets/fonts/nunito-sans-latin-400-normal.woff',
+  'assets/fonts/nunito-sans-latin-600-normal.woff2',
+  'assets/fonts/nunito-sans-latin-600-normal.woff',
+  'assets/fonts/nunito-sans-latin-700-normal.woff2',
+  'assets/fonts/nunito-sans-latin-700-normal.woff',
+  'assets/fonts/nunito-sans-latin-800-normal.woff2',
+  'assets/fonts/nunito-sans-latin-800-normal.woff'
 ];
 
 // Reads questions.txt, prunes any cached videos that are no longer
@@ -240,6 +251,10 @@ self.addEventListener('fetch', event => {
   // above, not a replacement for it.
   const isCacheableFile = /\.(html|css|js|json|txt)$/i.test(url.pathname);
 
+  // Font files: same opportunistic-caching reasoning as isCacheableFile,
+  // kept as its own check since fonts aren't otherwise "content" files.
+  const isFont = /\.(woff2?|ttf|otf)$/i.test(url.pathname);
+
   // Handle video files
   if (event.request.url.endsWith('.webm')) {
     event.respondWith(
@@ -273,7 +288,7 @@ self.addEventListener('fetch', event => {
         return networkPromise;
       })
     );
-  } else if (isStaticAsset || isImage || isCacheableFile) {
+  } else if (isStaticAsset || isImage || isCacheableFile || isFont) {
     // Only intercept GET requests - a cache can't usefully store the
     // response to a POST/etc, and trying to would just throw.
     if (event.request.method !== 'GET') {

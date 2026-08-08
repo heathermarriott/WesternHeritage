@@ -10,11 +10,74 @@
    you're previewing in - so you always see the true composition, just
    shrunk/grown to fit your monitor, instead of a cropped slice of it.
    ========================================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Rye&family=Nunito+Sans:wght@400;600;700;800&display=swap');
+/* Self-hosted fonts. This used to be a Google Fonts @import, which is a
+   silent failure point on an offline kiosk like this one - that remote
+   request would just fail, and every element using var(--font-display)
+   would fall back to a plain serif with different metrics than Rye.
+   Self-hosting removes that network dependency so text always renders
+   with the intended font regardless of connectivity. (Confirmed on-device
+   that Rye itself was rendering correctly even before this change, so
+   this wasn't the cause of the Cowboy Roundup play-area sizing issue -
+   that's still being tracked down separately.) */
+@font-face {
+    font-family: 'Rye';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/assets/fonts/rye-latin-400-normal.woff2') format('woff2'),
+         url('/assets/fonts/rye-latin-400-normal.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Nunito Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/assets/fonts/nunito-sans-latin-400-normal.woff2') format('woff2'),
+         url('/assets/fonts/nunito-sans-latin-400-normal.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Nunito Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('/assets/fonts/nunito-sans-latin-600-normal.woff2') format('woff2'),
+         url('/assets/fonts/nunito-sans-latin-600-normal.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Nunito Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('/assets/fonts/nunito-sans-latin-700-normal.woff2') format('woff2'),
+         url('/assets/fonts/nunito-sans-latin-700-normal.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Nunito Sans';
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: url('/assets/fonts/nunito-sans-latin-800-normal.woff2') format('woff2'),
+         url('/assets/fonts/nunito-sans-latin-800-normal.woff') format('woff');
+}
 
 :root{
-    --device-width: 2189px;
-    --device-height: 3890px;
+    /* Proto Luma's documented native panel resolution (CSS px, assuming a
+       device pixel ratio of 1 - if the on-device debug readout in
+       CowboyRoundup/index.html shows a viewport far smaller than this,
+       e.g. ~1080x1920, that means the actual devicePixelRatio is 2 and
+       these values need to be halved instead). Previously this was
+       2189x3890 - an ad hoc value nudged up from what looks like this same
+       documented resolution (a prior commit shows the height started at
+       3840 and was bumped by hand "to cover the top gap"). That drifted
+       the aspect ratio by less than 0.1%, so it wasn't a meaningful cause
+       of any sizing issue on its own - just worth having the real,
+       documented number as the source of truth instead of a hand-tuned one. */
+    --device-width: 2160px;
+    --device-height: 3840px;
 
     /* The original design was tuned assuming a viewport around this wide.
        --scale is the multiplier applied to every fixed-px value below so

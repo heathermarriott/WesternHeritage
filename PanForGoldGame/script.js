@@ -2,10 +2,13 @@
   'use strict';
 
   // ---------- Stage scaling ----------
-  // The whole game is designed at a fixed 2160x3840 (9x16) resolution to match
-  // the Proto Luma's portrait touch display, then scaled with a CSS transform
-  // to fit whatever viewport/window it actually renders in.
-  const STAGE_W = 2160, STAGE_H = 3840;
+  // Reads the device dimensions from the CSS custom properties in
+  // ../css/style.css instead of hardcoding them here - that file is the
+  // single source of truth (previously it disagreed with this file, at
+  // 2189x3890 vs this file's 2160x3840 - this file had it right).
+  const rootStyles = getComputedStyle(document.documentElement);
+  const STAGE_W = parseFloat(rootStyles.getPropertyValue('--device-width'));
+  const STAGE_H = parseFloat(rootStyles.getPropertyValue('--device-height'));
 
   function fitStage() {
     const stage = document.getElementById('stage');

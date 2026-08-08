@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Rye&family=Nunito+Sans:wght@400;600;700;800&display=swap');
+/* Fonts are self-hosted via @font-face in ../css/style.css (loaded before
+   this file, per index.html's <link> order) - no import needed here. */
 
 :root{
   --sky-top: #d97a3f;
@@ -30,19 +31,24 @@ html, body{
   overflow:hidden;
 }
 
+/* Fixed-resolution kiosk stage: sized from the same --device-width/height
+   variables defined once in ../css/style.css (loaded before this file),
+   and scaled to fit whatever viewport it's rendered in via JS (see
+   script.js, which now reads those same variables too instead of its own
+   hardcoded copy). */
 #stage{
   position:absolute;
   top:0; left:0;
-  width:2160px;
-  height:3840px;
+  width:var(--device-width);
+  height:var(--device-height);
   transform-origin: top left;
   overflow:hidden;
 }
 
 .scene{
   position:relative;
-  width:2160px;
-  height:3840px;
+  width:var(--device-width);
+  height:var(--device-height);
   display:flex;
   flex-direction:column;
   align-items:center;

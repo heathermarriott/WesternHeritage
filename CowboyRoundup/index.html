@@ -45,10 +45,15 @@
         });
 
         // --- Stage Scaling Logic ---
+        // Reads the device dimensions from the CSS custom properties in
+        // ../css/style.css instead of hardcoding them here - that file is
+        // the single source of truth, so this can never drift out of sync
+        // with it again the way it previously did.
         function fitStage() {
             const stage = document.getElementById('stage');
-            const stageW = 2189;
-            const stageH = 3890;
+            const rootStyles = getComputedStyle(document.documentElement);
+            const stageW = parseFloat(rootStyles.getPropertyValue('--device-width'));
+            const stageH = parseFloat(rootStyles.getPropertyValue('--device-height'));
             const scale = Math.min(window.innerWidth / stageW, window.innerHeight / stageH);
             const offsetX = (window.innerWidth - stageW * scale) / 2;
             const offsetY = (window.innerHeight - stageH * scale) / 2;

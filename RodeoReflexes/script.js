@@ -2,7 +2,12 @@
   'use strict';
 
   // ---------- Stage scaling ----------
-  const STAGE_W = 2160, STAGE_H = 3840;
+  // Reads the device dimensions from the CSS custom properties in
+  // ../css/style.css instead of hardcoding them here - that file is the
+  // single source of truth.
+  const rootStyles = getComputedStyle(document.documentElement);
+  const STAGE_W = parseFloat(rootStyles.getPropertyValue('--device-width'));
+  const STAGE_H = parseFloat(rootStyles.getPropertyValue('--device-height'));
   function fitStage() {
     const stage = document.getElementById('stage');
     const scale = Math.min(window.innerWidth / STAGE_W, window.innerHeight / STAGE_H);

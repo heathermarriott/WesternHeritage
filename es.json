@@ -1,4 +1,5 @@
 {
+  "_comment": "This file contains all the text for the website translated to Spanish.",
   "pageTitle": "Centro de Patrimonio del Oeste de Prescott",
   "menu": {
     "openMenuTitle": "Abrir Menú",
@@ -6,6 +7,7 @@
     "selectAvatar": "Seleccionar Personaje",
     "askQuestion": "Haz Una Pregunta",
     "prescottTrivia": "Preguntas de Trivia de Prescott",
+    "firstRodeo": "Primer Rodeo Profesional",
     "prescottTimeline": "Cronología de Prescott",
     "games": "Juegos"
   },
@@ -148,6 +150,19 @@
       { "year": "1905", "title": "Se Inaugura el Elks Opera House", "body": "Un nuevo y elegante teatro abri\u00f3 sus puertas en el centro, trayendo vodevil, cine y espect\u00e1culos en vivo a la ciudad reconstruida; todav\u00eda presenta espect\u00e1culos hoy en d\u00eda." },
       { "year": "1927", "title": "Se Inaugura el Hassayampa Inn", "body": "Este elegante hotel abri\u00f3 sus puertas en el centro, convirti\u00e9ndose r\u00e1pidamente en un lugar de encuentro para viajeros, ganaderos y lugare\u00f1os por igual." },
       { "year": "1928", "title": "Se Funda el Museo Sharlot Hall", "body": "La pionera e historiadora Sharlot Hall abri\u00f3 un museo en la antigua Mansi\u00f3n del Gobernador Territorial, dedic\u00e1ndose a preservar la historia fronteriza de Prescott para las generaciones futuras." }
+    ]
+  },
+  "firstRodeo": {
+    "heading": "El primer rodeo profesional",
+    "intro": "Toca una pregunta para descubrir cómo Prescott se convirtió en la cuna del rodeo profesional.",
+    "trailEnd": "Prescott Frontier Days sigue celebrando esa misma tradición del 4 de julio cada año.",
+    "questions": [
+      { "marker": "P1", "question": "¿Por qué se considera a Prescott la cuna del rodeo profesional?", "answer": "El 4 de julio de 1888, un comité de comerciantes y empresarios de Prescott organizó un \u201ctorneo de vaqueros\u201d como parte de la celebración del Día de la Independencia. Fue la primera competencia de su tipo en cumplir con todos los requisitos que definen un rodeo moderno: un comité planeó y dirigió el evento, se invitó formalmente a los vaqueros a competir, se cobró entrada para cubrir los gastos, se otorgaron premios a los ganadores y los resultados se publicaron en el periódico local." },
+      { "marker": "P2", "question": "¿Quién ganó el primer título?", "answer": "Un vaquero llamado Juan Leivas, que trabajaba en el rancho Date Creek al suroeste del pueblo, fue nombrado \u201cMejor Vaquero\u201d y se llevó tanto el premio en efectivo como un trofeo. Su victoria quedó registrada en el Arizona Journal-Miner, y ese mismo trofeo todavía se exhibe hoy en el Museo Sharlot Hall de Prescott." },
+      { "marker": "P3", "question": "¿En qué pruebas competían los vaqueros?", "answer": "El torneo de 1888 incluyó monta de caballos broncos, enlazada de reses (steer roping) y carreras de caballos de rancho, además de al menos una gran carrera de caballos: las mismas destrezas que usaban a diario los vaqueros, convertidas en una competencia pública." },
+      { "marker": "P4", "question": "¿En qué parte de Prescott se celebró?", "answer": "El primer torneo se realizó en un terreno abierto junto a Iron Springs Road, cerca de donde hoy se encuentra un vivero de plantas, muy lejos de las instalaciones fijas para rodeo que usa hoy Prescott Frontier Days." },
+      { "marker": "P5", "question": "¿Siempre se llamó \u201crodeo\u201d?", "answer": "No al principio. Desde 1888 hasta la década de 1920, la celebración del 4 de julio en Prescott recibió varios nombres, entre ellos Torneo de Vaqueros, Fiesta y Estampida. La palabra \u201crodeo\u201d no se usó para el evento hasta 1924, aunque el evento en sí se había celebrado cada año desde 1888." },
+      { "marker": "P6", "question": "¿Cómo sabemos que fue realmente el primero?", "answer": "Porque quedó documentado en su momento. El Arizona Journal-Miner informó sobre los resultados en 1888, y esa cobertura original se conserva en los archivos del Museo Sharlot Hall. Esa evidencia es la razón por la que, en 1985, \u201cWorld's Oldest Rodeo\u201d se registró oficialmente como marca ante la Oficina de Patentes y Marcas de los Estados Unidos." }
     ]
   }
 }

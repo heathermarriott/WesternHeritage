@@ -1,3 +1,14 @@
+#Updating Text
+To better support multiple languages we have stored the text for each page in JSON file: en.json for english es.json for Spanish ect.
+The index.html has a line: <li><a href="#" data-page="Select Avatar" data-lang-key="menu.selectAvatar">Select Your Character</a></li>
+but the real text that displays for that menu item will depend on the language that the user has selected.
+
+When adding new text, you will need to update each of the language files. This solution does not scale well.  Currently we have files for the top 5 languages the museum identified.
+js/i18n.js will use the json files and add the appropriate text based on data-lang-key values.
+
+js/render.js will render the pages.
+
+
 # WesternHeritage
  Issues discussed:  
  1) How will device be used.  Should games be seperate apps or all in one app?

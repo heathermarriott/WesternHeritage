@@ -1,4 +1,5 @@
 {
+  "_comment": "This file contains all the text for the website translated to Italian",
   "pageTitle": "Centro del Patrimonio dell'Ovest di Prescott",
   "menu": {
     "openMenuTitle": "Apri Menu",
@@ -6,6 +7,7 @@
     "selectAvatar": "Seleziona Personaggio",
     "askQuestion": "Fai Una Domanda",
     "prescottTrivia": "Quiz su Prescott",
+    "firstRodeo": "Primo Rodeo Professionale",
     "prescottTimeline": "Linea del Tempo di Prescott",
     "games": "Giochi",
     "settings": "Impostazioni"
@@ -154,6 +156,19 @@
       { "year": "1905", "title": "Apertura dell'Elks Opera House", "body": "Un nuovo e magnifico teatro apr\u00ec nel centro citt\u00e0, portando variet\u00e0, cinema e spettacoli dal vivo nella citt\u00e0 ricostruita; ospita ancora spettacoli oggi." },
       { "year": "1927", "title": "Apertura dell'Hassayampa Inn", "body": "Questo elegante hotel apr\u00ec le sue porte nel centro citt\u00e0, diventando rapidamente un luogo d'incontro per viaggiatori, allevatori e residenti." },
       { "year": "1928", "title": "Fondazione del Museo Sharlot Hall", "body": "La pioniera e storica Sharlot Hall apr\u00ec un museo nell'antica Residenza del Governatore Territoriale, dedicandosi a preservare la storia di frontiera di Prescott per le generazioni future." }
+    ]
+  },
+  "firstRodeo": {
+    "heading": "Il primo rodeo professionistico",
+    "intro": "Tocca una domanda per scoprire come Prescott sia diventata la culla del rodeo professionistico.",
+    "trailEnd": "Prescott Frontier Days celebra ancora oggi, ogni anno, questa stessa tradizione del 4 luglio.",
+    "questions": [
+      { "marker": "D1", "question": "Perché Prescott è considerata la culla del rodeo professionistico?", "answer": "Il 4 luglio 1888, un comitato di commercianti e uomini d'affari di Prescott organizzò un \u201ctorneo di cowboy\u201d nell'ambito dei festeggiamenti per il Giorno dell'Indipendenza. Fu la prima competizione del genere a soddisfare tutti i criteri che definiscono un rodeo moderno: un comitato organizzò e diresse l'evento, i cowboy furono invitati ufficialmente a partecipare, fu richiesto un biglietto d'ingresso per coprire le spese, furono assegnati premi ai vincitori e i risultati vennero riportati sul giornale locale." },
+      { "marker": "D2", "question": "Chi vinse il primissimo titolo?", "answer": "Un cowboy di nome Juan Leivas, che lavorava presso il ranch Date Creek a sud-ovest della città, fu nominato \u201cMiglior Cowboy\u201d e portò a casa sia un premio in denaro sia un trofeo. La sua vittoria fu registrata sull'Arizona Journal-Miner, e quello stesso trofeo è ancora oggi esposto al Museo Sharlot Hall di Prescott." },
+      { "marker": "D3", "question": "In quali prove gareggiavano i cowboy?", "answer": "Il torneo del 1888 comprendeva la doma di cavalli selvaggi (bronc riding), la cattura al lazo dei manzi (steer roping) e corse di cavalli da ranch, oltre ad almeno una grande gara di cavalli - le stesse abilità che i cowboy usavano ogni giorno, trasformate in una competizione pubblica." },
+      { "marker": "D4", "question": "In quale zona di Prescott si svolse l'evento?", "answer": "Il primo torneo si tenne in un'area aperta lungo Iron Springs Road, vicino a dove oggi sorge un vivaio di piante - ben lontano dagli attuali impianti fissi utilizzati oggi da Prescott Frontier Days." },
+      { "marker": "D5", "question": "Si è sempre chiamato \u201crodeo\u201d?", "answer": "Non all'inizio. Dal 1888 fino agli anni '20 del Novecento, la festa del 4 luglio a Prescott ebbe diversi nomi, tra cui Torneo dei Cowboy, Fiesta e Stampede. La parola \u201crodeo\u201d fu associata all'evento solo nel 1924, sebbene l'evento stesso si tenesse ogni anno fin dal 1888." },
+      { "marker": "D6", "question": "Come sappiamo che fu davvero il primo?", "answer": "Perché all'epoca fu documentato con precisione. L'Arizona Journal-Miner riportò i risultati nel 1888, e quella cronaca originale è conservata negli archivi del Museo Sharlot Hall. Proprio questa documentazione è il motivo per cui, nel 1985, \u201cWorld's Oldest Rodeo\u201d fu registrato ufficialmente come marchio presso l'Ufficio Brevetti e Marchi degli Stati Uniti." }
     ]
   }
 }

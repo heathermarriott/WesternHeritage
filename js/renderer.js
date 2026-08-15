@@ -217,6 +217,68 @@ function renderTimelinePage(context) {
     trail.querySelectorAll(".milestone").forEach(el => observer.observe(el));
 }
 
+/**
+ * Renders the "First Professional Rodeo" page: an interactive, tap-to-expand
+ * Q&A about Prescott, Arizona being home to the first professional rodeo,
+ * staged during the July 4th, 1888 celebration. Copy comes from
+ * translations.firstRodeo (heading/intro/trailEnd/questions), mirroring how
+ * the Prescott Timeline page pulls from translations.timeline - see the JSON
+ * snippet provided alongside this file. Reuses the .milestone/.trail CSS
+ * classes so the card styling matches the Timeline page.
+ * @param {Object} context - The application context.
+ */
+function renderFirstRodeoPage(context) {
+    const { content, translations } = context;
+    const firstRodeo = translations.firstRodeo;
+
+    const questionMarkup = firstRodeo.questions.map((qa, index) => `
+        <div class="milestone">
+            <div class="milestone-marker">${qa.marker}</div>
+            <div class="milestone-card" data-index="${index}">
+                <div class="milestone-title">
+                    <h2>${qa.question}</h2>
+                    <span class="milestone-caret">&#9660;</span>
+                </div>
+                <div class="milestone-body">${qa.answer}</div>
+            </div>
+        </div>
+    `).join('');
+
+    content.innerHTML = `
+        <div class="timelineHeader">
+            <h2 data-lang-key="firstRodeo.heading">${firstRodeo.heading}</h2>
+            <p data-lang-key="firstRodeo.intro">${firstRodeo.intro}</p>
+        </div>
+        <div class="trail" id="rodeoTrail">
+            ${questionMarkup}
+        </div>
+        <div class="trailEnd" data-lang-key="firstRodeo.trailEnd">${firstRodeo.trailEnd}</div>
+    `;
+
+    const trail = document.getElementById("rodeoTrail");
+
+    // Tap a question (or its marker) to expand/collapse the answer
+    trail.addEventListener("click", (e) => {
+        const card = e.target.closest(".milestone-card");
+        const marker = e.target.closest(".milestone-marker");
+        const targetCard = card || (marker ? marker.nextElementSibling : null);
+        if (targetCard) {
+            targetCard.classList.toggle("open");
+        }
+    });
+
+    // Fade/slide each question in as it scrolls into view
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+            }
+        });
+    }, { threshold: 0.15 });
+
+    trail.querySelectorAll(".milestone").forEach(el => observer.observe(el));
+}
+
 
 // --- PUBLIC RENDER FUNCTION ---
 
@@ -346,6 +408,8 @@ export function renderPage(page, context) {
 
     } else if (page === "Prescott Timeline") {
         renderTimelinePage(context);
+    } else if (page === "First Professional Rodeo") {
+        renderFirstRodeoPage(context);
 
     } else if (page === "Settings") {
         const savedLanguage = localStorage.getItem("language") || "en";

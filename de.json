@@ -1,4 +1,5 @@
 {
+  "_comment": "This file contains all the text for the website translated to German.",
   "pageTitle": "Prescott Western Heritage Center",
   "menu": {
     "openMenuTitle": "Menü Öffnen",
@@ -6,6 +7,7 @@
     "selectAvatar": "Charakter Auswählen",
     "askQuestion": "Frage Stellen",
     "prescottTrivia": "Prescott-Quiz",
+    "firstRodeo": "Erstes Professionelles Rodeo",
     "prescottTimeline": "Prescott-Zeitstrahl",
     "games": "Spiele"
   },
@@ -148,6 +150,19 @@
       { "year": "1905", "title": "Elks Opera House Er\u00f6ffnet", "body": "Ein pr\u00e4chtiges neues Theater er\u00f6ffnete in der Innenstadt und brachte Variet\u00e9, Film und Live-Auftritte in die wiederaufgebaute Stadt - es zeigt noch heute Vorstellungen." },
       { "year": "1927", "title": "Hassayampa Inn Er\u00f6ffnet", "body": "Dieses elegante Hotel \u00f6ffnete seine T\u00fcren in der Innenstadt und wurde schnell zu einem Treffpunkt f\u00fcr Reisende, Rancher und Einheimische gleicherma\u00dfen." },
       { "year": "1928", "title": "Sharlot-Hall-Museum Gegr\u00fcndet", "body": "Die Pionierin und Historikerin Sharlot Hall er\u00f6ffnete ein Museum in der alten Residenz des Territorialgouverneurs und widmete sich der Bewahrung von Prescotts Grenzgeschichte f\u00fcr k\u00fcnftige Generationen." }
+    ]
+  },
+  "firstRodeo": {
+    "heading": "Das erste professionelle Rodeo",
+    "intro": "Tippe auf eine Frage, um zu erfahren, wie Prescott zur Geburtsstadt des professionellen Rodeos wurde.",
+    "trailEnd": "Prescott Frontier Days feiert diese Tradition zum 4. Juli noch heute, Jahr für Jahr.",
+    "questions": [
+      { "marker": "Q1", "question": "Warum gilt Prescott als Heimat des professionellen Rodeos?", "answer": "Am 4. Juli 1888 organisierte ein Komitee aus Kaufleuten und Geschäftsleuten von Prescott im Rahmen der Unabhängigkeitstagsfeier ein sogenanntes \u201cCowboy-Turnier\u201d. Es war der erste Wettbewerb dieser Art, der alle Merkmale eines modernen Rodeos erfüllte: Ein Komitee plante und leitete die Veranstaltung, Cowboys wurden offiziell zur Teilnahme eingeladen, Eintritt wurde erhoben, um die Kosten zu decken, Preise wurden an die Sieger vergeben, und die Ergebnisse wurden in der örtlichen Zeitung festgehalten." },
+      { "marker": "Q2", "question": "Wer gewann den allerersten Titel?", "answer": "Ein Cowboy namens Juan Leivas, der auf der Date Creek Ranch südwestlich der Stadt arbeitete, wurde zum \u201cBest Cowboy\u201d gekürt und erhielt sowohl Preisgeld als auch eine Trophäe. Sein Sieg wurde im Arizona Journal-Miner festgehalten, und dieselbe Trophäe ist bis heute im Sharlot Hall Museum in Prescott ausgestellt." },
+      { "marker": "Q3", "question": "In welchen Disziplinen traten die Cowboys an?", "answer": "Das Turnier von 1888 umfasste Bronco-Reiten, Steer Roping (das Einfangen von Rindern) und Cow-Pony-Rennen sowie mindestens ein großes Pferderennen - alltägliche Fähigkeiten der Ranch-Arbeiter, verwandelt in einen öffentlichen Wettkampf." },
+      { "marker": "Q4", "question": "Wo in Prescott fand die Veranstaltung statt?", "answer": "Das erste Turnier fand auf einem offenen Gelände an der Iron Springs Road statt, in der Nähe des heutigen Standorts einer Gärtnerei - weit entfernt von dem festen Rodeo-Gelände, das die Prescott Frontier Days heute nutzen." },
+      { "marker": "Q5", "question": "Hieß die Veranstaltung schon immer \u201cRodeo\u201d?", "answer": "Nicht von Anfang an. Von 1888 bis in die 1920er-Jahre trug die Feier zum 4. Juli in Prescott mehrere Namen, darunter Cowboy-Turnier, Fiesta und Stampede. Erst 1924 wurde der Begriff \u201cRodeo\u201d dafür verwendet - obwohl die Veranstaltung selbst schon seit 1888 jedes Jahr stattfand." },
+      { "marker": "Q6", "question": "Woher wissen wir, dass es wirklich das erste war?", "answer": "Weil es damals genau dokumentiert wurde. Der Arizona Journal-Miner berichtete 1888 über die Ergebnisse, und diese Originalberichterstattung ist bis heute im Archiv des Sharlot Hall Museums erhalten. Dieser Nachweis ist auch der Grund, warum \u201cWorld's Oldest Rodeo\u201d 1985 offiziell beim US-Patent- und Markenamt als Marke eingetragen wurde." }
     ]
   }
 }

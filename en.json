@@ -167,13 +167,13 @@
     "intro": "Tap a question below to learn how Prescott earned its title as the birthplace of professional rodeo.",
     "trailEnd": "Prescott Frontier Days still celebrates that same Fourth of July tradition every year.",
     "questions": [
-      { "marker": "Q1", "question": "Why is Prescott considered the home of professional rodeo?", "answer": "On July 4, 1888, a committee of Prescott merchants and businessmen organized a \u201ccowboy tournament\u201d as part of the town's Independence Day celebration. It was the first competition of its kind to check every box that defines a modern rodeo: a committee planned and ran the event, cowboys were formally invited to compete, admission was charged to cover expenses, prizes were awarded to the winners, and the results were written up in the local newspaper." },
-      { "marker": "Q2", "question": "Who won the very first title?", "answer": "A cowboy named Juan Leivas, who worked at the Date Creek Ranch southwest of town, was named \u201cBest Cowboy\u201d and took home both cash winnings and a trophy. His win was recorded in the Arizona Journal-Miner, and that same trophy is still on display today at Prescott's Sharlot Hall Museum." },
-      { "marker": "Q3", "question": "What events did the cowboys compete in?", "answer": "The 1888 tournament featured bronc riding, steer roping, and cow pony racing, along with at least one big horse race - the same kinds of skills ranch hands used every day, turned into a public contest." },
-      { "marker": "Q4", "question": "Where in Prescott did it take place?", "answer": "The first tournament was held in an open area off Iron Springs Road, near where a plant nursery stands today - a far cry from the dedicated rodeo grounds Prescott Frontier Days uses now." },
-      { "marker": "Q5", "question": "Was it always called a \u201crodeo\u201d?", "answer": "Not at first. From 1888 into the 1920s, Prescott's Fourth of July event went by several names, including the Cowboy Tournament, the Fiesta, and the Stampede. The word \u201crodeo\u201d wasn't attached to it until 1924, even though the event itself had been running every year since 1888." },
-      { "marker": "Q6", "question": "How do we know it was really the first?", "answer": "Because it was documented at the time. The Arizona Journal-Miner reported on the results in 1888, and that original coverage survives in the Sharlot Hall Museum archives. That paper trail is why, in 1985, \u201cWorld's Oldest Rodeo\u201d was officially registered as a trademark with the U.S. Patent and Trademark Office." }
-    ]
+    { "marker": "Q1", "question": "Why is Prescott considered the home of professional rodeo?", "answer": "On July 4, 1888, a Prescott committee held a \u201ccowboy tournament\u201d with invited competitors, paid admission, and prizes - the first event to meet every requirement of a modern rodeo." },
+    { "marker": "Q2", "question": "Who won the very first title?", "answer": "Juan Leivas, a cowboy from the Date Creek Ranch, was named \u201cBest Cowboy\u201d and won cash and a trophy - now on display at Prescott's Sharlot Hall Museum." },
+    { "marker": "Q3", "question": "What events did the cowboys compete in?", "answer": "Bronc riding, steer roping, and cow pony racing, plus a big horse race - everyday ranch skills turned into public competition." },
+    { "marker": "Q4", "question": "Where in Prescott did it take place?", "answer": "In an open area off Iron Springs Road, near today's plant nursery - long before Prescott had dedicated rodeo grounds." },
+    { "marker": "Q5", "question": "Was it always called a \u201crodeo\u201d?", "answer": "No. From 1888 into the 1920s it was called the Cowboy Tournament, Fiesta, or Stampede. The word \u201crodeo\u201d wasn't used until 1924." },
+    { "marker": "Q6", "question": "How do we know it was really the first?", "answer": "The Arizona Journal-Miner documented it in 1888, and that record - preserved at Sharlot Hall Museum - led to \u201cWorld's Oldest Rodeo\u201d being trademarked in 1985." }
+  ]
   }
 
 }

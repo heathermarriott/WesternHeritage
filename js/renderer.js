@@ -231,15 +231,17 @@ function renderFirstRodeoPage(context) {
     const { content, translations } = context;
     const firstRodeo = translations.firstRodeo;
 
-    const questionMarkup = firstRodeo.questions.map((qa, index) => `
-        <div class="milestone">
-            <div class="milestone-marker">${qa.marker}</div>
-            <div class="milestone-card" data-index="${index}">
-                <div class="milestone-title">
+    const cardMarkup = firstRodeo.questions.map((qa, index) => `
+        <div class="flashcard" data-index="${index}">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    <span class="flashcard-marker">${qa.marker}</span>
                     <h2>${qa.question}</h2>
-                    <span class="milestone-caret">&#9660;</span>
+                    <span class="flashcard-hint">Tap to reveal &#8594;</span>
                 </div>
-                <div class="milestone-body">${qa.answer}</div>
+                <div class="flashcard-back">
+                    <p>${qa.answer}</p>
+                </div>
             </div>
         </div>
     `).join('');
@@ -249,25 +251,23 @@ function renderFirstRodeoPage(context) {
             <h2 data-lang-key="firstRodeo.heading">${firstRodeo.heading}</h2>
             <p data-lang-key="firstRodeo.intro">${firstRodeo.intro}</p>
         </div>
-        <div class="trail" id="rodeoTrail">
-            ${questionMarkup}
+        <div class="flashcardGrid" id="rodeoFlashcards">
+            ${cardMarkup}
         </div>
         <div class="trailEnd" data-lang-key="firstRodeo.trailEnd">${firstRodeo.trailEnd}</div>
     `;
 
-    const trail = document.getElementById("rodeoTrail");
+    const grid = document.getElementById("rodeoFlashcards");
 
-    // Tap a question (or its marker) to expand/collapse the answer
-    trail.addEventListener("click", (e) => {
-        const card = e.target.closest(".milestone-card");
-        const marker = e.target.closest(".milestone-marker");
-        const targetCard = card || (marker ? marker.nextElementSibling : null);
-        if (targetCard) {
-            targetCard.classList.toggle("open");
+    // Tap a card to flip it and reveal the answer; tap again to flip back
+    grid.addEventListener("click", (e) => {
+        const card = e.target.closest(".flashcard");
+        if (card) {
+            card.classList.toggle("flipped");
         }
     });
 
-    // Fade/slide each question in as it scrolls into view
+    // Fade/pop each card in as it scrolls into view
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -276,8 +276,9 @@ function renderFirstRodeoPage(context) {
         });
     }, { threshold: 0.15 });
 
-    trail.querySelectorAll(".milestone").forEach(el => observer.observe(el));
+    grid.querySelectorAll(".flashcard").forEach(el => observer.observe(el));
 }
+
 
 
 // --- PUBLIC RENDER FUNCTION ---

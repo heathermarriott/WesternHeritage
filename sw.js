@@ -1,4 +1,4 @@
-const CACHE_NAME = 'western-heritage-cache-v18'; // Increment cache version for update
+const CACHE_NAME = 'western-heritage-cache-v19'; // Increment cache version for update
 
 // List of static assets to cache on install. This needs to include every
 // page/script/style/data file the app can navigate or fetch to, not just the

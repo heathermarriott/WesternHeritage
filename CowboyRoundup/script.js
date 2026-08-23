@@ -131,11 +131,16 @@ function renderSpeedSelect() {
  */
 function moveHorse() {
     if (!gameArea || !horse) return;
-    const gameAreaRect = gameArea.getBoundingClientRect();
-    const horseSize = horse.getBoundingClientRect();
-
-    const maxX = gameAreaRect.width - horseSize.width;
-    const maxY = gameAreaRect.height - horseSize.height;
+    // Use offsetWidth/offsetHeight rather than getBoundingClientRect(): the
+    // whole #stage is scaled down with a CSS transform to fit the window,
+    // and getBoundingClientRect() returns those post-transform (visual)
+    // pixel values while left/top are applied in the pre-transform layout
+    // space. Mixing the two shrank the horse's actual range down to a
+    // small box in the upper-left corner. offsetWidth/offsetHeight are
+    // unaffected by the transform, so they match the coordinate space
+    // left/top are set in.
+    const maxX = gameArea.offsetWidth - horse.offsetWidth;
+    const maxY = gameArea.offsetHeight - horse.offsetHeight;
 
     const randomX = Math.random() * maxX;
     const randomY = Math.random() * maxY;

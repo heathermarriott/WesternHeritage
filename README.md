@@ -24,7 +24,7 @@ Right now the video play is laggy, so I just have placeholder images.
 This GitHub page is hosting the website:  ***https://heathermarriott.github.io/WesternHeritage/***
 
 # See Videos, Playlists, Apps on the Device
-***https://cloud.protohologram.com/login*** cowboycrucibles@outlook.com
+***https://cloud.protohologram.com/login*** 
 
 # To do:
 1) Figure out how to run locally (bring ethernet cable)

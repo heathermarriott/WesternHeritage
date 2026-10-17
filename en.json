@@ -143,36 +143,57 @@
     "underConstruction": "This section is under construction."
   },
 
-  "timeline": {
+"timeline": {
     "heading": "The Prescott Trail",
     "intro": "Tap any marker to follow the town's story, year by year.",
     "trailEnd": "The trail continues today \u2014 Prescott's story is still being written.",
     "milestones": [
-      { "year": "1863", "title": "Gold Along Granite Creek", "body": "A prospecting party led by Joseph Walker found gold in the creeks of the Bradshaw Mountains, drawing the first wave of miners into the area that would become Prescott." },
-      { "year": "1864", "title": "Arizona's First Capital", "body": "The newly formed Arizona Territory needed a seat of government. Officials gathered and settled on the name \u201cPrescott,\u201d honoring historian William Hickling Prescott, and the town became the territory's first capital." },
-      { "year": "1866", "title": "Racing Joins the Fourth", "body": "Two years after Prescott became Arizona's territorial capital, organizers added horse racing - with paid admission and prize money - to the town's Fourth of July celebration, launching an annual tradition." },
-      { "year": "1867", "title": "Capital Moves to Tucson", "body": "Political winds shifted, and the territorial capital was relocated south to Tucson, slowing Prescott's growth as a government center for a decade." },
-      { "year": "1877", "title": "The Capital Returns", "body": "Prescott won back its status as territorial capital, restoring the town as the political heart of Arizona for another twelve years." },
-      { "year": "1888", "title": "The World's Oldest Rodeo", "body": "By 1888, townspeople wanted more than a one-day party. A committee - including future Rough Rider Buckey O'Neill and future mayor Morris Goldwater - invited cowboys to compete for prizes, launching what's now the World's Oldest Rodeo." },
-      { "year": "1889", "title": "Capital Moves to Phoenix", "body": "The territorial capital left Prescott for good, settling in Phoenix as the territory's population and growth shifted southward." },
-      { "year": "1900", "title": "The Whiskey Row Fire", "body": "A devastating fire tore through downtown, destroying the wooden storefronts of Whiskey Row. Rebuilding began almost immediately - this time in brick and stone." },
-      { "year": "1905", "title": "Elks Opera House Opens", "body": "A grand new theater opened downtown, bringing vaudeville, film, and live performance to the rebuilt city - it still hosts shows today." },
-      { "year": "1927", "title": "Hassayampa Inn Opens", "body": "This elegant hotel opened its doors downtown, quickly becoming a gathering place for travelers, ranchers, and locals alike." },
-      { "year": "1928", "title": "Sharlot Hall Museum Founded", "body": "Pioneer and historian Sharlot Hall opened a museum in the old Territorial Governor's Mansion, dedicating herself to preserving Prescott's frontier history for future generations." }
+      { "year": "1863", "title": "Gold Along Granite Creek", "body": "A prospecting party led by Joseph Walker found gold in the creeks of the Bradshaw Mountains, drawing the first wave of miners into the area that would become Prescott."},
+      { "year": "1864", "title": "Arizona's First Capital", "body": "The newly formed Arizona Territory needed a seat of government. Officials gathered and settled on the name \u201cPrescott,\u201d honoring historian William Hickling Prescott, and the town became the territory's first capital."},
+      { "year": "1866", "title": "Racing Joins the Fourth", "body": "Two years after Prescott became Arizona's territorial capital, organizers added horse racing - with paid admission and prize money - to the town's Fourth of July celebration, launching an annual tradition."},
+      { "year": "1867", "title": "Capital Moves to Tucson", "body": "Political winds shifted, and the territorial capital was relocated south to Tucson, slowing Prescott's growth as a government center for a decade."},
+      { "year": "1868", "title": "First U.S. Land Office", "body": "The first U.S. General Land Office in Arizona Territory opened in Prescott."},
+      { "year": "1877", "title": "The Capital Returns", "body": "Prescott won back its status as territorial capital, restoring the town as the political heart of Arizona for another twelve years."},
+      { "year": "1878", "title": "A New Courthouse", "body": "A new red-brick Yavapai County Courthouse featuring a clock tower was built on the Courthouse Plaza."},
+      { "year": "1886", "title": "The Railroad Arrives", "body": "The Prescott and Arizona Central Railroad connected Prescott to Seligman."},
+      { "year": "1888", "title": "The World's Oldest Rodeo", "body": "By 1888, townspeople wanted more than a one-day party. A committee - including future Rough Rider Buckey O'Neill and future mayor Morris Goldwater - invited cowboys to compete for prizes, launching what's now the World's Oldest Rodeo."},
+      { "year": "1889", "title": "Capital Moves to Phoenix", "body": "The territorial capital left Prescott for good, settling in Phoenix as the territory's population and growth shifted southward."},
+      { "year": "1898", "title": "Rough Riders Go to War", "body": "Prescott Mayor Buckey O'Neill recruited troops for the Spanish-American War, and was later killed in action at San Juan Hill, Cuba, on July 1."},
+      { "year": "1900", "title": "The Whiskey Row Fire", "body": "A devastating fire tore through downtown, destroying the wooden storefronts of Whiskey Row. Rebuilding began almost immediately - this time in brick and stone."},
+      { "year": "1905", "title": "Elks Opera House Opens", "body": "A grand new theater opened downtown, bringing vaudeville, film, and live performance to the rebuilt city - it still hosts shows today."},
+      { "year": "1907", "title": "Rough Rider Monument Dedicated", "body": "Solon Borglum's bronze monument honoring Bucky O'Neill and the Rough Riders was dedicated on the Courthouse Plaza, marking the first public art in the territory."},
+      { "year": "1911", "title": "Arizona Pioneers' Home", "body": "The Arizona Pioneers' Home opened overlooking the city of Prescott on February 1."},
+      { "year": "1912", "title": "Statehood Achieved", "body": "Arizona was admitted to the Union as the 48th state on February 14."},
+      { "year": "1913", "title": "Tom Mix Makes Movies", "body": "Early Western film star Tom Mix filmed silent cowboy movies in and around Prescott."},
+      { "year": "1916", "title": "The Granite Courthouse", "body": "Construction began on the current granite neo-classical Yavapai County Courthouse located on the Plaza."},
+      { "year": "1922", "title": "Whipple Becomes V.A.", "body": "Fort Whipple was transferred to the newly created U.S. Veterans Bureau to treat veterans."},
+      { "year": "1926", "title": "Ernest A. Love Airport", "body": "Prescott's municipal airport was dedicated in honor of World War I flying ace Lt. Ernest A. Love."},
+      { "year": "1927", "title": "Hassayampa Inn Opens", "body": "This elegant hotel opened its doors downtown, quickly becoming a gathering place for travelers, ranchers, and locals alike."},
+      { "year": "1927", "title": "Sharlot Hall Museum Founded", "body": "Pioneer and historian Sharlot Hall opened a museum in the old Territorial Governor's Mansion, dedicating herself to preserving Prescott's frontier history for future generations."},
+      { "year": "1940", "title": "First Radio Station", "body": "KYCA Radio began broadcasting in Prescott as the very first radio station in Yavapai County."},
+      { "year": "1959", "title": "Acker's Gift for Parks", "body": "James S. Acker bequeathed 100 parcels of land in trust to the City of Prescott to be used for parks and youth music programs."},
+      { "year": "1964", "title": "Goldwater Announces for President", "body": "U.S. Senator Barry Goldwater launched his presidential campaign directly from the steps of the Yavapai County Courthouse."},
+      { "year": "1966", "title": "Prescott College Opens", "body": "After local citizens raised a million dollars, Prescott College opened its doors to its charter class of students."},
+      { "year": "1968", "title": "Honor Island Dedicated", "body": "Honor Island was dedicated in Prescott as one of the very first Vietnam War memorials in the United States."},
+      { "year": "1969", "title": "Yavapai College Opens", "body": "Yavapai College opened for its first semester of classes following a donation of land near Fort Whipple."},
+      { "year": "1975", "title": "First Female Mayor", "body": "Jerri Wagner was elected as the first female Mayor of Prescott."},
+      { "year": "1978", "title": "Embry-Riddle Opens", "body": "Embry-Riddle Aeronautical University opened its residential Western Campus in Prescott."},
+      { "year": "1981", "title": "Territorial Days Begin", "body": "Prescott launched its annual Territorial Days celebration, held each June on the Courthouse Plaza."},
+      { "year": "1984", "title": "Phippen Museum Opens", "body": "The Phippen Museum of Western Art opened north of Prescott."}
     ]
-  },
+},
 
   "firstRodeo": {
     "heading": "The First Professional Rodeo",
     "intro": "Tap a question below to learn how Prescott earned its title as the birthplace of professional rodeo.",
     "trailEnd": "Prescott Frontier Days still celebrates that same Fourth of July tradition every year.",
     "questions": [
-    { "marker": "Q1", "question": "Why is Prescott considered the home of professional rodeo?", "answer": "On July 4, 1888, a Prescott committee held a \u201ccowboy tournament\u201d with invited competitors, paid admission, and prizes - the first event to meet every requirement of a modern rodeo." },
-    { "marker": "Q2", "question": "Who won the very first title?", "answer": "Juan Leivas, a cowboy from the Date Creek Ranch, was named \u201cBest Cowboy\u201d and won cash and a trophy - now on display at Prescott's Sharlot Hall Museum." },
-    { "marker": "Q3", "question": "What events did the cowboys compete in?", "answer": "Bronc riding, steer roping, and cow pony racing, plus a big horse race - everyday ranch skills turned into public competition." },
-    { "marker": "Q4", "question": "Where in Prescott did it take place?", "answer": "In an open area off Iron Springs Road, near today's plant nursery - long before Prescott had dedicated rodeo grounds." },
-    { "marker": "Q5", "question": "Was it always called a \u201crodeo\u201d?", "answer": "No. From 1888 into the 1920s it was called the Cowboy Tournament, Fiesta, or Stampede. The word \u201crodeo\u201d wasn't used until 1924." },
-    { "marker": "Q6", "question": "How do we know it was really the first?", "answer": "The Arizona Journal-Miner documented it in 1888, and that record - preserved at Sharlot Hall Museum - led to \u201cWorld's Oldest Rodeo\u201d being trademarked in 1985." }
+    { "marker": "Q1", "question": "Why is Prescott considered the home of professional rodeo?", "answer": "On July 4, 1888, a Prescott committee held a \u201ccowboy tournament\u201d with invited competitors, paid admission, and prizes - the first event to meet every requirement of a modern rodeo."},
+    { "marker": "Q2", "question": "Who won the very first title?", "answer": "Juan Leivas, a cowboy from the Date Creek Ranch, was named \u201cBest Cowboy\u201d and won cash and a trophy - now on display at Prescott's Sharlot Hall Museum."},
+    { "marker": "Q3", "question": "What events did the cowboys compete in?", "answer": "Bronc riding, steer roping, and cow pony racing, plus a big horse race - everyday ranch skills turned into public competition."},
+    { "marker": "Q4", "question": "Where in Prescott did it take place?", "answer": "In an open area off Iron Springs Road, near today's plant nursery - long before Prescott had dedicated rodeo grounds."},
+    { "marker": "Q5", "question": "Was it always called a \u201crodeo\u201d?", "answer": "No. From 1888 into the 1920s it was called the Cowboy Tournament, Fiesta, or Stampede. The word \u201crodeo\u201d wasn't used until 1924."},
+    { "marker": "Q6", "question": "How do we know it was really the first?", "answer": "The Arizona Journal-Miner documented it in 1888, and that record - preserved at Sharlot Hall Museum - led to \u201cWorld's Oldest Rodeo\u201d being trademarked in 1985."}
   ]
   }
 

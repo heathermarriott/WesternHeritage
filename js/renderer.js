@@ -389,11 +389,11 @@ export function renderPage(page, context) {
                     <label><input type="radio" name="q5" value="c"> ${translations.trivia.q5C}</label><br>
                     <label><input type="radio" name="q5" value="d"> ${translations.trivia.q5D}</label>
                 </div>
+                <h3 id="triviaScore"></h3>
                 <br>
                 <button type="button" id="gradeQuiz" data-lang-key="trivia.submit">${translations.trivia.submit}</button>
             </form>
-            <img src="${currentAvatarImg}" id="centerImage" alt="Avatar" style="max-width:min(50%, calc(200px * var(--scale))); margin: calc(30px * var(--scale)) auto 0; display:block;">
-            <h3 id="triviaScore"></h3>`;
+            <img src="${currentAvatarImg}" id="centerImage" alt="Avatar" style="max-width:min(50%, calc(200px * var(--scale))); margin: calc(30px * var(--scale)) auto 0; display:block;">`;
 
         document.getElementById("gradeQuiz").addEventListener("click", function() {
             const answers = { q1: "a", q2: "a", q3: "b", q4: "b", q5: "b" };
